@@ -42,9 +42,9 @@
                     <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
                         href="/">Inicio</a>
                     <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
-                        href="{{ route('categories.index') }}">Kits</a>
+                        href="{{ route('kits.index') }}">Kits</a>
                     <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
-                        href="{{ route('menus.index') }}">Productos</a>
+                        href="{{ route('refaccions.index') }}">Refacciones</a>
                     <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
                         href="{{ route('reservations.step.one') }}">Carrito de Compra</a>
     
