@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
@@ -15,6 +16,8 @@ class ProductoController extends Controller
     public function index()
     {
         //
+        $productos = Producto::all();
+        return view('admin.productos.index', compact('productos'));
     }
 
     /**

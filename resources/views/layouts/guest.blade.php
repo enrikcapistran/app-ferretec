@@ -44,9 +44,11 @@
                     <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
                         href="{{ route('kits.index') }}">Kits</a>
                     <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
-                        href="{{ route('refaccions.index') }}">Refacciones</a>
+                        href="{{ route('productos.index') }}">Productos</a>
                     <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
                         href="{{ route('reservations.step.one') }}">Carrito de Compra</a>
+                    <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
+                        href="{{ route('admin.index') }}">Iniciar Sesión</a>
     
                 </div>
             </nav>
@@ -59,9 +61,10 @@
                 <div class="flex flex-wrap justify-center">
                     <ul class="flex items-center space-x-4 text-white">
                         <li>Inicio</li>
-                        <li>Categorías</li>
-                        <li>Nuestro Menú</li>
-                        <li>Reservaciones</li>
+                        <li>Kits</li>
+                        <li>Productos</li>
+                        <li>Carrito de Compra</li>
+                        <li>Iniciar Sesión</li>
                     </ul>
                 </div>
                 <div class="flex justify-center mt-4 lg:mt-0">

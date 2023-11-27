@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kit;
 use Illuminate\Http\Request;
 
 class KitController extends Controller
@@ -15,6 +16,8 @@ class KitController extends Controller
     public function index()
     {
         //
+        $kits = Kit::all();
+        return view('admin.kits.index', compact('kits'));
     }
 
     /**

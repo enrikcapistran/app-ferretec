@@ -16,7 +16,7 @@ use App\Http\Controllers\Frontend\MenuController as FrontendMenuController;
 
 
 use App\Http\Controllers\Frontend\KitController as FrontendKitController;
-use App\Http\Controllers\Frontend\RefaccionController as FrontendRefaccionController;
+use App\Http\Controllers\Frontend\ProductoController as FrontendProductoController;
 
 use App\Http\Controllers\Frontend\ReservationController as FrontendReservationController;
 use App\Http\Controllers\Frontend\WelcomeController;
@@ -44,12 +44,12 @@ Route::get('/', [WelcomeController::class, 'index']);
 
 Route::get('/kits', [FrontendKitController::class, 'index'])->name('kits.index');
 Route::get('/kits/{kit}', [FrontendKitController::class, 'show'])->name('kits.show');
-Route::get('/refaccions', [FrontendRefaccionController::class, 'index'])->name('refaccions.index');
+Route::get('/productos', [FrontendProductoController::class, 'index'])->name('productos.index');
 
-//Route::get('/reservation/step-one', [FrontendReservationController::class, 'stepOne'])->name('reservations.step.one');
-//Route::post('/reservation/step-one', [FrontendReservationController::class, 'storeStepOne'])->name('reservations.store.step.one');
-//Route::get('/reservation/step-two', [FrontendReservationController::class, 'stepTwo'])->name('reservations.step.two');
-//Route::post('/reservation/step-two', [FrontendReservationController::class, 'storeStepTwo'])->name('reservations.store.step.two');
+Route::get('/reservation/step-one', [FrontendReservationController::class, 'stepOne'])->name('reservations.step.one');
+Route::post('/reservation/step-one', [FrontendReservationController::class, 'storeStepOne'])->name('reservations.store.step.one');
+Route::get('/reservation/step-two', [FrontendReservationController::class, 'stepTwo'])->name('reservations.step.two');
+Route::post('/reservation/step-two', [FrontendReservationController::class, 'storeStepTwo'])->name('reservations.store.step.two');
 Route::get('/gracias', [WelcomeController::class, 'gracias'])->name('gracias');
 
 Route::get('/dashboard', function () {
@@ -68,12 +68,6 @@ Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(fun
     Route::resource('/productos', ProductoController::class);
     Route::resource('/tiendas', TiendaController::class);
     Route::resource('/ventas', VentaController::class);
-    //Route::resource('/categories', CategoryController::class);
-    //Route::resource('/menus', MenuController::class);
-    Route::resource('/tables', TableController::class);
-    Route::resource('/reservations', ReservationController::class);
-
-    
 });
 
 require __DIR__.'/auth.php';

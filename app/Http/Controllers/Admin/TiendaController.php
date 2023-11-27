@@ -15,6 +15,7 @@ class TiendaController extends Controller
     public function index()
     {
         //
+        return view('admin.tiendas.index');
     }
 
     /**
