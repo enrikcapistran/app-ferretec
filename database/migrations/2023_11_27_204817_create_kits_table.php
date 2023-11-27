@@ -13,8 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('kit_refaccions', function (Blueprint $table) {
+        Schema::create('kits', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
+            $table->text('descripcion');
+            $table->string('imagen');
+            $table->decimal('precio', 10, 2);
+            $table->integer('stock');
             $table->timestamps();
         });
     }
@@ -26,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kit_refaccions');
+        Schema::dropIfExists('kits');
     }
 };

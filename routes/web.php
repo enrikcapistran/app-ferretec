@@ -7,7 +7,9 @@ use App\Http\Controllers\Admin\TableController;
 use App\Http\Controllers\Admin\ReservationController;
 
 use App\Http\Controllers\Admin\KitController;
-use App\Http\Controllers\Admin\RefaccionController;
+use App\Http\Controllers\Admin\ProductoController;
+use App\Http\Controllers\Admin\TiendaController;
+use App\Http\Controllers\Admin\VentaController;
 
 use App\Http\Controllers\Frontend\CategoryController as FrontendCategoryController;
 use App\Http\Controllers\Frontend\MenuController as FrontendMenuController;
@@ -44,10 +46,10 @@ Route::get('/kits', [FrontendKitController::class, 'index'])->name('kits.index')
 Route::get('/kits/{kit}', [FrontendKitController::class, 'show'])->name('kits.show');
 Route::get('/refaccions', [FrontendRefaccionController::class, 'index'])->name('refaccions.index');
 
-Route::get('/reservation/step-one', [FrontendReservationController::class, 'stepOne'])->name('reservations.step.one');
-Route::post('/reservation/step-one', [FrontendReservationController::class, 'storeStepOne'])->name('reservations.store.step.one');
-Route::get('/reservation/step-two', [FrontendReservationController::class, 'stepTwo'])->name('reservations.step.two');
-Route::post('/reservation/step-two', [FrontendReservationController::class, 'storeStepTwo'])->name('reservations.store.step.two');
+//Route::get('/reservation/step-one', [FrontendReservationController::class, 'stepOne'])->name('reservations.step.one');
+//Route::post('/reservation/step-one', [FrontendReservationController::class, 'storeStepOne'])->name('reservations.store.step.one');
+//Route::get('/reservation/step-two', [FrontendReservationController::class, 'stepTwo'])->name('reservations.step.two');
+//Route::post('/reservation/step-two', [FrontendReservationController::class, 'storeStepTwo'])->name('reservations.store.step.two');
 Route::get('/gracias', [WelcomeController::class, 'gracias'])->name('gracias');
 
 Route::get('/dashboard', function () {
@@ -62,14 +64,16 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(function(){
     Route::get('/', [AdminController::class, 'index'])->name('index');
+    Route::resource('/kits', KitController::class);
+    Route::resource('/productos', ProductoController::class);
+    Route::resource('/tiendas', TiendaController::class);
+    Route::resource('/ventas', VentaController::class);
     //Route::resource('/categories', CategoryController::class);
     //Route::resource('/menus', MenuController::class);
     Route::resource('/tables', TableController::class);
     Route::resource('/reservations', ReservationController::class);
 
     
-    Route::resource('/kits', KitController::class);
-    Route::resource('/refaccions', RefaccionController::class);
 });
 
 require __DIR__.'/auth.php';

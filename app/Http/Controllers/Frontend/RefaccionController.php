@@ -8,10 +8,14 @@ use Illuminate\Http\Request;
 
 class RefaccionController extends Controller
 {
-    public function index()
-    {
+    //
+    public function index(){
         $refaccions = Refaccion::all();
-
         return view('refaccions.index', compact('refaccions'));
     }
+
+    public function show(Refaccion $refaccion){
+        return view('refaccions.show', compact('refaccion'));
+    }
 }
+

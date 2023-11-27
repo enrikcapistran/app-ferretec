@@ -8,14 +8,10 @@ use Illuminate\Http\Request;
 
 class KitController extends Controller
 {
-    //
-    public function index(){
+    public function index()
+    {
         $kits = Kit::all();
+
         return view('kits.index', compact('kits'));
     }
-
-    public function show(Kit $category){
-        return view('kits.show', compact('kit'));
-    }
 }
-
