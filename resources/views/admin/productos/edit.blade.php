@@ -41,6 +41,26 @@
                             <div class="text-sm text-red-500">{{ $message }}</div>
                         @enderror
                         </div>
+
+                        <div class="sm:col-span-6">
+                            <label for="precio" class="block text-sm font-medium text-gray-700">Precio</label>
+                            <div class="mt-1">
+                                <input type="number" min="0.00" max="10000.00" step="0.01" id="precio" name="precio" class="@error('precio') border-red-500 @enderror block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" value="{{ $producto->precio }}" />
+                            </div>
+                            @error('precio')
+                            <div class="text-sm text-red-500">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="sm:col-span-6">
+                            <label for="stock" class="block text-sm font-medium text-gray-700">Stock</label>
+                            <div class="mt-1">
+                                <input type="number" min="0" id="stock" name="stock" class="@error('stock') border-red-500 @enderror block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" value="{{ $producto->stock }}" />
+                            </div>
+                            @error('stock')
+                            <div class="text-sm text-red-500">{{ $message }}</div>
+                            @enderror
+                        </div>
                         
                         <div class="sm:col-span-6 pt-5">
                         <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción</label>

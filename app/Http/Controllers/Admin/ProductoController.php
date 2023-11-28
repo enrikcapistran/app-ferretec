@@ -41,12 +41,12 @@ class ProductoController extends Controller
     public function store(ProductoStoreRequest $request)
     {
         //
-        $image = $request->file('imagen')->store('public/productos');
+        $imagen = $request->file('imagen')->store('public/productos');
 
         Producto::create([
             'nombre' => $request->nombre,
             'descripcion' => $request->descripcion,
-            'imagen' => $image,
+            'imagen' => $imagen,
             'precio' => $request->precio,
             'stock' => $request->stock,
         ]);
@@ -88,10 +88,10 @@ class ProductoController extends Controller
     {
         //
         $request->validate([
-            "nombre" => 'required',
-            "descripcion" => 'required',
-            "precio" => 'required',
-            "stock" => 'required',
+            'nombre' => 'required',
+            'descripcion' => 'required',
+            'precio' => 'required',
+            'stock' => 'required',
         ]);
         $imagen = $producto->imagen;
         if($request->hasFile('imagen')){
@@ -100,15 +100,14 @@ class ProductoController extends Controller
         }
 
         $producto->update([
-            'nombre' => $request->name,
+            'nombre' => $request->nombre,
             'descripcion' => $request->descripcion,
             'imagen' => $imagen,
             'precio' => $request->precio,
             'stock' => $request->stock,
         ]);
 
-        return to_route('admin.productos.index')->with('success', 'Producto Actualizado Correctamente.');
-    }
+    return redirect()->route('admin.productos.index')->with('success', 'Producto Actualizado Correctamente.');    }
 
     /**
      * Remove the specified resource from storage.

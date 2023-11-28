@@ -47,6 +47,7 @@ class KitController extends Controller
     public function store(KitStoreRequest $request)
     {
         //
+        
         $image = $request->file('imagen')->store('public/kits');
 
         $kit = Kit::create([

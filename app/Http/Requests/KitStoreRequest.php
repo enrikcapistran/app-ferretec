@@ -24,11 +24,10 @@ class KitStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            //
             'nombre' => ['required'],
+            'imagen' => ['required', 'image'],
             'descripcion' => ['required'],
             'precio' => ['required'],
-            'imagen' => ['required', 'image'],
             'stock' => ['required'],
         ];
     }
