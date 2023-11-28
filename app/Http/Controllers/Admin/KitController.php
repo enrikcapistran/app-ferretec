@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\KitStoreRequest;
+use App\Models\Producto;
 use App\Models\Kit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class KitController extends Controller
 {
@@ -17,6 +20,8 @@ class KitController extends Controller
     {
         //
         $kits = Kit::all();
+
+        //
         return view('admin.kits.index', compact('kits'));
     }
 
@@ -28,6 +33,9 @@ class KitController extends Controller
     public function create()
     {
         //
+        $productos = Producto::all();
+
+        return view('admin.kits.create', compact('productos'));
     }
 
     /**
@@ -36,9 +44,24 @@ class KitController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(KitStoreRequest $request)
     {
         //
+        $image = $request->file('imagen')->store('public/kits');
+
+        $kit = Kit::create([
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'imagen' => $image,
+            'precio' => $request->precio,
+            'stock' => $request->stock,
+        ]);
+
+        if($request->has('productos')){
+            $kit->productos()->attach($request->productos);
+        }
+
+        return to_route('admin.kits.index')->with('success', 'Kit Guardado Correctamente.');
     }
 
     /**
@@ -58,9 +81,11 @@ class KitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Kit $kit)
     {
         //
+        $productos = Productos::all();
+        return view('admin.kits.edit', compact('kit', 'productos'));
     }
 
     /**
@@ -70,9 +95,34 @@ class KitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Kit $kit)
     {
         //
+        $request->validate([
+            "nombre" => 'required',
+            "descripcion" => 'required',
+            "precio" => 'required',
+            "stock" => 'required',
+        ]);
+        $imagen = $kit->imagen;
+        if($request->hasFile('imagen')){
+            Storage::delete($kit->imagen);
+            $imagen = $request->file('imagen')->store('public/kits');
+        }
+
+        $kit->update([
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'imagen' => $imagen,
+            'precio' => $request->precio,
+            'stock' => $request->stock, 
+        ]);
+
+        if($request->has('productos')){
+            $kit->categories()->sync($request->kits);
+        }
+
+        return to_route('admin.kits.index')->with('success', 'Kit Actualizado Correctamente.');
     }
 
     /**
@@ -81,8 +131,13 @@ class KitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Kit $kit)
     {
         //
+        Storage::delete($kit->image);
+        $kit->categories()->detach();
+        $kit->delete();
+        
+        return to_route('admin.kits.index')->with('danger', 'Kit Eliminado.');
     }
 }
