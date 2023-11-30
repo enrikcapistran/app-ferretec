@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Kit extends Model
 {
@@ -20,6 +20,6 @@ class Kit extends Model
 
     public function productos()
     {
-        return $this->hasMany(Producto::class);
+        return $this->belongsToMany(Producto::class);
     }
 }

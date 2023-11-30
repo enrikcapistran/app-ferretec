@@ -5,11 +5,11 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="h-32 md:h-auto md:w-1/2">
                         <img class="object-cover w-full h-full"
-                            src="https://cdn.pixabay.com/photo/2021/01/15/17/01/green-5919790__340.jpg" alt="img" />
+                            src="https://materialeselcentenario.mx/wp-content/uploads/2021/09/ferreteria4-800x630.jpg" alt="img" />
                     </div>
                     <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
                         <div class="w-full">
-                            <h3 class="mb-4 text-xl font-bold text-blue-600">Hacer Reservación</h3>
+                            <h3 class="mb-4 text-xl font-bold text-blue-600">Realizar Pago</h3>
 
                             <div class="w-full bg-gray-200 rounded-full">
                                 <div
@@ -20,14 +20,14 @@
                             <form method="POST" action="{{ route('reservations.store.step.two') }}">
                                 @csrf
                                 <div class="sm:col-span-6 pt-5">
-                                    <label for="status" class="block text-sm font-medium text-gray-700">Mesa</label>
+                                    <label for="status" class="block text-sm font-medium text-gray-700">Tienda</label>
                                     <div class="mt-1">
                                         <select id="table_id" name="table_id"
                                             class="form-multiselect block w-full mt-1">
                                             @foreach ($tables as $table)
                                                 <option value="{{ $table->id }}" @selected($table->id == $reservation->table_id)>
                                                     {{ $table->name }}
-                                                    ({{ $table->guest_number }} Lugares)
+                                                    ({{ $table->guest_number }} Stock)
                                                 </option>
                                             @endforeach
                                         </select>
@@ -41,7 +41,7 @@
                                     <a href="{{ route('reservations.step.one') }}"
                                         class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">Regresar</a>
                                     <button type="submit"
-                                        class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">Enviar</button>
+                                        class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">Finalizar</button>
                                 </div>
                             </form>
                         </div>

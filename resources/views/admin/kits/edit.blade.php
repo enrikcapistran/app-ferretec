@@ -75,7 +75,7 @@
                         </div>
 
                         <div class="sm:col-span-6 pt-5">
-                            <label for="productos" class="block text-sm font-medium text-gray-700">Producto</label>
+                            <label for="productos" class="block text-sm font-medium text-gray-700">Productos</label>
                             <div class="mt-1">
                                 <select multiple id="productos" name="productos[]"
                                     class="form-multiselect block w-full mt-1">
@@ -90,6 +90,7 @@
                                 <div class="text-sm text-red-500">{{ $message }}</div>
                             @enderror
                         </div>
+                        
 
                         <div class="mt-6 p-4">
                             <button type="submit" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">

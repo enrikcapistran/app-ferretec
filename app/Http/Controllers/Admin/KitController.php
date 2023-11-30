@@ -57,11 +57,8 @@ class KitController extends Controller
         ]);
 
         if ($request->has('productos')) {
-            foreach ($request->productos as $productoData) {
-                // Create a new Producto and associate it with the Kit
-                $producto = new Producto($productoData);
-                $kit->productos()->save($producto);
-            }
+            // Attach selected productos to the kit
+            $kit->productos()->attach($request->productos);
         }
 
         return redirect()->route('admin.kits.index')->with('success', 'Kit Guardado Correctamente.');
@@ -121,6 +118,7 @@ class KitController extends Controller
         ]);
 
         if ($request->has('productos')) {
+            // Sync selected productos with the kit
             $kit->productos()->sync($request->productos);
         } else {
             // If no productos are selected, detach all existing productos
@@ -137,13 +135,13 @@ class KitController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Kit $kit)
-{
-    // Delete associated productos directly
-    $kit->productos()->delete();
+    {
+        // Delete associated productos directly
+        $kit->productos()->delete();
 
-    // Delete the Kit
-    $kit->delete();
+        // Delete the Kit
+        $kit->delete();
 
-    return redirect()->route('admin.kits.index')->with('danger', 'Kit Eliminado.');
-}
+        return redirect()->route('admin.kits.index')->with('danger', 'Kit Eliminado.');
+    }
 }
