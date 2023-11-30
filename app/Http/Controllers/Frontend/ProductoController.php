@@ -14,7 +14,7 @@ class ProductoController extends Controller
         return view('productos.index', compact('productos'));
     }
 
-    public function show(Refaccion $refaccion){
+    public function show(Producto $producto){
         return view('productos.show', compact('producto'));
     }
 }

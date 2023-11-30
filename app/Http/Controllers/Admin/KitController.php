@@ -46,8 +46,6 @@ class KitController extends Controller
      */
     public function store(KitStoreRequest $request)
     {
-        //
-        console.log('asdadasdsadasdsadasdasda');
         $image = $request->file('imagen')->store('public/kits');
 
         $kit = Kit::create([
@@ -58,13 +56,16 @@ class KitController extends Controller
             'stock' => $request->stock,
         ]);
 
-        if($request->has('productos')){
-            $kit->productos()->attach($request->productos);
+        if ($request->has('productos')) {
+            foreach ($request->productos as $productoData) {
+                // Create a new Producto and associate it with the Kit
+                $producto = new Producto($productoData);
+                $kit->productos()->save($producto);
+            }
         }
 
-        return to_route('admin.kits.index')->with('success', 'Kit Guardado Correctamente.');
+        return redirect()->route('admin.kits.index')->with('success', 'Kit Guardado Correctamente.');
     }
-
     /**
      * Display the specified resource.
      *
@@ -84,8 +85,7 @@ class KitController extends Controller
      */
     public function edit(Kit $kit)
     {
-        //
-        $productos = Productos::all();
+        $productos = Producto::all();
         return view('admin.kits.edit', compact('kit', 'productos'));
     }
 
@@ -98,15 +98,16 @@ class KitController extends Controller
      */
     public function update(Request $request, Kit $kit)
     {
-        //
         $request->validate([
-            "nombre" => 'required',
-            "descripcion" => 'required',
-            "precio" => 'required',
-            "stock" => 'required',
+            'nombre' => 'required',
+            'descripcion' => 'required',
+            'precio' => 'required',
+            'stock' => 'required',
         ]);
+
         $imagen = $kit->imagen;
-        if($request->hasFile('imagen')){
+
+        if ($request->hasFile('imagen')) {
             Storage::delete($kit->imagen);
             $imagen = $request->file('imagen')->store('public/kits');
         }
@@ -116,14 +117,17 @@ class KitController extends Controller
             'descripcion' => $request->descripcion,
             'imagen' => $imagen,
             'precio' => $request->precio,
-            'stock' => $request->stock, 
+            'stock' => $request->stock,
         ]);
 
-        if($request->has('productos')){
-            $kit->productos()->sync($request->kits);
+        if ($request->has('productos')) {
+            $kit->productos()->sync($request->productos);
+        } else {
+            // If no productos are selected, detach all existing productos
+            $kit->productos()->detach();
         }
 
-        return to_route('admin.kits.index')->with('success', 'Kit Actualizado Correctamente.');
+        return redirect()->route('admin.kits.index')->with('success', 'Kit Actualizado Correctamente.');
     }
 
     /**
@@ -133,12 +137,13 @@ class KitController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Kit $kit)
-    {
-        //
-        Storage::delete($kit->image);
-        $kit->productos()->detach();
-        $kit->delete();
-        
-        return to_route('admin.kits.index')->with('danger', 'Kit Eliminado.');
-    }
+{
+    // Delete associated productos directly
+    $kit->productos()->delete();
+
+    // Delete the Kit
+    $kit->delete();
+
+    return redirect()->route('admin.kits.index')->with('danger', 'Kit Eliminado.');
+}
 }
