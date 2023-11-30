@@ -47,7 +47,7 @@ class KitController extends Controller
     public function store(KitStoreRequest $request)
     {
         //
-        
+        console.log('asdadasdsadasdsadasdasda');
         $image = $request->file('imagen')->store('public/kits');
 
         $kit = Kit::create([
@@ -120,7 +120,7 @@ class KitController extends Controller
         ]);
 
         if($request->has('productos')){
-            $kit->categories()->sync($request->kits);
+            $kit->productos()->sync($request->kits);
         }
 
         return to_route('admin.kits.index')->with('success', 'Kit Actualizado Correctamente.');
@@ -136,7 +136,7 @@ class KitController extends Controller
     {
         //
         Storage::delete($kit->image);
-        $kit->categories()->detach();
+        $kit->productos()->detach();
         $kit->delete();
         
         return to_route('admin.kits.index')->with('danger', 'Kit Eliminado.');

@@ -18,8 +18,8 @@ class Kit extends Model
         'stock',
     ];
 
-    public function productos()
+    public function productos(): HasMany
     {
-        return $this->belongsToMany(Producto::class, 'kit_producto');
+        return $this->hasMany(Producto::class);
     }
 }

@@ -16,10 +16,11 @@ class Producto extends Model
         'imagen',
         'precio',
         'stock',
+        'kit_id',
     ];
 
-    public function kits()
+    public function kit(): BelongsTo
     {
-        return $this->belongsToMany(Kit::class, 'kit_producto');
+        return $this->belongsTo(Kit::class);
     }
 }

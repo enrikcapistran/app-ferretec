@@ -20,15 +20,13 @@ return new class extends Migration
             $table->string('imagen');
             $table->decimal('precio', 10, 2);
             $table->integer('stock');
+            $table->unsignedBigInteger('kit_id')->nullable(); // Foreign key
             $table->timestamps();
+
+            $table->foreign('kit_id')->references('id')->on('kits')->onDelete('set null');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('productos');

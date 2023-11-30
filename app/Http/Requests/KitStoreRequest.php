@@ -24,11 +24,13 @@ class KitStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => ['required'],
-            'imagen' => ['required', 'image'],
-            'descripcion' => ['required'],
-            'precio' => ['required'],
-            'stock' => ['required'],
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'required|string',
+            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'precio' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'productos' => 'array', // Adjust based on your requirements
+            'productos.*' => 'exists:productos,id', // Ensure each producto exists in the productos table
         ];
     }
 }
