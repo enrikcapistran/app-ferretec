@@ -11,7 +11,7 @@
         </div>
         <div class="flex flex-col items-center mt-12 text-center">
             <span class="relative inline-flex w-full md:w-auto">
-                <a href="#" type="button"
+                <a href="/productos" type="button"
                     class="inline-flex items-center justify-center px-6 py-2 text-base font-bold leading-6 text-white bg-green-600 rounded-full lg:w-full md:w-auto hover:bg-green-500 focus:outline-none">
                     Ver Productos
                 </a>
@@ -58,6 +58,57 @@
             </div>
         </div>
     </section>
+
+     <!-- Section for different user roles -->
+    @if(auth()->check())
+    @if(auth()->user()->isAdmin())
+        <!-- Admin Section -->
+        <section class="bg-gray-200 py-8">
+            <div class="container mx-auto">
+                <h2 class="text-2xl font-bold mb-4">Panel de Administrador</h2>
+                <!-- Contenido específico para administradores -->
+                <!-- ... -->
+            </div>
+        </section>
+    @elseif(auth()->user()->isCajero())
+        <!-- Cashier Section -->
+        <section class="bg-gray-200 py-8">
+            <div class="container mx-auto">
+                <h2 class="text-2xl font-bold mb-4">Panel de Cajero</h2>
+                <!-- Contenido específico para cajeros -->
+                <!-- ... -->
+            </div>
+        </section>
+    @elseif(auth()->user()->isClienteNormal())
+        <!-- Normal Client Section -->
+        <section class="bg-gray-200 py-8">
+            <div class="container mx-auto">
+                <h2 class="text-2xl font-bold mb-4">Panel de Cliente Normal</h2>
+                <!-- Contenido específico para clientes normales -->
+                <!-- ... -->
+            </div>
+        </section>
+    @elseif(auth()->user()->isClienteVip())
+        <!-- VIP Client Section -->
+        <section class="bg-gray-200 py-8">
+            <div class="container mx-auto">
+                <h2 class="text-2xl font-bold mb-4">Panel de Cliente VIP</h2>
+                <!-- Contenido específico para clientes VIP -->
+                <!-- ... -->
+            </div>
+        </section>
+    @elseif(auth()->user()->isMarketing())
+        <!-- Marketing Section -->
+        <section class="bg-gray-200 py-8">
+            <div class="container mx-auto">
+                <h2 class="text-2xl font-bold mb-4">Panel de Marketing</h2>
+                <!-- Contenido específico para el departamento de marketing -->
+                <!-- ... -->
+            </div>
+        </section>
+    @endif
+@endif
+
     <section class="py-20 bg-gray-50">
         <div class="container items-center max-w-6xl px-4 px-10 mx-auto sm:px-20 md:px-32 lg:px-6">
             <div class="flex flex-wrap items-center -mx-3">

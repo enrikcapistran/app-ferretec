@@ -19,7 +19,7 @@
             <nav class="container px-12 py-8 mx-auto md:flex md:justify-between md:items-center">
                 <div class="flex items-center justify-between">
                     <a class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
-                        href="#">
+                        href="/">
                         FerreTec
                     </a>
                     <!-- Mobile menu button -->
