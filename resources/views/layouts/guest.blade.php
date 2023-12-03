@@ -10,12 +10,13 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
+        
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
     </head>
     <body class="font-sans text-gray-900 antialiased">
-        <div class="bg-white shadow-md" x-data="{ isOpen: false }">
+        <div class="bg-white shadow-md fixed w-full" x-data="{ isOpen: false }">
             <nav class="container px-12 py-8 mx-auto md:flex md:justify-between md:items-center">
                 <div class="flex items-center justify-between">
                     <a class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
@@ -47,9 +48,33 @@
                         href="{{ route('productos.index') }}">Productos</a>
                     <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
                         href="{{ route('reservations.step.one') }}">Carrito de Compra</a>
-                    <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
-                        href="{{ route('admin.index') }}">Iniciar Sesión</a>
-    
+                    
+                        @auth
+                        <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
+                            href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Cerrar Sesión
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                        @else
+                            <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
+                            href="{{ route('admin.index') }}">Iniciar Sesión</a>
+                        @endauth
+
+                        
+                        @auth
+                        <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
+                            href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                        @else
+                            <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
+                                href="{{ route('register') }}">Registro</a>
+                        @endauth
                 </div>
             </nav>
         </div>

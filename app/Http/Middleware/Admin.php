@@ -16,9 +16,13 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!auth()->check() || !auth()->user()->es_admin){
-            abort(403);
+        // Verificar si el usuario está autenticado y es un administrador
+        if (auth()->check() && auth()->user()->es_admin) {
+            // Si es un administrador, permite el acceso normalmente
+            return $next($request);
         }
-        return $next($request);
+
+        // Si el usuario no es un administrador, redirige al sitio inicial
+        return redirect('/');
     }
 }
