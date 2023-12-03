@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="register-page min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
             <div>
                 
