@@ -4,6 +4,8 @@ namespace App\Http;
 
 
 use App\Http\Middleware\Admin;
+use App\Http\Middleware\Cajero;
+use App\Http\Middleware\Marketing;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -68,5 +70,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => Admin::class,
+        //'admin' => Marketing::class, Admin::Class,
+        //'cajero' => Cajero::Class
     ];
 }

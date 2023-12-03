@@ -5,11 +5,11 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="h-32 md:h-auto md:w-1/2">
                         <img class="object-cover w-full h-full"
-                            src="https://cdn.pixabay.com/photo/2021/01/15/17/01/green-5919790__340.jpg" alt="img" />
+                            src="https://materialeselcentenario.mx/wp-content/uploads/2021/09/ferreteria4-800x630.jpg" alt="img" />
                     </div>
                     <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
                         <div class="w-full">
-                            <h3 class="mb-4 text-xl font-bold text-blue-600">Hacer Reservación</h3>
+                            <h3 class="mb-4 text-xl font-bold text-blue-600">Realizar Compra</h3>
 
                             <div class="w-full bg-gray-200 rounded-full">
                                 <div
@@ -67,7 +67,7 @@
                                     @enderror
                                 </div>
                                 <div class="sm:col-span-6">
-                                    <label for="res_date" class="block text-sm font-medium text-gray-700"> Fecha de Reservación
+                                    <label for="res_date" class="block text-sm font-medium text-gray-700"> Fecha de Envío
                                     </label>
                                     <div class="mt-1">
                                         <input type="datetime-local" id="res_date" name="res_date"
@@ -82,7 +82,7 @@
                                     @enderror
                                 </div>
                                 <div class="sm:col-span-6">
-                                    <label for="guest_number" class="block text-sm font-medium text-gray-700"> Invitados
+                                    <label for="guest_number" class="block text-sm font-medium text-gray-700"> Test
                                     </label>
                                     <div class="mt-1">
                                         <input type="number" id="guest_number" name="guest_number"
