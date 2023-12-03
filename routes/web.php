@@ -62,6 +62,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware(['auth', 'cliente'])->group(function(){
+    Route::get('/', [WelcomeController::class, 'index']);
+});
+
 Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(function(){
     Route::get('/', [AdminController::class, 'index'])->name('index');
     Route::resource('/kits', KitController::class);

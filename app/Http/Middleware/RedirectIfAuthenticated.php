@@ -17,6 +17,23 @@ class RedirectIfAuthenticated
      * @param  string|null  ...$guards
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
+    protected function redirectTo($request)
+    {
+        if (Auth::check()) {
+            // Obtener los roles del usuario autenticado
+            $roles = Auth::user()->roles->pluck('nombre')->toArray();
+
+            // Redirigir según el rol
+            if (in_array('admin', $roles)) {
+                return route('admin.dashboard');
+            } elseif (in_array('cliente', $roles)) {
+                return route('welcome');
+            }
+        }
+
+        return route('welcome');
+    }
+
     public function handle(Request $request, Closure $next, ...$guards)
     {
         $guards = empty($guards) ? [null] : $guards;
@@ -29,4 +46,8 @@ class RedirectIfAuthenticated
 
         return $next($request);
     }
+    // ...
+
+    
 }
+
