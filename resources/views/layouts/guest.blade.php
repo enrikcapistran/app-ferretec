@@ -77,7 +77,7 @@
                 </div>
             </nav>
         </div>
-        <div class="min-h-screen font-sans text-gray-900 antialiased mt-10">
+        <div class="min-h-screen font-sans text-gray-900 antialiased mt-0">
                 {{ $slot }}
         </div>
         <footer class="bg-gray-800 border-t border-gray-200">
