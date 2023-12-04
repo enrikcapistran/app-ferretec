@@ -10,7 +10,7 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
+        
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -47,13 +47,37 @@
                         href="{{ route('productos.index') }}">Productos</a>
                     <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
                         href="{{ route('reservations.step.one') }}">Carrito de Compra</a>
-                    <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
-                        href="{{ route('admin.index') }}">Iniciar Sesión</a>
-    
+                    
+                        @auth
+                        <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
+                            href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Cerrar Sesión
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                        @else
+                            <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
+                            href="{{ route('admin.index') }}">Iniciar Sesión</a>
+                        @endauth
+
+                        
+                        @auth
+                        <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
+                            href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                        @else
+                            <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700"
+                                href="{{ route('register') }}">Registro</a>
+                        @endauth
                 </div>
             </nav>
         </div>
-        <div class="min-h-screen font-sans text-gray-900 antialiased">
+        <div class="min-h-screen font-sans text-gray-900 antialiased mt-0">
                 {{ $slot }}
         </div>
         <footer class="bg-gray-800 border-t border-gray-200">
