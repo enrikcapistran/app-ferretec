@@ -70,11 +70,7 @@
         <div class="container flex flex-wrap items-center justify-center px-4 py-8 mx-auto lg:justify-between">
             <div class="flex flex-wrap justify-center">
                 <ul class="flex items-center space-x-4 text-white">
-                    <li>Inicio</li>
-                    <li>Kits AAAA</li>
-                    <li>Productos</li>
-                    <li>Carrito de Compra</li>
-                    <li>Iniciar Sesión</li>
+                    <li>©2023 FerreTec, S. de R.L. de C.V. Todos los derechos reservados</li>
                 </ul>
             </div>
             <div class="flex justify-center mt-4 lg:mt-0">
