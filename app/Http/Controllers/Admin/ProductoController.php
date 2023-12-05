@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductoStoreRequest;
-use App\Models\Producto;
+use App\Models\Producto as ProductoServicios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,10 +18,10 @@ class ProductoController extends Controller
     public function index()
     {
         //
-        $productos = Producto::all();
+        $productos = ProductoServicios::all();
         return view('admin.productos.index', compact('productos'));
     }
-/**
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -43,7 +43,7 @@ class ProductoController extends Controller
         //
         $imagen = $request->file('imagen')->store('public/productos');
 
-        Producto::create([
+        ProductoServicios::create([
             'nombre' => $request->nombre,
             'descripcion' => $request->descripcion,
             'imagen' => $imagen,
@@ -63,6 +63,8 @@ class ProductoController extends Controller
     public function show($id)
     {
         //
+        $producto = ProductoServicios::findOrFail($id);
+        return view('productos.show', compact('producto'));
     }
 
     /**
@@ -71,7 +73,7 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Producto $producto)
+    public function edit(ProductoServicios $producto)
     {
         //
         return view('admin.productos.edit', compact('producto'));
@@ -84,7 +86,7 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Producto $producto)
+    public function update(Request $request, ProductoServicios $producto)
     {
         //
         $request->validate([
@@ -94,7 +96,7 @@ class ProductoController extends Controller
             'stock' => 'required',
         ]);
         $imagen = $producto->imagen;
-        if($request->hasFile('imagen')){
+        if ($request->hasFile('imagen')) {
             Storage::delete($producto->imagen);
             $imagen = $request->file('imagen')->store('public/productos');
         }
@@ -107,7 +109,8 @@ class ProductoController extends Controller
             'stock' => $request->stock,
         ]);
 
-    return redirect()->route('admin.productos.index')->with('success', 'Producto Actualizado Correctamente.');    }
+        return redirect()->route('admin.productos.index')->with('success', 'Producto Actualizado Correctamente.');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -115,7 +118,7 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Producto $producto)
+    public function destroy(ProductoServicios $producto)
     {
         //
         Storage::delete($producto->imagen);
