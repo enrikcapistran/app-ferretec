@@ -117,11 +117,7 @@
                         <h2 class="mb-4 text-2xl font-bold">Encuentra los artículos de ferretería que tus proyectos necesitan</h2>
                         
 
-                        <p class="mb-4 font-medium tracking-tight text-gray-400 xl:mb-6">Lorem ipsum dolor sit amet
-                            consectetur
-                            adipisicing elit. Natus hic atque magni minus aliquam, eos quam incidunt nam iusto sunt
-                            voluptates
-                            inventore a veritatis doloremque corrupti. Veritatis est expedita cupiditate!</p>
+                        <p class="mb-4 font-medium tracking-tight text-gray-400 xl:mb-6"></p>
                         <ul>
                             <li class="flex items-center py-2 space-x-4 xl:py-3">
                                 <svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -165,92 +161,6 @@
                         class="mx-auto sm:max-w-sm lg:max-w-full"
                         src="https://crm.aftgrupo.com/documentacion/70/43881.jpg"
                         alt="feature image"></div>
-            </div>
-        </div>
-    </section>
-    <section class="mt-8 bg-white">
-        <div class="mt-4 text-center">
-            <h3 class="text-2xl font-bold">Productos</h3>
-            <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
-                Promociones KITS</h2>
-        </div>
-        <div class="container w-full px-5 py-6 mx-auto">
-            <div class="grid lg:grid-cols-4 gap-y-6">
-                @if ($specials && $specials->menus)
-                <@foreach ($specials->menus as $menu)
-                    <div class="max-w-xs mx-4 mb-2 rounded-lg shadow-lg">
-                        <img class="w-full h-48" src="{{ Storage::url($menu->image) }}" alt="Image" />
-                        <div class="px-6 py-4">
-                            <h4 class="mb-3 text-xl font-semibold tracking-tight text-green-600 uppercase">
-                                {{ $menu->name }}</h4>
-                            <p class="leading-normal text-gray-700">{{ $menu->description }}.</p>
-                        </div>
-                        <div class="flex items-center justify-between p-4">
-                            <span class="text-xl text-green-600">${{ $menu->price }}</span>
-                        </div>
-                    </div>
-                @endforeach
-                @endif
-            </div>
-        </div>
-    </section>
-    <section class="pt-4 pb-12 bg-gray-800">
-        <div class="my-16 text-center">
-            <h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
-                Testimonios </h2>
-            <p class="text-xl text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. soluta sapient</p>
-        </div>
-        <div class="grid gap-2 lg:grid-cols-3 content-center">
-            <div class="max-w-md p-4 bg-white rounded-lg shadow-lg content-center">
-                <div class="flex justify-center -mt-16 md:justify-end">
-                    <img class="object-cover w-20 h-20 border-2 border-green-500 rounded-full"
-                        src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80">
-                </div>
-                <div>
-                    <h2 class="text-3xl font-semibold text-gray-800">Cliente1</h2>
-                    <p class="mt-2 text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae dolores
-                        deserunt
-                        ea doloremque natus error, rerum quas odio quaerat nam ex commodi hic, suscipit in a veritatis
-                        pariatur
-                        minus consequuntur!</p>
-                </div>
-                <div class="flex justify-end mt-4">
-                    <a href="#" class="text-xl font-medium text-green-500">John Doe</a>
-                </div>
-            </div>
-            <div class="max-w-md p-4 bg-white rounded-lg shadow-lg">
-                <div class="flex justify-center -mt-16 md:justify-end">
-                    <img class="object-cover w-20 h-20 border-2 border-green-500 rounded-full"
-                        src="https://cdn.pixabay.com/photo/2018/01/04/21/15/young-3061652__340.jpg">
-                </div>
-                <div>
-                    <h2 class="text-3xl font-semibold text-gray-800">Cliente2</h2>
-                    <p class="mt-2 text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae dolores
-                        deserunt
-                        ea doloremque natus error, rerum quas odio quaerat nam ex commodi hic, suscipit in a veritatis
-                        pariatur
-                        minus consequuntur!</p>
-                </div>
-                <div class="flex justify-end mt-4">
-                    <a href="#" class="text-xl font-medium text-green-500">John Doe</a>
-                </div>
-            </div>
-            <div class="max-w-md p-4 bg-white rounded-lg shadow-lg">
-                <div class="flex justify-center -mt-16 md:justify-end">
-                    <img class="object-cover w-20 h-20 border-2 border-green-500 rounded-full"
-                        src="https://cdn.pixabay.com/photo/2018/01/18/17/48/purchase-3090818__340.jpg">
-                </div>
-                <div>
-                    <h2 class="text-3xl font-semibold text-gray-800">Cliente3</h2>
-                    <p class="mt-2 text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae dolores
-                        deserunt
-                        ea doloremque natus error, rerum quas odio quaerat nam ex commodi hic, suscipit in a veritatis
-                        pariatur
-                        minus consequuntur!</p>
-                </div>
-                <div class="flex justify-end mt-4">
-                    <a href="#" class="text-xl font-medium text-green-500">John Doe</a>
-                </div>
             </div>
         </div>
     </section>
