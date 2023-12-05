@@ -18,6 +18,7 @@ use App\Http\Controllers\Frontend\MenuController as FrontendMenuController;
 use App\Http\Controllers\Frontend\KitController as FrontendKitController;
 use App\Http\Controllers\Frontend\ProductoController as FrontendProductoController;
 
+
 use App\Http\Controllers\Frontend\ReservationController as FrontendReservationController;
 use App\Http\Controllers\Frontend\WelcomeController;
 use App\Http\Controllers\ProfileController;
@@ -45,6 +46,7 @@ Route::get('/', [WelcomeController::class, 'index']);
 Route::get('/kits', [FrontendKitController::class, 'index'])->name('kits.index');
 Route::get('/kits/{kit}', [FrontendKitController::class, 'show'])->name('kits.show');
 Route::get('/productos', [FrontendProductoController::class, 'index'])->name('productos.index');
+Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.show');
 
 Route::get('/reservation/step-one', [FrontendReservationController::class, 'stepOne'])->name('reservations.step.one');
 Route::post('/reservation/step-one', [FrontendReservationController::class, 'storeStepOne'])->name('reservations.store.step.one');
@@ -62,7 +64,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(function(){
+Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
     Route::resource('/kits', KitController::class);
     Route::resource('/productos', ProductoController::class);
@@ -70,4 +72,4 @@ Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(fun
     Route::resource('/ventas', VentaController::class);
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
