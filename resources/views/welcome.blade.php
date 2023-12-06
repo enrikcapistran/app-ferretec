@@ -194,7 +194,10 @@
         </div>
     </section>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/diego
     
     <section class="pt-4 pb-12 bg-gray-800">
         <div class="my-16 text-center">
@@ -256,5 +259,8 @@
             </div>
         </div>
     </section>
+<<<<<<< HEAD
 >>>>>>> origin/v1
+=======
+>>>>>>> origin/diego
 </x-guest-layout>
