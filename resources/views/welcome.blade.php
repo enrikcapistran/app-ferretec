@@ -18,6 +18,35 @@
         </div>
     </div>
     <!-- End Main Hero Content -->
+    <!-- Inicio Seccion Promociones Kits -->
+    <section class="mt-8 bg-white">
+        <div class="mt-4 text-center">
+            <h3 class="text-2xl font-bold">Productos</h3>
+            <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
+                Promociones KITS</h2>
+        </div>
+        <div class="container w-full px-5 py-6 mx-auto">
+            <div class="grid lg:grid-cols-4 gap-8 mt-8">
+                @forelse ($kits as $kit)
+                    <div class="max-w-xs overflow-hidden bg-white rounded-lg shadow-lg">
+                        <img class="w-full h-48 object-cover object-center" src="{{ Storage::url($kit->imagen) }}" alt="{{ $kit->nombre }}">
+                        <div class="px-6 py-4">
+                            <h4 class="mb-2 text-xl font-semibold text-green-600 uppercase">{{ $kit->nombre }}</h4>
+                            <p class="text-gray-700">{{ $kit->descripcion }}</p>
+                        </div>
+                        <div class="flex items-center justify-between px-6 py-4 bg-gray-100">
+                            <span class="text-xl text-green-600">${{ $kit->precio }}</span>
+                            <a href="#_" class="text-sm text-blue-600 hover:underline">Ver detalles</a>
+                        </div>
+                    </div>
+                @empty
+                    <p class="text-center text-gray-500">No kits available at the moment.</p>
+                @endforelse
+            </div>
+            
+        </div>
+    </section>
+
     <section class="px-2 py-32 bg-white md:px-0">
         <div class="container items-center max-w-6xl px-8 mx-auto xl:px-6">
             <div class="flex flex-wrap items-center sm:-mx-3">
@@ -168,32 +197,7 @@
             </div>
         </div>
     </section>
-    <section class="mt-8 bg-white">
-        <div class="mt-4 text-center">
-            <h3 class="text-2xl font-bold">Productos</h3>
-            <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
-                Promociones KITS</h2>
-        </div>
-        <div class="container w-full px-5 py-6 mx-auto">
-            <div class="grid lg:grid-cols-4 gap-y-6">
-                @if ($specials && $specials->menus)
-                <@foreach ($specials->menus as $menu)
-                    <div class="max-w-xs mx-4 mb-2 rounded-lg shadow-lg">
-                        <img class="w-full h-48" src="{{ Storage::url($menu->image) }}" alt="Image" />
-                        <div class="px-6 py-4">
-                            <h4 class="mb-3 text-xl font-semibold tracking-tight text-green-600 uppercase">
-                                {{ $menu->name }}</h4>
-                            <p class="leading-normal text-gray-700">{{ $menu->description }}.</p>
-                        </div>
-                        <div class="flex items-center justify-between p-4">
-                            <span class="text-xl text-green-600">${{ $menu->price }}</span>
-                        </div>
-                    </div>
-                @endforeach
-                @endif
-            </div>
-        </div>
-    </section>
+    
     <section class="pt-4 pb-12 bg-gray-800">
         <div class="my-16 text-center">
             <h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">

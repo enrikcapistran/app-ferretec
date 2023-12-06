@@ -48,10 +48,10 @@ Route::get('/kits/{kit}', [FrontendKitController::class, 'show'])->name('kits.sh
 Route::get('/productos', [FrontendProductoController::class, 'index'])->name('productos.index');
 Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.show');
 
-Route::get('/reservation/step-one', [FrontendReservationController::class, 'stepOne'])->name('reservations.step.one');
-Route::post('/reservation/step-one', [FrontendReservationController::class, 'storeStepOne'])->name('reservations.store.step.one');
-Route::get('/reservation/step-two', [FrontendReservationController::class, 'stepTwo'])->name('reservations.step.two');
-Route::post('/reservation/step-two', [FrontendReservationController::class, 'storeStepTwo'])->name('reservations.store.step.two');
+//Route::get('/reservation/step-one', [FrontendReservationController::class, 'stepOne'])->name('reservations.step.one');
+//Route::post('/reservation/step-one', [FrontendReservationController::class, 'storeStepOne'])->name('reservations.store.step.one');
+//Route::get('/reservation/step-two', [FrontendReservationController::class, 'stepTwo'])->name('reservations.step.two');
+//Route::post('/reservation/step-two', [FrontendReservationController::class, 'storeStepTwo'])->name('reservations.store.step.two');
 Route::get('/gracias', [WelcomeController::class, 'gracias'])->name('gracias');
 
 Route::get('/dashboard', function () {
