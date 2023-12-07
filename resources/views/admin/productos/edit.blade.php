@@ -19,11 +19,11 @@
                         @csrf
                         @method('PUT')
                         <div class="sm:col-span-6">
-                            <label for="nombre" class="block text-sm font-medium text-gray-700"> Nombre </label>
+                            <label for="nombreProducto" class="block text-sm font-medium text-gray-700"> Nombre </label>
                             <div class="mt-1">
-                                <input type="text" id="nombre" name="nombre" class="@error('nombre') border-red-500 @enderror block w-full appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" value="{{ $producto->nombre }}" />
+                                <input type="text" id="nombreProducto" name="nombreProducto" class="@error('nombre') border-red-500 @enderror block w-full appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" value="{{ $producto->nombreProducto }}" />
                             </div>
-                            @error('nombre')
+                            @error('nombreProducto')
                             <div class="text-sm text-red-500">{{ $message }}</div>
                             @enderror
                         </div>
@@ -41,16 +41,16 @@
                         </div>
 
                         <div class="sm:col-span-6">
-                            <label for="precio" class="block text-sm font-medium text-gray-700">Precio</label>
+                            <label for="precioUnitario" class="block text-sm font-medium text-gray-700">Precio Unitario</label>
                             <div class="mt-1">
-                                <input type="number" min="0.00" max="10000.00" step="0.01" id="precio" name="precio" class="@error('precio') border-red-500 @enderror block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" value="{{ $producto->precio }}" />
+                                <input type="number" min="0.00" max="100000.00" step="0.01" id="precioUnitario" name="precioUnitario" class="@error('precio') border-red-500 @enderror block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" value="{{ $producto->precioUnitario }}" />
                             </div>
-                            @error('precio')
+                            @error('precioUnitario')
                             <div class="text-sm text-red-500">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <div class="sm:col-span-6">
+                        <!--<div class="sm:col-span-6">
                             <label for="stock" class="block text-sm font-medium text-gray-700">Stock</label>
                             <div class="mt-1">
                                 <input type="number" min="0" id="stock" name="stock" class="@error('stock') border-red-500 @enderror block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" value="{{ $producto->stock }}" />
@@ -58,7 +58,7 @@
                             @error('stock')
                             <div class="text-sm text-red-500">{{ $message }}</div>
                             @enderror
-                        </div>
+                        </div>-->
 
                         <div class="sm:col-span-6 pt-5">
                             <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción</label>

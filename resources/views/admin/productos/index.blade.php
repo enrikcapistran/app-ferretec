@@ -31,9 +31,9 @@
                             <th scope="col" class="px-6 py-3">
                                 Precio
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <!--<th scope="col" class="px-6 py-3">
                                 Stock
-                            </th>
+                            </th>-->
                             <th scope="'col" class="relative py-3 px-6">
                                 <span class="sr-only">Editar</span>
                             </th>
@@ -43,7 +43,7 @@
                         @foreach ( $productos as $producto )
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ $producto->nombre }}
+                                {{ $producto->nombreProducto }}
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <img src="{{ Storage::url($producto->imagen) }}" class="w-16 h-16 rounded">
@@ -52,11 +52,11 @@
                                 {{ Str::limit($producto->descripcion, 30, '...') }}
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ $producto->precio }}
+                                {{ $producto->precioUnitario }}
                             </td>
-                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <!--<td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{ $producto->stock }}
-                            </td>
+                            </td>-->
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <div class="flex space-x-2">
                                     <a href="{{ route('admin.productos.edit', $producto->idProducto) }}" class="px-4 py-2 bg-green-500 hover:bg-green-700 rounded-lg text-white">

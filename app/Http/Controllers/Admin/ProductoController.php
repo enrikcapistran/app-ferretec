@@ -44,11 +44,13 @@ class ProductoController extends Controller
         $imagen = $request->file('imagen')->store('public/productos');
 
         ProductoServicios::create([
-            'nombre' => $request->nombre,
+            'nombreProducto' => $request->nombreProducto,
             'descripcion' => $request->descripcion,
             'imagen' => $imagen,
-            'precio' => $request->precio,
+            'precioUnitario' => $request->precioUnitario,
             'stock' => $request->stock,
+            'idTipoProducto' => 1, //DUDA
+            'idStatus' => 1, //DUDA
         ]);
 
         return to_route('admin.productos.index')->with('success', 'Producto Guardado Correctamente.');
@@ -91,10 +93,10 @@ class ProductoController extends Controller
     {
         //
         $request->validate([
-            'nombre' => 'required',
+            'nombreProducto' => 'required',
             'descripcion' => 'required',
-            'precio' => 'required',
-            'stock' => 'required',
+            'precioUnitario' => 'required',
+            //'stock' => 'required',
         ]);
         $imagen = $producto->imagen;
         if ($request->hasFile('imagen')) {
@@ -103,10 +105,10 @@ class ProductoController extends Controller
         }
 
         $producto->update([
-            'nombre' => $request->nombre,
+            'nombreProducto' => $request->nombreProducto,
             'descripcion' => $request->descripcion,
             'imagen' => $imagen,
-            'precio' => $request->precio,
+            'precioUnitario' => $request->precioUnitario,
             'stock' => $request->stock,
         ]);
 
