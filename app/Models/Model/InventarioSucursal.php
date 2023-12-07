@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Models\Clases;
+namespace App\Models;
+
 class InventarioSucursal
 {
     public int $idSucursal;

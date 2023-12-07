@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Clases;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +12,7 @@ class Venta extends Model
     public int $idEmpleado;
     public int $idCliente;
     public int $idPago;
-    public string $fechaVenta;
+    public string $fechaVenta; 
     public float $totalPago;
     public int $idStatus;
 
@@ -28,36 +28,13 @@ class Venta extends Model
         $this->idStatus = $idStatus;
     }
 
-    public function getFolio(): ?int
-    {
-        return $this->folio;
-    }
-    public function getIdSucursal(): int
-    {
-        return $this->idSucursal;
-    }
-    public function getIdEmpleado(): int
-    {
-        return $this->idEmpleado;
-    }
-    public function getIdCliente(): int
-    {
-        return $this->idCliente;
-    }
-    public function getIdPago(): int
-    {
-        return $this->idPago;
-    }
-    public function getFechaVenta(): string
-    {
-        return $this->fechaVenta;
-    }
-    public function getTotalPago(): float
-    {
-        return $this->totalPago;
-    }
-    public function getIdStatus(): int
-    {
-        return $this->idStatus;
-    }
+    public function getFolio(): ?int { return $this->folio; }
+    public function getIdSucursal(): int { return $this->idSucursal; }
+    public function getIdEmpleado(): int { return $this->idEmpleado; }
+    public function getIdCliente(): int { return $this->idCliente; }
+    public function getIdPago(): int { return $this->idPago; }
+    public function getFechaVenta(): string { return $this->fechaVenta; }
+    public function getTotalPago(): float { return $this->totalPago; }
+    public function getIdStatus(): int { return $this->idStatus; }
 }
+

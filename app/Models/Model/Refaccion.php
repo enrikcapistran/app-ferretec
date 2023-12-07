@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Clases;
+namespace App\Models;
 
 class Refaccion
 {
@@ -16,18 +16,9 @@ class Refaccion
     }
 
     // Métodos getters para cada propiedad
-    public function getIdProducto(): int
-    {
-        return $this->idProducto;
-    }
-    public function getSKU(): string
-    {
-        return $this->SKU;
-    }
-    public function getIdStatus(): int
-    {
-        return $this->idStatus;
-    }
+    public function getIdProducto(): int { return $this->idProducto; }
+    public function getSKU(): string { return $this->SKU; }
+    public function getIdStatus(): int { return $this->idStatus; }
 
     // Métodos setters si los necesitas
     // Métodos para lógica de negocio específica de refacciones

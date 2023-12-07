@@ -70,23 +70,10 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
-
-    Route::get('/kits', [KitController::class, 'index'])->name('kits.index');;
-    Route::get('/kits/edit/{idKit}', [KitController::class, 'edit'])->name('kits.edit');
-    Route::get('/kits/delete/{idKit}', [KitController::class, 'edit'])->name('kits.destroy');
-    Route::get('/kits/create', [KitController::class, 'create'])->name('kits.create');
-
-
-    Route::get('/kit/iniciar', [KitController::class, 'iniciarNuevoKit'])->name('kits.iniciar');
-    Route::post('/kit/añadirRefaccion', [KitController::class, 'añadirRefacciones'])->name('kits.addRefaccion');
-    Route::put('/kit/setInfo', [KitController::class, 'setInformacion'])->name('kits.setInfo');
-    Route::post('/kit/finalizar', [KitController::class, 'finalizarNuevoKit'])->name('kits.finalizar');
-    Route::delete('/kit/eliminarRefaccion/{idRefaccion}', [KitController::class, 'eliminarRefaccion'])->name('kits.eliminarRefaccion');
-
+    Route::resource('/kits', KitController::class);
     Route::resource('/productos', ProductoController::class);
     Route::resource('/tiendas', TiendaController::class);
     Route::resource('/ventas', VentaController::class);
 });
-
 
 require __DIR__ . '/auth.php';

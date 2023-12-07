@@ -2,96 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-//import de la clase Kit
-use App\Models\Clases\Kit;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\KitStoreRequest;
 use App\Models\Producto;
-use App\Models\Model;
-use App\Models\DetalleKit;
+use App\Models\Kit;
 use App\Models\Sucursal;
+use App\Models\DetalleKit;
 use App\Models\Refaccion;
 use Illuminate\Support\Facades\Log;
-use App\Models\Modelos\kitModelo;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class KitController extends Controller
 {
-
-    //Responde a '/kit/iniciar' 'kits.iniciar'
-    public function iniciarNuevoKit()
-    {
-        $modelo = new kitModelo();
-
-        $modelo->iniciarNuevoKit();
-
-        return redirect('admin/kits/create');
-    }
-
-    //Responde a '/kit/añadirRefaccion' 'kits.addRefaccion'
-    public function añadirRefacciones(Request $request)
-    {
-        try {
-            $modelo = new kitModelo();
-            $boolean = $modelo->añadirRefaccion($request->idRefaccion, $request->cantidad);
-
-            if ($boolean) {
-                return redirect()->back()->with('success', 'Producto agregado al kit.');
-            } else {
-                return redirect()->back()->with('danger', 'Producto duplicado en el kit.');
-            }
-        } catch (\Throwable $th) {
-            return redirect()->back()->with('danger', 'Error al agregar el producto al kit.');
-        }
-    }
-
-    public function setInformacion(Request $request)
-    {
-        // try {
-        $modelo = new kitModelo();
-
-        $modelo->setInformacion($request->nombreProducto, $request->descripcion, $request->precioUnitario, $request->imagen, $request->sucursal);
-
-        return redirect()->back()->with('success', 'Informacion actualizada.');
-        // } catch (\Throwable $th) {
-        //     return redirect()->back()->with('danger', 'Error al actualizar la informacion.');
-        //}
-    }
-
-    public function finalizarNuevoKit()
-    {
-        //try {
-        //code...
-        $modelo = new kitModelo();
-
-        $modelo->grabarKit();
-        //} catch (\Throwable $th) {
-        //throw $th;
-        //}
-
-        return redirect('/admin/kits')->with('success', 'Kit grabado.');
-    }
-
-    public function eliminarRefaccion(string $idRefaccion)
-    {
-        try {
-            $modelo = new kitModelo();
-
-            $boolean = $modelo->eliminarRefaccion($idRefaccion);
-
-            if ($boolean) {
-                return redirect()->back()->with('success', 'Producto eliminado del kit.');
-            } else {
-                return redirect()->back()->with('danger', 'Error al eliminar el producto del kit.');
-            }
-        } catch (\Throwable $th) {
-            return redirect()->back()->with('danger', 'Error al eliminar el producto del kit.');
-        }
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -100,9 +24,7 @@ class KitController extends Controller
     public function index()
     {
         //
-        $modelo = new kitModelo();
-
-        $kits = $modelo->obtenerKitsEnDiseño();
+        $kits = Producto::all()->where('idTipoProducto', '=', 2)->where('idStatus', '=', 11);
 
         //
         return view('admin.kits.index', compact('kits'));
@@ -115,13 +37,13 @@ class KitController extends Controller
      */
     public function create()
     {
-
-
+        //
         $productos = Producto::all()->where('idTipoProducto', '=', 1);
+        //dd($productos);
         $sucursales = Sucursal::all();
-        $kit = session()->get('kit');
 
-        return view('admin.kits.create', compact('productos', 'sucursales'), compact('kit'));
+
+        return view('admin.kits.create', compact('productos'), compact('sucursales'));
     }
 
     /**

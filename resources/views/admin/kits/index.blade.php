@@ -11,7 +11,7 @@
             <h1 class="text-3xl text-center font-bold text-gray-800 dark:text-gray-200">Kits en diseño</h1>
 
             <div class="flex justify-end m-2 p-2">
-                <a href="{{ route('admin.kits.iniciar') }}" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg
+                <a href="{{ route('admin.kits.create') }}" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg
                 text-white">
                     Nuevo Kit
                 </a>
@@ -39,20 +39,20 @@
                         @foreach ( $kits as $kit )
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ $kit->getNombreProducto() }}
+                                {{ $kit->nombreProducto }}
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <img src="{{ Storage::url($kit->getImagen()) }}" class="w-16 h-16 rounded">
+                                <img src="{{ Storage::url($kit->imagen) }}" class="w-16 h-16 rounded">
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ $kit->getPrecioUnitario() }}
+                                {{ $kit->precioUnitario }}
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <div class="flex space-x-2">
-                                    <a href="{{ route('admin.kits.edit', $kit->getIdProducto()) }}" class="px-4 py-2 bg-green-500 hover:bg-green-700 rounded-lg text-white">
+                                    <a href="{{ route('admin.kits.edit', $kit->idProducto) }}" class="px-4 py-2 bg-green-500 hover:bg-green-700 rounded-lg text-white">
                                         Editar
                                     </a>
-                                    <form class="px-4 py-2 bg-red-500 hover:bg-red-700 rounded-lg text-white" method="POST" action="{{ route('admin.kits.destroy', $kit->getIdProducto()) }}" onsubmit="return confirm('¿Desea eliminar este menú?')">
+                                    <form class="px-4 py-2 bg-red-500 hover:bg-red-700 rounded-lg text-white" method="POST" action="{{ route('admin.kits.destroy', $kit->idProducto) }}" onsubmit="return confirm('¿Desea eliminar este menú?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit">Eliminar</button>
