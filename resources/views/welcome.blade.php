@@ -1,14 +1,14 @@
 <x-guest-layout>
     <!-- Main Hero Content -->
     <div class="container max-w-lg px-4 py-32 mx-auto text-left bg-center bg-no-repeat bg-cover md:max-w-none md:text-center" style="background-image: url('https://irp.cdn-website.com/b8e4de53/DESKTOP/jpg/755.jpg')">
-        <h1 class="font-mono text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 hover:text-blue-700 md:text-center sm:leading-none lg:text-5xl">
+        <h1 class="mt-20 font-mono text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 hover:text-blue-700 md:text-center sm:leading-none lg:text-5xl">
             <span class="inline md:block">Bienvenido a FerreTec</span>
         </h1>
         <div class="mx-auto mt-2 text-black-500 md:text-center lg:text-lg">
             Con La Calidad Y Precio Que Buscas
         </div>
         <div class="flex flex-col items-center mt-12 text-center">
-            <span class="relative inline-flex w-full md:w-auto">
+            <span class="relative inline-flex w-full md:w-auto" style="z-index: 0;">
                 <a href="/productos" type="button" class="inline-flex items-center justify-center px-6 py-2 text-base font-bold leading-6 text-white bg-green-600 rounded-full lg:w-full md:w-auto hover:bg-green-500 focus:outline-none">
                     Ver Productos
                 </a>
