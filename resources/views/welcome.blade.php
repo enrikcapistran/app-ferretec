@@ -32,7 +32,7 @@
                         <img class="w-full h-48 object-cover object-center" src="{{ Storage::url($kit->imagen) }}" alt="{{ $kit->nombre }}">
                         <div class="px-6 py-4">
                             <h4 class="mb-2 text-xl font-semibold text-green-600 uppercase">{{ $kit->nombre }}</h4>
-                            <p class="text-gray-700">{{ $kit->descripcion }}</p>
+                            <!--<p class="text-gray-700">{{ $kit->descripcion }}</p>-->
                         </div>
                         <div class="flex items-center justify-between px-6 py-4 bg-gray-100">
                             <span class="text-xl text-green-600">${{ $kit->precio }}</span>

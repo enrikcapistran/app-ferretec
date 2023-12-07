@@ -49,7 +49,7 @@
                                 <img src="{{ Storage::url($producto->imagen) }}" class="w-16 h-16 rounded">
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ $producto->descripcion }}
+                                {{ Str::limit($producto->descripcion, 30, '...') }}
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{ $producto->precio }}

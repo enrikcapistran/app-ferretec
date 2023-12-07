@@ -8,7 +8,9 @@
                     <h4 class="mb-3 text-xl font-semibold tracking-tight text-green-600 uppercase">
                         {{ $producto->nombre }}
                     </h4>
-                    <p class="leading-normal text-gray-700">{{ $producto->descripcion }}.</p>
+                    <p class="leading-normal text-gray-700">
+                        {{ strlen($producto->descripcion) > 40 ? substr($producto->descripcion, 0, 70) . '...' : $producto->descripcion }}
+                    </p>
                 </div>
                 <div class="flex items-center justify-between p-4">
                     <span class="text-xl text-green-600">${{ $producto->precio }}</span>
