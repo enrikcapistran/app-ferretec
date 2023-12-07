@@ -23,7 +23,7 @@ class KitController extends Controller
     public function index()
     {
         //
-        $kits = Kit::all();
+        $kits = Producto::all()->where('idTipoProducto', '=', 2);
 
         //
         return view('admin.kits.index', compact('kits'));
@@ -37,7 +37,8 @@ class KitController extends Controller
     public function create()
     {
         //
-        $productos = Producto::all();
+        $productos = Producto::all()->where('idTipoProducto', '=', 1);
+        //dd($productos);
         $sucursales = Sucursal::all();
 
 
@@ -54,38 +55,41 @@ class KitController extends Controller
     {
         $image = $request->file('imagen')->store('public/kits');
 
-        Log::info('Message', $request->all());
+        //dd($request);
+
 
         $producto = Producto::create([
             'nombreProducto' => $request->nombre,
             'descripcion' => $request->descripcion,
             'imagen' => $image,
-            'preciounitario' => $request->precio,
+            'precioUnitario' => $request->precio,
             'idTipoProducto' => 2,
             'idStatus' => 11,
         ]);
 
+        //dd($producto);
+
+        $usuario = auth()->user();
+
+        //dd($usuario);
+
         $kit = Kit::create([
             'idProducto' => $producto->idProducto,
-            'idSucursal' => $request->idSucursal,
+            'idSucursal' => $request->sucursal,
+            'idUsuarioCreador' => $usuario->idUsuario,
+            'idUsuarioAutorizador' => null,
+            'idStatus' => 11,
         ]);
 
-        // Filter out products without quantity or with quantity as zero, can remove
-        $productos = array_filter($request->productos, function ($producto) {
-            return isset($producto['cantidad']) && $producto['cantidad'] > 0;
-        });
+        $detallesKit = $request->productos;
 
-        foreach ($productos as $idProducto => $producto) {
+        //dd($kit);
+        for ($i = 0; $i < count($detallesKit); $i++) {
             $detalleKit = DetalleKit::create([
-                'idKit' => $kit->idKit,
-                'idProducto' => $idProducto,
-                'cantidad' => $producto['cantidad'],
+                'idKit' => $kit->idProducto,
+                'idRefaccion' => $detallesKit[$i]['idProducto'],
+                'cantidad' => $detallesKit[$i]['cantidad'],
             ]);
-        }
-
-        if ($request->has('productos')) {
-            // Attach selected productos to the kit
-            $kit->productos()->attach($request->productos);
         }
 
         return redirect()->route('admin.kits.index')->with('success', 'Kit Guardado Correctamente.');

@@ -67,6 +67,10 @@
                         </div>
                     </div>
 
+                    @error('sucursal')
+                    <div class="text-sm text-red-500">{{ $message }}</div>
+                    @enderror
+
                     <!-- Product Selection -->
                     <div class="sm:col-span-6 pt-5">
                         <label for="productSelect" class="block text-sm font-medium text-gray-700">Producto</label>
@@ -100,67 +104,78 @@
         </div>
 
         <script>
-            var selectedProducts = {};
+            var selectedProducts = [];
 
             function addProduct() {
                 var select = document.getElementById('productSelect');
-                var productId = select.value;
+                var idProduct = select.value;
                 var quantity = document.getElementById('productQuantity').value;
 
-                if (!productId || quantity <= 0) {
+                if (!idProduct || quantity <= 0) {
                     alert('Seleccione un producto y especifique la cantidad.');
                     return;
                 }
 
-                if (selectedProducts[productId]) {
-                    alert('Este producto ya ha sido agregado.');
-                    return;
+                for (var i = 0; i < selectedProducts.length; i++) {
+                    if (selectedProducts[i].idProducto == idProduct) {
+                        alert('Este producto ya ha sido agregado.');
+                        return;
+                    }
                 }
 
                 var productName = select.options[select.selectedIndex].text;
                 var selectedProductsList = document.getElementById('selectedProductsList');
 
                 var li = document.createElement('li');
-                li.id = 'product-' + productId;
+                li.id = 'product-' + idProduct;
                 li.textContent = `${productName}, Cantidad: ${quantity} `;
                 var removeButton = document.createElement('button');
                 removeButton.textContent = 'Eliminar';
                 removeButton.onclick = function() {
-                    removeProduct(productId);
+                    removeProduct(idProduct);
                 };
                 li.appendChild(removeButton);
                 selectedProductsList.appendChild(li);
 
-                selectedProducts[productId] = {
-                    idProducto: productId
+                selectedProducts.push({
+                    idProducto: idProduct
                     , cantidad: quantity
-                };
+                });
 
                 // Reset the selection
                 select.value = '';
                 document.getElementById('productQuantity').value = '';
             }
 
-            function removeProduct(productId) {
-                var productElement = document.getElementById('product-' + productId);
-                productElement.remove();
-                delete selectedProducts[productId];
+            function removeProduct(idProduct) {
+                var productElement = document.getElementById('product-' + idProduct);
+                for (var i = 0; i < selectedProducts.length; i++) {
+                    if (selectedProducts[i].idProducto == idProduct) {
+                        selectedProducts.splice(i, 1);
+                        break;
+                    }
+                }
             }
 
-            document.getElementById('kitForm').onsubmit = function() {
-                for (var productId in selectedProducts) {
+            document.getElementById('kitForm').onsubmit = function(e) {
+                // Clear any previously created hidden inputs
+                document.querySelectorAll('.dynamic-input').forEach(el => el.remove());
+
+                selectedProducts.forEach(function(product, index) {
                     var inputIdProducto = document.createElement('input');
                     inputIdProducto.type = 'hidden';
-                    inputIdProducto.name = 'productos[' + productId + '][idProducto]';
-                    inputIdProducto.value = productId;
+                    inputIdProducto.name = 'productos[' + index + '][idProducto]';
+                    inputIdProducto.value = product.idProducto;
+                    inputIdProducto.className = 'dynamic-input'; // Add a class for easy removal if needed
                     this.appendChild(inputIdProducto);
 
                     var inputCantidad = document.createElement('input');
                     inputCantidad.type = 'hidden';
-                    inputCantidad.name = 'productos[' + productId + '][cantidad]';
-                    inputCantidad.value = selectedProducts[productId].cantidad;
+                    inputCantidad.name = 'productos[' + index + '][cantidad]';
+                    inputCantidad.value = product.cantidad;
+                    inputCantidad.className = 'dynamic-input'; // Add a class for easy removal if needed
                     this.appendChild(inputCantidad);
-                }
+                }, this);
             };
 
         </script>

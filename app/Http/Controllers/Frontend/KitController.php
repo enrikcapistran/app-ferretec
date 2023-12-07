@@ -18,7 +18,7 @@ class KitController extends Controller
     //i just implemented this method
     public function show(Kit $kit)
     {
-        $kit = Kit::with('productos')->findOrFail($kit->id);
+        $kit = Kit::with('productos')->findOrFail($kit->idProducto);
 
         return view('kits.show', compact('kit'));
     }

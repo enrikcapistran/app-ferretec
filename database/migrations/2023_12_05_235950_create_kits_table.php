@@ -17,8 +17,8 @@ return new class extends Migration
             $table->integer('idProducto')->unsigned();
             $table->integer('idSucursal')->unsigned();
             $table->integer('idUsuarioCreador')->unsigned();
-            $table->integer('idUsuarioAutorizador')->unsigned()->nullable();
-            $table->tinyInteger('idStatus')->unsigned()->default(1);
+            $table->integer('idUsuarioAutorizador')->unsigned()->nullable()->default(null);
+            $table->tinyInteger('idStatus')->unsigned()->default(11);
             $table->timestamps();
             $table->foreign('idProducto')->references('idProducto')->on('productos');
             $table->foreign('idSucursal')->references('idSucursal')->on('sucursales');
