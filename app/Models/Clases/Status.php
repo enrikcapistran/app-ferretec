@@ -9,7 +9,7 @@ class Status
 
 
 
-    public function __construct($idStatus, $nombreStatus)
+    public function __construct($idStatus, $nombreStatus = "")
     {
         $this->idStatus = $idStatus;
         $this->nombreStatus = $nombreStatus;

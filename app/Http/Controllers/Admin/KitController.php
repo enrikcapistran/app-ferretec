@@ -2,21 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-//import de la clase Kit
+//CLASES
 use App\Models\Clases\Kit;
-
 use App\Http\Controllers\Controller;
-use App\Http\Requests\KitStoreRequest;
-use App\Models\Producto;
-use App\Models\Model;
-use App\Models\DetalleKit;
-use App\Models\Sucursal;
-use App\Models\Refaccion;
-use Illuminate\Support\Facades\Log;
+
+//MODELOS
 use App\Models\Modelos\kitModelo;
+use App\Models\Modelos\sucursalModelo;
+use App\Models\Modelos\RefaccionModelo;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class KitController extends Controller
 {
@@ -50,27 +45,23 @@ class KitController extends Controller
 
     public function setInformacion(Request $request)
     {
-        // try {
+
         $modelo = new kitModelo();
 
-        $modelo->setInformacion($request->nombreProducto, $request->descripcion, $request->precioUnitario, $request->imagen, $request->sucursal);
+        $image = $request->file('imagen')->store('public/kits');
+
+        $modelo->setInformacion($request->nombreProducto, $request->descripcion, $request->precioUnitario, $image, $request->sucursal);
 
         return redirect()->back()->with('success', 'Informacion actualizada.');
-        // } catch (\Throwable $th) {
-        //     return redirect()->back()->with('danger', 'Error al actualizar la informacion.');
-        //}
     }
 
     public function finalizarNuevoKit()
     {
-        //try {
-        //code...
+
         $modelo = new kitModelo();
 
         $modelo->grabarKit();
-        //} catch (\Throwable $th) {
-        //throw $th;
-        //}
+
 
         return redirect('/admin/kits')->with('success', 'Kit grabado.');
     }
@@ -115,76 +106,15 @@ class KitController extends Controller
      */
     public function create()
     {
+        $sucursalModelo = new sucursalModelo();
+        $sucursales = $sucursalModelo->getTodasSucursales();
 
+        $refaccionesModelo = new RefaccionModelo();
+        $refacciones = $refaccionesModelo->getTodasRefacciones();
 
-        $productos = Producto::all()->where('idTipoProducto', '=', 1);
-        $sucursales = Sucursal::all();
         $kit = session()->get('kit');
 
-        return view('admin.kits.create', compact('productos', 'sucursales'), compact('kit'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(KitStoreRequest $request)
-    {
-        //dd($request);
-        $image = $request->file('imagen')->store('public/kits');
-
-        //dd($request);
-
-
-        $producto = Producto::create([
-            'nombreProducto' => $request->nombre,
-            'descripcion' => $request->descripcion,
-            'imagen' => $image,
-            'precioUnitario' => $request->precio,
-            'idTipoProducto' => 2,
-            'idStatus' => 11,
-        ]);
-
-        //dd($producto);
-
-        $usuario = auth()->user();
-
-        //dd($usuario);
-
-        $kit = Kit::create([
-            'idProducto' => $producto->idProducto,
-            'idSucursal' => $request->sucursal,
-            'idUsuarioCreador' => $usuario->idUsuario,
-            'idUsuarioAutorizador' => null,
-            'idStatus' => 11,
-        ]);
-
-        $detallesKit = $request->productos;
-
-        //dd($kit);
-        for ($i = 0; $i < count($detallesKit); $i++) {
-            $detalleKit = DetalleKit::create([
-                'idKit' => $kit->idProducto,
-                'idRefaccion' => $detallesKit[$i]['idProducto'],
-                'cantidad' => $detallesKit[$i]['cantidad'],
-            ]);
-        }
-
-        return redirect()->route('admin.kits.index')->with('success', 'Kit Guardado Correctamente.');
-    }
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return view('admin.kits.create', compact('refacciones', 'sucursales', 'kit'));
     }
 
     /**
@@ -193,20 +123,21 @@ class KitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kit $kit)
+    public function edit(int $idKit)
     {
-        $producto = Producto::findOrFail($kit->idProducto);
 
-        $refacciones = Producto::all()->where('idTipoProducto', '=', 1);
+        $kitModelo = new kitModelo();
+        $kit = $kitModelo->obtenerKitConDetalle($idKit);
 
-        //include refacciones in the kit
-        $detallesKit = DetalleKit::all()->where('idKit', '=', $kit->idProducto);
+        session()->put('kit', $kit);
 
+        $sucursalModelo = new sucursalModelo();
+        $sucursales = $sucursalModelo->getTodasSucursales();
 
+        $refaccionesModelo = new RefaccionModelo();
+        $refacciones = $refaccionesModelo->getTodasRefacciones();
 
-        $sucursales = Sucursal::all();
-
-        return view('admin.kits.edit', compact('kit', 'producto', 'detallesKit', 'sucursales', 'refacciones'));
+        return view('admin.kits.edit', compact('kit', 'refacciones', 'sucursales'));
     }
 
     /**
@@ -260,24 +191,19 @@ class KitController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $idKit
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kit $kit)
+    public function eliminarKit(int $idKit)
     {
-        // Delete associated productos directly
-        //$kit->productos()->delete();
 
-        // Logic delete kit
-        $kit->update([
-            'idStatus' => 2,
-        ]);
 
-        // Logic delete producto
-        $kit->producto()->update([
-            'idStatus' => 2,
-        ]);
+        $modelo = new kitModelo();
 
-        return redirect()->route('admin.kits.index')->with('danger', 'Kit Eliminado.');
+        $kit = $modelo->obtenerKitConDetalle($idKit);
+
+        $modelo->eliminarDiseñoKit($kit);
+
+        return redirect()->route('admin.kits.index')->with('danger', 'Diseño Kit Eliminado.');
     }
 }

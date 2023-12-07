@@ -72,7 +72,7 @@ Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(fun
     Route::get('/', [AdminController::class, 'index'])->name('index');
 
     Route::get('/kits', [KitController::class, 'index'])->name('kits.index');;
-    Route::get('/kits/edit/{idKit}', [KitController::class, 'edit'])->name('kits.edit');
+    Route::get('/kits/edit/{idKit}', [KitController::class, 'edit'])->name('kits.update');
     Route::get('/kits/delete/{idKit}', [KitController::class, 'edit'])->name('kits.destroy');
     Route::get('/kits/create', [KitController::class, 'create'])->name('kits.create');
 
@@ -82,6 +82,8 @@ Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(fun
     Route::put('/kit/setInfo', [KitController::class, 'setInformacion'])->name('kits.setInfo');
     Route::post('/kit/finalizar', [KitController::class, 'finalizarNuevoKit'])->name('kits.finalizar');
     Route::delete('/kit/eliminarRefaccion/{idRefaccion}', [KitController::class, 'eliminarRefaccion'])->name('kits.eliminarRefaccion');
+    Route::delete('/kit/eliminar/{idKit}', [KitController::class, 'eliminarKit'])->name('kits.eliminarKit');
+
 
     Route::resource('/productos', ProductoController::class);
     Route::resource('/tiendas', TiendaController::class);

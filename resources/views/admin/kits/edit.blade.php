@@ -18,12 +18,12 @@
                 </a>
             </div>
             <div class="m-2 p-2 bg-slate-100 rounded">
-                <form id="kitForm" method="PUT" action="{{ route('admin.kits.update', $kit) }}" enctype="multipart/form-data">
+                <form id="kitForm" method="PUT" action="{{ route('admin.kits.update', $kit->getIdProducto()) }}" enctype="multipart/form-data">
                     @csrf
                     <div class="sm:col-span-6">
                         <label for="nombre" class="block text-sm font-medium text-gray-700"> Nombre </label>
                         <div class="mt-1">
-                            <input type="text" id="nombre" name="nombre" value="{{$producto->nombreProducto}}" placeholder="Nombre del Kit" class="@error('nombre') border-red-500 @enderror block w-full transition duration-150 ease-in-out sm:text-sm" />
+                            <input type="text" id="nombre" name="nombre" value="{{$kit->getnombreProducto()}}" placeholder="Nombre del Kit" class="@error('nombre') border-red-500 @enderror block w-full transition duration-150 ease-in-out sm:text-sm" />
                             @error('nombre')
                             <div class="text-sm text-red-500">{{ $message }}</div>
                             @enderror
@@ -33,7 +33,7 @@
                     <div class="sm:col-span-6">
                         <label for="imagen" class="block text-sm font-medium text-gray-700"> Imagen </label>
                         <div class="mt-1">
-                            <input type="file" id="imagen" name="imagen" value="{{$producto->imagen}}" class="@error('imagen') border-red-500 @enderror block w-full transition duration-150 ease-in-out sm:text-sm" />
+                            <input type="file" id="imagen" name="imagen" value="{{$kit->getImagen()}}" class="@error('imagen') border-red-500 @enderror block w-full transition duration-150 ease-in-out sm:text-sm" />
                             @error('imagen')
                             <div class="text-sm text-red-500">{{ $message }}</div>
                             @enderror
@@ -43,7 +43,7 @@
                     <div class="sm:col-span-6">
                         <label for="precio" class="block text-sm font-medium text-gray-700"> Precio </label>
                         <div class="mt-1">
-                            <input type="number" min="0.00" max="10000.00" value="{{$producto->precioUnitario}}" step="0.01" id="precio" name="precio" class="@error('precio') border-red-500 @enderror block w-full transition duration-150 ease-in-out sm:text-sm" />
+                            <input type="number" min="0.00" max="10000.00" value="{{$kit->getPrecioUnitario()}}" step="0.01" id="precio" name="precio" class="@error('precio') border-red-500 @enderror block w-full transition duration-150 ease-in-out sm:text-sm" />
                             @error('precio')
                             <div class="text-sm text-red-500">{{ $message }}</div>
                             @enderror
@@ -53,7 +53,9 @@
                     <div class="sm:col-span-6 pt-5">
                         <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción</label>
                         <div class="mt-1">
-                            <textarea id="descripcion" rows="3" name="descripcion" class="@error('descripcion') border-red-500 @enderror shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">{{$producto->descripcion}}</textarea>
+                            <textarea id="descripcion" rows="3" name="descripcion" class="@error('descripcion') border-red-500 @enderror shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                            {{$kit->getDescripcion()}}
+                            </textarea>
                             @error('descripcion')
                             <div class="text-sm text-red-500">{{ $message }}</div>
                             @enderror
@@ -64,7 +66,7 @@
                     <div class="sm:col-span-6 pt-5">
                         <label for="sucursal" class="block text-sm font-medium text-gray-700">Sucursal</label>
                         <div class="mt-1">
-                            <select id="sucursal" name="sucursal" value={{$kit->idSucursal}} class="form-select block w-full mt-1">
+                            <select id="sucursal" name="sucursal" value={{$kit->getSucursal()->getIdSucursal()}} class="form-select block w-full mt-1">
                                 @foreach($sucursales as $sucursal)
                                 <option value="{{ $sucursal->idSucursal }}">{{ $sucursal->nombreSucursal }}</option>
                                 @endforeach
@@ -83,7 +85,7 @@
                             <select id="productSelect" class="form-select block w-full mt-1">
                                 <option value="">Seleccione un producto</option>
                                 @foreach($refacciones as $refaccion)
-                                <option value="{{ $refaccion->idProducto }}">{{ $refaccion->nombreProducto }}</option>
+                                <option value="{{ $refaccion->getIdProducto() }}">{{ $refaccion->getnombreProducto() }}</option>
                                 @endforeach
                             </select>
                             <input type="number" id="productQuantity" placeholder="Cantidad" class="form-input ml-2">
@@ -97,16 +99,33 @@
                     <div class="sm:col-span-6 pt-5">
                         <label class="block text-sm font-medium text-gray-700">Productos Seleccionados</label>
                         <ul id="selectedProductsList" class="list-disc pl-5 mt-2">
-                            @foreach($detallesKit as $detalle)
+
+                            @foreach($kit->getDetallesKit() as $detalle)
+
                             @php
-                            $producto = collect($refacciones)->firstWhere('idProducto', $detalle->idRefaccion);
+                            $producto = null;
+
+                            foreach ($refacciones as $productoBuscar) {
+                            if ($productoBuscar->getIdProducto() === $detalle->getIdRefaccion()) {
+                            $producto = $productoBuscar;
+                            break;
+                            }
+                            }
                             @endphp
-                            <li id="product-{{ $detalle->idProducto }}">
-                                {{ $producto->nombreProducto }}, Cantidad: {{ $detalle->cantidad }}
-                                <button type="button" onclick="removeProduct('{{ $detalle->idProducto }}', this.parentElement)">
-                                    Eliminar
-                                </button>
+
+                            @if($producto)
+                            <li>
+                                {{ $producto->getNombreProducto() }} - Cantidad: {{ $detalle->getCantidad() }}
+                                <!-- Formulario para eliminar producto del kit -->
+                                <form method="POST" action="{{ route('admin.kits.eliminarRefaccion', $detalle->getIdRefaccion()) }}" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="px-2 py-1 text-red-500 hover:text-red-700 text-sm">
+                                        Eliminar
+                                    </button>
+                                </form>
                             </li>
+                            @endif
                             @endforeach
                         </ul>
                     </div>
@@ -119,84 +138,6 @@
                 </form>
             </div>
         </div>
-
-        <script>
-            var selectedProducts = @json($detallesKit);
-
-            function addProduct() {
-                var select = document.getElementById('productSelect');
-                var idProduct = select.value;
-                var quantity = document.getElementById('productQuantity').value;
-
-                if (!idProduct || quantity <= 0) {
-                    alert('Seleccione un producto y especifique la cantidad.');
-                    return;
-                }
-
-                var isProductAdded = selectedProducts.some(function(product) {
-                    return product.idProducto === idProduct;
-                });
-
-                if (isProductAdded) {
-                    alert('Este producto ya ha sido agregado.');
-                    return;
-                }
-
-                var productName = select.options[select.selectedIndex].text;
-                var selectedProductsList = document.getElementById('selectedProductsList');
-
-                var li = document.createElement('li');
-                li.id = 'product-' + idProduct;
-                li.textContent = `${productName}, Cantidad: ${quantity} `;
-                var removeButton = document.createElement('button');
-                removeButton.textContent = 'Eliminar';
-                removeButton.onclick = function() {
-                    removeProduct(idProduct, li);
-                };
-                li.appendChild(removeButton);
-                selectedProductsList.appendChild(li);
-
-                selectedProducts.push({
-                    idProducto: idProduct
-                    , cantidad: quantity
-                });
-
-                select.value = '';
-                document.getElementById('productQuantity').value = '';
-            }
-
-            function removeProduct(idProduct, liElement) {
-                var indexToRemove = selectedProducts.findIndex(function(product) {
-                    return product.idProducto === idProduct;
-                });
-
-                if (indexToRemove > -1) {
-                    selectedProducts.splice(indexToRemove, 1);
-                    liElement.remove();
-                }
-            }
-
-            document.getElementById('kitForm').onsubmit = function(e) {
-                document.querySelectorAll('.dynamic-input').forEach(el => el.remove());
-
-                selectedProducts.forEach(function(product, index) {
-                    var inputIdProducto = document.createElement('input');
-                    inputIdProducto.type = 'hidden';
-                    inputIdProducto.name = 'productos[' + index + '][idProducto]';
-                    inputIdProducto.value = product.idProducto;
-                    inputIdProducto.className = 'dynamic-input';
-                    this.appendChild(inputIdProducto);
-
-                    var inputCantidad = document.createElement('input');
-                    inputCantidad.type = 'hidden';
-                    inputCantidad.name = 'productos[' + index + '][cantidad]';
-                    inputCantidad.value = product.cantidad;
-                    inputCantidad.className = 'dynamic-input';
-                    this.appendChild(inputCantidad);
-                }, this);
-            };
-
-        </script>
 
         @error('productos')
         <div class="text-sm text-red-500">{{ $message }}</div>

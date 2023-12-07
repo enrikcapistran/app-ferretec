@@ -8,8 +8,11 @@ class DetalleKit
     public int $idRefaccion;
     public int $cantidad;
 
-    public function __construct()
+    public function __construct(int $idKit = 0, int $idRefaccion = 0, int $cantidad = 0)
     {
+        $this->idKit = $idKit;
+        $this->idRefaccion = $idRefaccion;
+        $this->cantidad = $cantidad;
     }
 
     public function getIdKit(): int
