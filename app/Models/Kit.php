@@ -15,15 +15,14 @@ class Kit extends Model
     // Indicate that the primary key is not auto-incrementing
     public $incrementing = false;
 
+    public $timestamps = false;
+
     // Specify the data type of the primary key if it's not an integer
     protected $keyType = 'int';
 
-    // Custom timestamp column names
-    const CREATED_AT = 'creadoEn';
-    const UPDATED_AT = 'actualizadoEn';
-
     // Attributes that are mass assignable
     protected $fillable = [
+        'idProducto',
         'idSucursal',
         'idUsuarioCreador',
         'idUsuarioAutorizador',

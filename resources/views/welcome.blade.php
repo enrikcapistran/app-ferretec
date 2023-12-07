@@ -33,7 +33,7 @@
                     </div>
                     <div class="flex items-center justify-between px-6 py-4 bg-gray-100">
                         <span class="text-xl text-green-600">${{ $kit->precio }}</span>
-                        <a href="{{ route('kits.show', $kit->id) }}" class="text-sm text-blue-600 hover:underline">Ver detalles</a>
+                        <a href="{{ route('kits.show', $kit->idProducto) }}" class="text-sm text-blue-600 hover:underline">Ver detalles</a>
                     </div>
                 </div>
                 @empty

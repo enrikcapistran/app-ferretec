@@ -4,13 +4,13 @@ namespace App\Models;
 
 class Producto
 {
-    private ?int $idProducto;
-    private string $nombreProductos;
-    private string $descripcion;
-    private string $imagen;
-    private float $precioUnitario;
-    private int $idTipoProducto;
-    private int $idStatus;
+    public ?int $idProducto;
+    public string $nombreProductos;
+    public string $descripcion;
+    public string $imagen;
+    public float $precioUnitario;
+    public int $idTipoProducto;
+    public int $idStatus;
 
     public function __construct(?int $idProducto, string $nombreProductos, string $descripcion, string $imagen, float $precioUnitario, int $idTipoProducto, int $idStatus)
     {
