@@ -52,31 +52,31 @@ class Usuario extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->idRol === '1';
+        return $this->idRol === 1;
     }
 
     public function isMarketing()
     {
-        return $this->idRol === '2';
+        return $this->idRol === 2;
     }
 
     public function isAlmacenista()
     {
-        return $this->idRol === '3';
+        return $this->idRol === 3;
     }
 
     public function isCajero()
     {
-        return $this->idRol === '4';
+        return $this->idRol === 4;
     }
 
     public function isClienteNormal()
     {
-        return $this->idRol === '5';
+        return $this->idRol === 5;
     }
 
     public function isClienteVip()
     {
-        return $this->idRol === '6';
+        return $this->idRol === 6;
     }
 }
