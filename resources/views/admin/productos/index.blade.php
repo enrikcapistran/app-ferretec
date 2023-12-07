@@ -40,7 +40,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ( $productos as $producto )
+                        @foreach ($productos as $producto)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{ $producto->nombre }}
@@ -59,25 +59,23 @@
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <div class="flex space-x-2">
-                                    <a href="{{ route('admin.productos.edit', $producto->id) }}"
-                                    class="px-4 py-2 bg-green-500 hover:bg-green-700 rounded-lg text-white">
-                                        Editar
-                                    </a>
-                                    <form class="px-4 py-2 bg-red-500 hover:bg-red-700 rounded-lg text-white"
-                                    method="POST" action="{{ route('admin.productos.destroy', $producto->id) }}"
-                                    onsubmit="return confirm('¿Desea eliminar este producto?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit">Eliminar</button>
-                                    </form>
+                                    <a href="{{ route('admin.productos.edit', $producto->idProducto) }}"
+                                        class="px-4 py-2 bg-green-500 hover:bg-green-700 rounded-lg text-white">
+                                         Editar
+                                     </a>
+                                     <form method="POST" action="{{ route('admin.productos.destroy', $producto->idProducto) }}"
+                                           onsubmit="return confirm('¿Desea eliminar este producto?')">
+                                         @csrf
+                                         @method('DELETE')
+                                         <button type="submit" class="px-4 py-2 bg-red-500 hover:bg-red-700 rounded-lg text-white">
+                                             Eliminar
+                                         </button>
+                                     </form>
+                                     
                                 </div>
                             </td>
                         </tr>
                         @endforeach
-                        
-                        
-                            
-                        
                     </tbody>
                 </table>
             </div>
