@@ -31,7 +31,7 @@
                     <img class="w-full h-48 object-cover object-center" src="{{ Storage::url($producto->imagen) }}" alt="{{ $producto->nombreProducto }}">
                     <div class="px-6 py-4">
                         <h4 class="mb-2 text-xl font-semibold text-green-600 uppercase">{{ $producto->nombreProducto }}</h4>
-                        <p class="text-gray-700">{{ $producto->descripcion }}</p>
+                        <p class="text-gray-700">{{ Str::limit($producto->descripcion, 140, '...') }}</p>
                     </div>
                     <div class="flex items-center justify-between px-6 py-4 bg-gray-100">
                         <span class="text-xl text-green-600">${{ $producto->precioUnitario }}</span>
