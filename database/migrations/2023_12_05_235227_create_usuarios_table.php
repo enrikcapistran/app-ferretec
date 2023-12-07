@@ -11,8 +11,8 @@ return new class extends Migration
     {
         Schema::create('usuarios', function (Blueprint $table) {
             $table->integer('idUsuario')->unsigned()->autoIncrement();
-            $table->string('correoElectronico', 60)->unique();
-            $table->string('contraseña', 255);
+            $table->string('email', 60)->unique();
+            $table->string('password', 255);
             $table->string('apellidoPaterno', 15);
             $table->string('apellidoMaterno', 15);
             $table->string('nombre', 30);

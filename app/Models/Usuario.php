@@ -21,8 +21,8 @@ class Usuario extends Authenticatable
 
     // Attributes that are mass assignable
     protected $fillable = [
-        'correoElectronico',
-        'contraseña',
+        'email',
+        'password',
         'apellidoPaterno',
         'apellidoMaterno',
         'nombre',
@@ -34,7 +34,7 @@ class Usuario extends Authenticatable
 
     // Hidden attributes
     protected $hidden = [
-        'contraseña',
+        'password',
         'remember_token',
     ];
 

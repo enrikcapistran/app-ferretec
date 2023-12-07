@@ -18,8 +18,8 @@ class Usuarios extends Seeder
     {
         //admin
         Usuario::create([
-            'correoElectronico' => 'admin@ferretec.com',
-            'contraseña' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'email' => 'admin@ferretec.com',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'apellidoPaterno' => 'Administrador',
             'apellidoMaterno' => 'Administrador',
             'nombre' => 'Administrador',
@@ -32,8 +32,8 @@ class Usuarios extends Seeder
 
         //marketing
         Usuario::create([
-            'correoElectronico' => 'marketing@ferretec.com',
-            'contraseña' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'email' => 'marketing@ferretec.com',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'apellidoPaterno' => 'Marketing',
             'apellidoMaterno' => 'Marketing',
             'nombre' => 'Marketing',
@@ -46,8 +46,8 @@ class Usuarios extends Seeder
 
         //Almacenista
         Usuario::create([
-            'correoElectronico' => 'almacenista@ferretec.com',
-            'contraseña' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'email' => 'almacenista@ferretec.com',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'apellidoPaterno' => 'Almacenista',
             'apellidoMaterno' => 'Almacenista',
             'nombre' => 'Almacenista',
@@ -60,8 +60,8 @@ class Usuarios extends Seeder
 
         //Cajero
         Usuario::create([
-            'correoElectronico' => 'cajero@ferretec.com',
-            'contraseña' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'email' => 'cajero@ferretec.com',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'apellidoPaterno' => 'Cajero',
             'apellidoMaterno' => 'Cajero',
             'nombre' => 'Cajero',
@@ -74,8 +74,8 @@ class Usuarios extends Seeder
 
         //Cliente
         Usuario::create([
-            'correoElectronico' => 'cliente@ferretec.com',
-            'contraseña' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'email' => 'cliente@ferretec.com',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'apellidoPaterno' => 'Cliente',
             'apellidoMaterno' => 'Cliente',
             'nombre' => 'Cliente',
@@ -88,8 +88,8 @@ class Usuarios extends Seeder
 
         //Cliente VIP
         Usuario::create([
-            'correoElectronico' => 'vip@ferretec.com',
-            'contraseña' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'email' => 'vip@ferretec.com',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'apellidoPaterno' => 'Cliente',
             'apellidoMaterno' => 'Cliente',
             'nombre' => 'Cliente',
