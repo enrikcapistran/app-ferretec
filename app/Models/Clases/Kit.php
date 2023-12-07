@@ -13,17 +13,17 @@ class Kit extends Producto
 
     private array $detallesKit;
 
-    public function __construct()
+    public function __construct(?Usuario $usuarioCreador = null)
     {
         $this->detallesKit = [];
-        $this->status = new Status(11, "en Dieño");
+        $this->status = new Status(11, "en Diseño");
         $this->idTipoProducto = 2;
         $this->sucursal = null;
         $this->nombreProducto = "";
         $this->descripcion = "";
         $this->imagen = "";
         $this->precioUnitario = 0;
-        $usr = new Usuario();
+        $usr = $usuarioCreador ?? new Usuario();
         $usr->setIdUsuario(auth()->user()->idUsuario);
 
         $this->usuarioCreador = $usr;
@@ -90,5 +90,10 @@ class Kit extends Producto
     public function getDetallesKit(): array
     {
         return $this->detallesKit;
+    }
+
+    public function setDetallesKit(array $detallesKit): void
+    {
+        $this->detallesKit = $detallesKit;
     }
 }

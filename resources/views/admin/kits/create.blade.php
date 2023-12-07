@@ -88,8 +88,8 @@
                     <div class="mt-1 flex">
                         <select id="productSelect" name="idRefaccion" class="form-select block w-full mt-1">
                             <option value="">Seleccione un producto</option>
-                            @foreach($productos as $producto)
-                            <option value="{{ $producto->idProducto }}">{{ $producto->nombreProducto }}</option>
+                            @foreach($refacciones as $producto)
+                            <option value="{{ $producto->getIdProducto() }}">{{ $producto->getNombreProducto() }}</option>
                             @endforeach
                         </select>
 
@@ -108,13 +108,23 @@
             <div class="sm:col-span-6 pt-5">
                 <label class="block text-sm font-medium text-gray-700">Productos Seleccionados</label>
                 <ul class="list-disc pl-5 mt-2">
+                    
                     @foreach($kit->getDetallesKit() as $detalle)
+
                     @php
-                    $producto = $productos->firstWhere('idProducto', $detalle->getIdRefaccion());
+                    $producto = null;
+
+                    foreach ($refacciones as $productoBuscar) {
+                    if ($productoBuscar->getIdProducto() === $detalle->getIdRefaccion()) {
+                    $producto = $productoBuscar;
+                    break;
+                    }
+                    }
                     @endphp
+
                     @if($producto)
                     <li>
-                        {{ $producto->nombreProducto }} - Cantidad: {{ $detalle->getCantidad() }}
+                        {{ $producto->getNombreProducto() }} - Cantidad: {{ $detalle->getCantidad() }}
                         <!-- Formulario para eliminar producto del kit -->
                         <form method="POST" action="{{ route('admin.kits.eliminarRefaccion', $detalle->getIdRefaccion()) }}" style="display: inline;">
                             @csrf

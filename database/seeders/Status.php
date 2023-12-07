@@ -42,6 +42,11 @@ class Status extends Seeder
             'nombreStatus' => 'Aprovado',
         ]);
 
+        ModelsStatus::create([
+            'idStatus' => '14',
+            'nombreStatus' => 'Rechazado',
+        ]);
+
         //Status for 
     }
 }

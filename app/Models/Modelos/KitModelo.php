@@ -6,19 +6,33 @@ use App\Models\Clases\Kit;
 use App\Models\Clases\Status;
 use App\Models\Clases\Producto;
 use App\Models\Clases\Sucursal;
+use App\Models\Clases\DetalleKit;
+use App\Models\Clases\Usuario;
 
 use App\Models\Kit as kitServicios;
 use App\Models\Producto as productoServicios;
+use App\Models\DetalleKit as detalleKitServicios;
+use App\Models\Sucursal as sucursalServicios;
+use App\Models\Usuario as usuarioServicios;
 
 class KitModelo
 {
 
     protected ?Kit $kit;
-    private $kitServicios;
+    private productoServicios $productoServicios;
+    private kitServicios $kitServicios;
+    private detalleKitServicios $detalleKitServicios;
+    private sucursalServicios $sucursalServicios;
+    private usuarioServicios $usuarioServicios;
 
     public function __construct(Kit $kit = null)
     {
         $this->kit = session()->get('kit') ?? $kit;
+        $this->productoServicios = new productoServicios();
+        $this->kitServicios = new kitServicios();
+        $this->detalleKitServicios = new detalleKitServicios();
+        $this->sucursalServicios = new sucursalServicios();
+        $this->usuarioServicios = new usuarioServicios();
     }
 
     public function iniciarNuevoKit()
@@ -52,15 +66,10 @@ class KitModelo
         session()->put('kit', $this->kit);
     }
 
-    public function getKit(): Kit
-    {
-        return $this->kit;
-    }
-
     public function grabarKit()
     {
 
-        $producto = productoServicios::create([
+        $producto = $this->productoServicios->create([
             'nombreProducto' => $this->kit->getNombreProducto(),
             'descripcion' => $this->kit->getDescripcion(),
             'imagen' => $this->kit->getImagen(),
@@ -72,7 +81,7 @@ class KitModelo
         ]);
 
 
-        kitServicios::create([
+        $kit = $this->kitServicios->create([
             'idProducto' => $producto->idProducto,
             'idSucursal' => $this->kit->getSucursal()->getIdSucursal(),
             'idUsuarioCreador' => $this->kit->getUsuarioCreador()->getIdUsuario(),
@@ -84,22 +93,160 @@ class KitModelo
 
     public function obtenerKitsEnDiseño()
     {
-        $kitsEnDiseño = productoServicios::all()->where('idTipoProducto', '=', 2)->where('idStatus', '=', 11);
+        $kitsEnDiseño = $this->productoServicios->all()->where('idTipoProducto', '=', 2)->where('idStatus', '=', 11);
 
-        $kitsObj = $kitsEnDiseño->map(function ($kitEloquent) {
-            $status = new Status($kitEloquent->status->idStatus, $kitEloquent->status->nombreStatus); // Asumiendo que tienes una clase Status y constructor adecuado
+        $kitsArray = array_values($kitsEnDiseño->map(function ($kitEloquent) {
 
-            return new Producto(
-                $kitEloquent->idProducto,
-                $kitEloquent->nombreProducto,
-                $kitEloquent->descripcion,
-                $kitEloquent->imagen,
-                $kitEloquent->precioUnitario,
-                $kitEloquent->idTipoProducto,
-                $status
+            $kitJson = $this->kitServicios->all()->where('idProducto', '=', $kitEloquent->idProducto)->first();
+
+            $sucursalJson = $this->sucursalServicios->all()->where('idSucursal', '=', $kitJson->idSucursal)->first();
+            $sucursalObj =  new Sucursal();
+            $sucursalObj->setIdSucursal($sucursalJson->idSucursal);
+            $sucursalObj->setNombreSucursal($sucursalJson->nombreSucursal);
+            $sucursalObj->setCalle($sucursalJson->calle);
+            $sucursalObj->setColonia($sucursalJson->colonia);
+            $sucursalObj->setNumero($sucursalJson->numero);
+            $sucursalObj->setCP($sucursalJson->CP);
+            $sucursalObj->setTelefono($sucursalJson->telefono);
+            $sucursalObj->setStatus(new Status($sucursalJson->status->idStatus, $sucursalJson->status->nombreStatus));
+
+
+            $detallesKitJson = $this->detalleKitServicios->all()->where('idKit', '=', $kitEloquent->idProducto);
+
+            $usuarioCreadorJson = $this->usuarioServicios->all()->where('idUsuario', '=', $kitJson->idUsuarioCreador)->first();
+
+            $usuarioCreadorObj = new Usuario();
+            $usuarioCreadorObj->setIdUsuario($usuarioCreadorJson->idUsuario);
+            $usuarioCreadorObj->setNombre($usuarioCreadorJson->nombre);
+            $usuarioCreadorObj->setApellidoPaterno($usuarioCreadorJson->apellidoPaterno);
+            $usuarioCreadorObj->setApellidoMaterno($usuarioCreadorJson->apellidoMaterno);
+            $usuarioCreadorObj->setEmail($usuarioCreadorJson->email);
+            $usuarioCreadorObj->setFechaNacimiento($usuarioCreadorJson->fechaNacimiento);
+            $usuarioCreadorObj->setIdRol($usuarioCreadorJson->idRol);
+
+
+            $detallesKitArr = $detallesKitJson->map(function ($detalleKit) {
+
+                return new DetalleKit(
+                    $detalleKit->idKit,
+                    $detalleKit->idRefaccion,
+                    $detalleKit->cantidad,
+                );
+            });
+
+            $kitObj = new Kit();
+            $kitObj->setIdProducto($kitEloquent->idProducto);
+            $kitObj->setNombreProducto($kitEloquent->nombreProducto);
+            $kitObj->setDescripcion($kitEloquent->descripcion);
+            $kitObj->setImagen($kitEloquent->imagen);
+            $kitObj->setPrecioUnitario($kitEloquent->precioUnitario);
+            $kitObj->setIdTipoProducto($kitEloquent->idTipoProducto);
+            $kitObj->setStatus(new Status($kitEloquent->status->idStatus, $kitEloquent->status->nombreStatus));
+            $kitObj->setSucursal($sucursalObj);
+            $kitObj->setUsuarioCreador($usuarioCreadorObj);
+            $kitObj->setDetallesKit($detallesKitArr->toArray());
+
+            return $kitObj;
+        })->toArray());
+
+        return $kitsArray;
+    }
+
+    public function obtenerKitConDetalle(int $idKit): Kit
+    {
+        $productoJson = $this->productoServicios->all()->where('idTipoProducto', '=', 2)->where('idStatus', '=', 11)->where('idProducto', '=', $idKit)->first();
+
+        $kitJson = $this->kitServicios->all()->where('idProducto', '=', $idKit)->first();
+
+        $sucursalJson = $this->sucursalServicios->all()->where('idSucursal', '=', $kitJson->idSucursal)->first();
+        $sucursalObj =  new Sucursal();
+        $sucursalObj->setIdSucursal($sucursalJson->idSucursal);
+        $sucursalObj->setNombreSucursal($sucursalJson->nombreSucursal);
+        $sucursalObj->setCalle($sucursalJson->calle);
+        $sucursalObj->setColonia($sucursalJson->colonia);
+        $sucursalObj->setNumero($sucursalJson->numero);
+        $sucursalObj->setCP($sucursalJson->CP);
+        $sucursalObj->setTelefono($sucursalJson->telefono);
+        $sucursalObj->setStatus(new Status($sucursalJson->status->idStatus, $sucursalJson->status->nombreStatus));
+
+
+        $detallesKitJson = $this->detalleKitServicios->all()->where('idKit', '=', $idKit);
+
+        $usuarioCreadorJson = $this->usuarioServicios->all()->where('idUsuario', '=', $kitJson->idUsuarioCreador)->first();
+
+        $usuarioCreadorObj = new Usuario();
+        $usuarioCreadorObj->setIdUsuario($usuarioCreadorJson->idUsuario);
+        $usuarioCreadorObj->setNombre($usuarioCreadorJson->nombre);
+        $usuarioCreadorObj->setApellidoPaterno($usuarioCreadorJson->apellidoPaterno);
+        $usuarioCreadorObj->setApellidoMaterno($usuarioCreadorJson->apellidoMaterno);
+        $usuarioCreadorObj->setEmail($usuarioCreadorJson->email);
+        $usuarioCreadorObj->setFechaNacimiento($usuarioCreadorJson->fechaNacimiento);
+        $usuarioCreadorObj->setIdRol($usuarioCreadorJson->idRol);
+
+
+        $detallesKitArr = $detallesKitJson->map(function ($detalleKit) {
+
+            return new DetalleKit(
+                $detalleKit->idKit,
+                $detalleKit->idRefaccion,
+                $detalleKit->cantidad,
             );
         });
 
-        return $kitsObj;
+        $kitObj = new Kit();
+        $kitObj->setIdProducto($productoJson->idProducto);
+        $kitObj->setNombreProducto($productoJson->nombreProducto);
+        $kitObj->setDescripcion($productoJson->descripcion);
+        $kitObj->setImagen($productoJson->imagen);
+        $kitObj->setPrecioUnitario($productoJson->precioUnitario);
+        $kitObj->setIdTipoProducto($productoJson->idTipoProducto);
+        $kitObj->setStatus(new Status($productoJson->status->idStatus, $productoJson->status->nombreStatus));
+        $kitObj->setSucursal($sucursalObj);
+        $kitObj->setUsuarioCreador($usuarioCreadorObj);
+        $kitObj->setDetallesKit($detallesKitArr->toArray());
+
+        return $kitObj;
+    }
+
+    public function eliminarDiseñoKit(Producto $kitProducto)
+    {
+
+        $kitProducto->setstatus(new Status(2));
+
+        $this->productoServicios->where('idProducto', '=', $kitProducto->getIdProducto())->update([
+            'idStatus' => 2,
+        ]);
+
+        $this->kitServicios->where('idProducto', '=', $kitProducto->getIdProducto())->update([
+            'idStatus' => 2,
+        ]);
+    }
+
+    public function aprobarKit(Producto $kitProducto)
+    {
+
+        $kitProducto->setstatus(new Status(12));
+
+        $this->productoServicios->where('idProducto', '=', $kitProducto->getIdProducto())->update([
+            'idStatus' => 1,
+        ]);
+
+        $this->kitServicios->where('idProducto', '=', $kitProducto->getIdProducto())->update([
+            'idStatus' => 13,
+        ]);
+    }
+
+    public function rechazarKit(Producto $kitProducto)
+    {
+
+        $kitProducto->setstatus(new Status(13));
+
+        $this->productoServicios->where('idProducto', '=', $kitProducto->getIdProducto())->update([
+            'idStatus' => 2,
+        ]);
+
+        $this->kitServicios->where('idProducto', '=', $kitProducto->getIdProducto())->update([
+            'idStatus' => 4,
+        ]);
     }
 }
