@@ -32,18 +32,17 @@
                         <img class="w-full h-48 object-cover object-center" src="{{ Storage::url($kit->imagen) }}" alt="{{ $kit->nombre }}">
                         <div class="px-6 py-4">
                             <h4 class="mb-2 text-xl font-semibold text-green-600 uppercase">{{ $kit->nombre }}</h4>
-                            <p class="text-gray-700">{{ $kit->descripcion }}</p>
+                            <!--<p class="text-gray-700">{{ $kit->descripcion }}</p>-->
                         </div>
                         <div class="flex items-center justify-between px-6 py-4 bg-gray-100">
                             <span class="text-xl text-green-600">${{ $kit->precio }}</span>
-                            <a href="#_" class="text-sm text-blue-600 hover:underline">Ver detalles</a>
+                            <a href="{{ route('kits.show', $kit->id) }}" class="text-sm text-blue-600 hover:underline">Ver detalles</a>
                         </div>
                     </div>
                 @empty
-                    <p class="text-center text-gray-500">No kits available at the moment.</p>
+                    <p class="text-center text-gray-500">No hay kits disponibles en este momento.</p>
                 @endforelse
             </div>
-            
         </div>
     </section>
 

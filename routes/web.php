@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\ProductoController;
 use App\Http\Controllers\Admin\TiendaController;
 use App\Http\Controllers\Admin\VentaController;
 
+use App\Http\Controllers\Frontend\CarritoDeCompraController;
+
 use App\Http\Controllers\Frontend\CategoryController as FrontendCategoryController;
 use App\Http\Controllers\Frontend\MenuController as FrontendMenuController;
 
@@ -47,6 +49,8 @@ Route::get('/kits', [FrontendKitController::class, 'index'])->name('kits.index')
 Route::get('/kits/{kit}', [FrontendKitController::class, 'show'])->name('kits.show');
 Route::get('/productos', [FrontendProductoController::class, 'index'])->name('productos.index');
 Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.show');
+
+Route::post('/carrito/agregar/{producto}', [CarritoDeCompraController::class, 'agregar'])->name('carrito.agregar');
 
 //Route::get('/reservation/step-one', [FrontendReservationController::class, 'stepOne'])->name('reservations.step.one');
 //Route::post('/reservation/step-one', [FrontendReservationController::class, 'storeStepOne'])->name('reservations.store.step.one');
