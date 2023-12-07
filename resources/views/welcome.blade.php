@@ -25,17 +25,17 @@
         <div class="container w-full px-5 py-6 mx-auto">
             <div class="grid lg:grid-cols-4 gap-8 mt-8">
                 @forelse ($kits as $kit)
-                <div class="max-w-xs overflow-hidden bg-white rounded-lg shadow-lg">
-                    <img class="w-full h-48 object-cover object-center" src="{{ Storage::url($kit->imagen) }}" alt="{{ $kit->nombre }}">
-                    <div class="px-6 py-4">
-                        <h4 class="mb-2 text-xl font-semibold text-green-600 uppercase">{{ $kit->nombre }}</h4>
-                        <!--<p class="text-gray-700">{{ $kit->descripcion }}</p>-->
+                    <div class="max-w-xs overflow-hidden bg-white rounded-lg shadow-lg">
+                        <img class="w-full h-48 object-cover object-center" src="{{ Storage::url($kit->imagen) }}" alt="{{ $kit->nombre }}">
+                        <div class="px-6 py-4">
+                            <h4 class="mb-2 text-xl font-semibold text-green-600 uppercase">{{ $kit->nombre }}</h4>
+                            <p class="text-gray-700">{{ $kit->descripcion }}</p>
+                        </div>
+                        <div class="flex items-center justify-between px-6 py-4 bg-gray-100">
+                            <span class="text-xl text-green-600">${{ $kit->precio }}</span>
+                            <a href="{{ route('kits.show', $kit->id) }}" class="text-sm text-blue-600 hover:underline">Ver detalles</a>
+                        </div>
                     </div>
-                    <div class="flex items-center justify-between px-6 py-4 bg-gray-100">
-                        <span class="text-xl text-green-600">${{ $kit->precio }}</span>
-                        <a href="{{ route('kits.show', $kit->idProducto) }}" class="text-sm text-blue-600 hover:underline">Ver detalles</a>
-                    </div>
-                </div>
                 @empty
                 <p class="text-center text-gray-500">No hay kits disponibles en este momento.</p>
                 @endforelse
