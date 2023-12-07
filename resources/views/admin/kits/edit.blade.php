@@ -1,3 +1,8 @@
+<?php
+// Uncomment if needed for debugging
+// dd($kit, $producto, $sucursales, $detalle);
+?>
+
 <x-admin-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -13,93 +18,188 @@
                 </a>
             </div>
             <div class="m-2 p-2 bg-slate-100 rounded">
-                <div class="space-y-8 divide-y divide-gray-200 w-1/2 mt-10">
-                    <form method="POST" action="{{ route('admin.kits.update', $kit->idProducto) }}" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-                        <div class="sm:col-span-6">
-                            <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
-                            <div class="mt-1">
-                                <input type="text" id="nombre" name="nombre" value="{{ old('nombre', $kit->nombre) }}" class="@error('nombre') border-red-500 @enderror block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
-                            </div>
+                <form id="kitForm" method="PUT" action="{{ route('admin.kits.update', $kit) }}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="sm:col-span-6">
+                        <label for="nombre" class="block text-sm font-medium text-gray-700"> Nombre </label>
+                        <div class="mt-1">
+                            <input type="text" id="nombre" name="nombre" value="{{$producto->nombreProducto}}" placeholder="Nombre del Kit" class="@error('nombre') border-red-500 @enderror block w-full transition duration-150 ease-in-out sm:text-sm" />
                             @error('nombre')
-                                <div class="text-sm text-red-500">{{ $message }}</div>
+                            <div class="text-sm text-red-500">{{ $message }}</div>
                             @enderror
                         </div>
-                        </div>
-                        <div class="sm:col-span-6">
-                        <label for="imagen" class="block text-sm font-medium text-gray-700"> Imagen </label>
-                        <div>
-                            <img class="w-32 h-32" src="{{ Storage::url($kit->imagen) }}">
-                        </div>
-                        <div class="mt-1">
-                            <input type="file" id="imagen" name="imagen" class="class="@error('imagen') border-red-500 @enderror block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
-                        </div>
-                        @error('imagen')
-                            <div class="text-sm text-red-500">{{ $message }}</div>
-                        @enderror
-                        </div>
+                    </div>
 
-                        <div class="sm:col-span-6">
+                    <div class="sm:col-span-6">
+                        <label for="imagen" class="block text-sm font-medium text-gray-700"> Imagen </label>
+                        <div class="mt-1">
+                            <input type="file" id="imagen" name="imagen" value="{{$producto->imagen}}" class="@error('imagen') border-red-500 @enderror block w-full transition duration-150 ease-in-out sm:text-sm" />
+                            @error('imagen')
+                            <div class="text-sm text-red-500">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-6">
                         <label for="precio" class="block text-sm font-medium text-gray-700"> Precio </label>
                         <div class="mt-1">
-                            <input type="number" min="0.00" max="10000.00" step="0.01" id="precio" name="precio"
-                            value="{{ $kit->precio }}" 
-                            class="class="@error('precio') border-red-500 @enderror block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
-                        </div>
-                        @error('precio')
+                            <input type="number" min="0.00" max="10000.00" value="{{$producto->precioUnitario}}" step="0.01" id="precio" name="precio" class="@error('precio') border-red-500 @enderror block w-full transition duration-150 ease-in-out sm:text-sm" />
+                            @error('precio')
                             <div class="text-sm text-red-500">{{ $message }}</div>
-                        @enderror
+                            @enderror
                         </div>
-                        
-                        <div class="sm:col-span-6 pt-5">
+                    </div>
+
+                    <div class="sm:col-span-6 pt-5">
                         <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción</label>
                         <div class="mt-1">
-                            <textarea id="descripcion" rows="3" name="descripcion"
-                            class="class="@error('descripcion') border-red-500 @enderror shadow-sm focus:ring-indigo-500 appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                            >{{$kit->descripcion}}</textarea>
-                        </div>
-                        @error('descripcion')
-                            <div class="text-sm text-red-500">{{ $message }}</div>
-                        @enderror
-                        </div>
-
-                        <div class="sm:col-span-6">
-                            <label for="stock" class="block text-sm font-medium text-gray-700">Stock</label>
-                            <div class="mt-1">
-                                <input type="number" min="0" id="stock" name="stock" class="@error('stock') border-red-500 @enderror block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" value="{{ $kit->stock }}" />
-                            </div>
-                            @error('stock')
+                            <textarea id="descripcion" rows="3" name="descripcion" class="@error('descripcion') border-red-500 @enderror shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">{{$producto->descripcion}}</textarea>
+                            @error('descripcion')
                             <div class="text-sm text-red-500">{{ $message }}</div>
                             @enderror
                         </div>
+                    </div>
 
-                        <div class="sm:col-span-6 pt-5">
-                            <label for="productos" class="block text-sm font-medium text-gray-700">Productos</label>
-                            <div class="mt-1">
-                                <select multiple id="productos" name="productos[]"
-                                    class="form-multiselect block w-full mt-1">
-                                    @foreach($productos as $producto)
-                                        <option value="{{ $producto->id }}" {{ in_array($producto->id, old('productos', $kit->productos->pluck('id')->toArray())) ? 'selected' : '' }}>
-                                            {{ $producto->nombre }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            @error('productos')
-                                <div class="text-sm text-red-500">{{ $message }}</div>
-                            @enderror
+                    <!-- Sucursal Selection -->
+                    <div class="sm:col-span-6 pt-5">
+                        <label for="sucursal" class="block text-sm font-medium text-gray-700">Sucursal</label>
+                        <div class="mt-1">
+                            <select id="sucursal" name="sucursal" value={{$kit->idSucursal}} class="form-select block w-full mt-1">
+                                @foreach($sucursales as $sucursal)
+                                <option value="{{ $sucursal->idSucursal }}">{{ $sucursal->nombreSucursal }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        
+                    </div>
 
-                        <div class="mt-6 p-4">
-                            <button type="submit" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">
-                                Guardar
+                    @error('sucursal')
+                    <div class="text-sm text-red-500">{{ $message }}</div>
+                    @enderror
+
+                    <!-- Product Selection -->
+                    <div class="sm:col-span-6 pt-5">
+                        <label for="productSelect" class="block text-sm font-medium text-gray-700">Producto</label>
+                        <div class="mt-1 flex">
+                            <select id="productSelect" class="form-select block w-full mt-1">
+                                <option value="">Seleccione un producto</option>
+                                @foreach($refacciones as $refaccion)
+                                <option value="{{ $refaccion->idProducto }}">{{ $refaccion->nombreProducto }}</option>
+                                @endforeach
+                            </select>
+                            <input type="number" id="productQuantity" placeholder="Cantidad" class="form-input ml-2">
+                            <button type="button" onclick="addProduct()" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white ml-2">
+                                Agregar
                             </button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+
+                    <!-- Selected Products List -->
+                    <div class="sm:col-span-6 pt-5">
+                        <label class="block text-sm font-medium text-gray-700">Productos Seleccionados</label>
+                        <ul id="selectedProductsList" class="list-disc pl-5 mt-2">
+                            @foreach($detallesKit as $detalle)
+                            @php
+                            $producto = collect($refacciones)->firstWhere('idProducto', $detalle->idRefaccion);
+                            @endphp
+                            <li id="product-{{ $detalle->idProducto }}">
+                                {{ $producto->nombreProducto }}, Cantidad: {{ $detalle->cantidad }}
+                                <button type="button" onclick="removeProduct('{{ $detalle->idProducto }}', this.parentElement)">
+                                    Eliminar
+                                </button>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+
+                    <div class="mt-6 p-4">
+                        <button type="submit" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">
+                            Actualizar
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
+
+        <script>
+            var selectedProducts = @json($detallesKit);
+
+            function addProduct() {
+                var select = document.getElementById('productSelect');
+                var idProduct = select.value;
+                var quantity = document.getElementById('productQuantity').value;
+
+                if (!idProduct || quantity <= 0) {
+                    alert('Seleccione un producto y especifique la cantidad.');
+                    return;
+                }
+
+                var isProductAdded = selectedProducts.some(function(product) {
+                    return product.idProducto === idProduct;
+                });
+
+                if (isProductAdded) {
+                    alert('Este producto ya ha sido agregado.');
+                    return;
+                }
+
+                var productName = select.options[select.selectedIndex].text;
+                var selectedProductsList = document.getElementById('selectedProductsList');
+
+                var li = document.createElement('li');
+                li.id = 'product-' + idProduct;
+                li.textContent = `${productName}, Cantidad: ${quantity} `;
+                var removeButton = document.createElement('button');
+                removeButton.textContent = 'Eliminar';
+                removeButton.onclick = function() {
+                    removeProduct(idProduct, li);
+                };
+                li.appendChild(removeButton);
+                selectedProductsList.appendChild(li);
+
+                selectedProducts.push({
+                    idProducto: idProduct
+                    , cantidad: quantity
+                });
+
+                select.value = '';
+                document.getElementById('productQuantity').value = '';
+            }
+
+            function removeProduct(idProduct, liElement) {
+                var indexToRemove = selectedProducts.findIndex(function(product) {
+                    return product.idProducto === idProduct;
+                });
+
+                if (indexToRemove > -1) {
+                    selectedProducts.splice(indexToRemove, 1);
+                    liElement.remove();
+                }
+            }
+
+            document.getElementById('kitForm').onsubmit = function(e) {
+                document.querySelectorAll('.dynamic-input').forEach(el => el.remove());
+
+                selectedProducts.forEach(function(product, index) {
+                    var inputIdProducto = document.createElement('input');
+                    inputIdProducto.type = 'hidden';
+                    inputIdProducto.name = 'productos[' + index + '][idProducto]';
+                    inputIdProducto.value = product.idProducto;
+                    inputIdProducto.className = 'dynamic-input';
+                    this.appendChild(inputIdProducto);
+
+                    var inputCantidad = document.createElement('input');
+                    inputCantidad.type = 'hidden';
+                    inputCantidad.name = 'productos[' + index + '][cantidad]';
+                    inputCantidad.value = product.cantidad;
+                    inputCantidad.className = 'dynamic-input';
+                    this.appendChild(inputCantidad);
+                }, this);
+            };
+
+        </script>
+
+        @error('productos')
+        <div class="text-sm text-red-500">{{ $message }}</div>
+        @enderror
     </div>
 </x-admin-layout>

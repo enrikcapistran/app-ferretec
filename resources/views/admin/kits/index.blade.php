@@ -8,6 +8,8 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
+            <h1 class="text-3xl text-center font-bold text-gray-800 dark:text-gray-200">Kits en diseño</h1>
+
             <div class="flex justify-end m-2 p-2">
                 <a href="{{ route('admin.kits.create') }}" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg
                 text-white">

@@ -12,6 +12,9 @@ class DetalleKit extends Model
     // Indicate that the model does not auto-incrementing
     public $incrementing = false;
 
+    // Define the primary key for the model
+    public $primaryKey = ['idKit', 'idRefaccion'];
+
     // Disable timestamps if they are not required
     public $timestamps = false;
 

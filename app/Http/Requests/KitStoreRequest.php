@@ -28,7 +28,7 @@ class KitStoreRequest extends FormRequest
             'descripcion' => 'required|string',
             'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'precio' => 'required|numeric|min:0',
-            //'idSucursal' =>  'required|exists:sucursales,idSucursal',
+            'idSucursal' =>  'required|exists:sucursales,idSucursal',
             'productos' => 'array', // Adjust based on your requirements
             'productos.*' => 'exists:productos,idProducto', // Ensure each producto exists in the productos table
         ];

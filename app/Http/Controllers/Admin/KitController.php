@@ -8,6 +8,7 @@ use App\Models\Producto;
 use App\Models\Kit;
 use App\Models\Sucursal;
 use App\Models\DetalleKit;
+use App\Models\Refaccion;
 use Illuminate\Support\Facades\Log;
 
 use Illuminate\Http\Request;
@@ -53,6 +54,7 @@ class KitController extends Controller
      */
     public function store(KitStoreRequest $request)
     {
+        dd($request);
         $image = $request->file('imagen')->store('public/kits');
 
         //dd($request);
@@ -67,7 +69,7 @@ class KitController extends Controller
             'idStatus' => 11,
         ]);
 
-        //dd($producto);
+        dd($producto);
 
         $usuario = auth()->user();
 
@@ -94,6 +96,8 @@ class KitController extends Controller
 
         return redirect()->route('admin.kits.index')->with('success', 'Kit Guardado Correctamente.');
     }
+
+
     /**
      * Display the specified resource.
      *
@@ -113,8 +117,18 @@ class KitController extends Controller
      */
     public function edit(Kit $kit)
     {
-        $productos = Producto::all();
-        return view('admin.kits.edit', compact('kit', 'productos'));
+        $producto = Producto::findOrFail($kit->idProducto);
+
+        $refacciones = Producto::all()->where('idTipoProducto', '=', 1);
+
+        //include refacciones in the kit
+        $detallesKit = DetalleKit::all()->where('idKit', '=', $kit->idProducto);
+
+
+
+        $sucursales = Sucursal::all();
+
+        return view('admin.kits.edit', compact('kit', 'producto', 'detallesKit', 'sucursales', 'refacciones'));
     }
 
     /**
@@ -126,26 +140,32 @@ class KitController extends Controller
      */
     public function update(Request $request, Kit $kit)
     {
+        /*
         $request->validate([
             'nombre' => 'required',
             'descripcion' => 'required',
             'precio' => 'required',
             'stock' => 'required',
         ]);
+        */
 
-        $imagen = $kit->imagen;
+
+        $producto = $kit->producto();
 
         if ($request->hasFile('imagen')) {
-            Storage::delete($kit->imagen);
-            $imagen = $request->file('imagen')->store('public/kits');
+            // Storage::delete($producto->imagen);
+            $imagen = $request->file('imagen')->store('public/productos');
         }
 
-        $kit->update([
-            'nombre' => $request->nombre,
+        $producto->update([
+            'nombreProducto' => $request->nombre,
             'descripcion' => $request->descripcion,
-            'imagen' => $imagen,
-            'precio' => $request->precio,
-            'stock' => $request->stock,
+            'precioUnitario' => $request->precio,
+            'idStatus' => 11,
+        ]);
+
+        $kit->update([
+            'idSucursal' => $request->sucursal,
         ]);
 
         if ($request->has('productos')) {
@@ -172,12 +192,12 @@ class KitController extends Controller
 
         // Logic delete kit
         $kit->update([
-            'idStatus' => 12,
+            'idStatus' => 2,
         ]);
 
         // Logic delete producto
         $kit->producto()->update([
-            'idStatus' => 12,
+            'idStatus' => 2,
         ]);
 
         return redirect()->route('admin.kits.index')->with('danger', 'Kit Eliminado.');
