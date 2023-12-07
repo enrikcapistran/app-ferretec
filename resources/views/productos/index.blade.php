@@ -15,13 +15,12 @@
                     </div>
                 </div>
                 <div class="p-4">
-                    <a href="{{ route('productos.show', $producto->id) }}"
-                        class="block w-full px-4 py-2 text-center text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                    <a href="{{ route('productos.show', $producto->idProducto) }}" class="block w-full px-4 py-2 text-center text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
                         Ver Detalles
                     </a>
                 </div>
-            </div>
-            @endforeach
         </div>
+        @endforeach
+    </div>
     </div>
 </x-guest-layout>

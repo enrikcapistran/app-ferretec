@@ -12,8 +12,8 @@
                 <span class="text-xl text-green-600">${{ $producto->precio }}</span>
             </div>
             <div class="p-4">
-                
-                <form action="{{ route('carrito.agregar', $producto->id) }}" method="post">
+
+                <form action="{{ route('carrito.agregar', $producto->idProducto) }}" method="post">
                     @csrf
                     <button type="submit" class="block w-full px-4 py-2 text-center text-white bg-green-500 rounded hover:bg-green-600 focus:outline-none focus:bg-green-600">
                         Agregar a Carrito
