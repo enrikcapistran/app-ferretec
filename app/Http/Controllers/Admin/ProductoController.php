@@ -40,19 +40,24 @@ class ProductoController extends Controller
      */
     public function store(ProductoStoreRequest $request)
     {
-        //
+        // Obtén la ruta donde se almacenará la imagen
         $imagen = $request->file('imagen')->store('public/productos');
-
+    
+        // Crea un nuevo producto con los datos proporcionados
         ProductoServicios::create([
-            'nombre' => $request->nombre,
+            'nombreProducto' => $request->nombre, // Asegúrate de utilizar el nombre correcto del campo
             'descripcion' => $request->descripcion,
             'imagen' => $imagen,
-            'precio' => $request->precio,
+            'precioUnitario' => $request->precio, // Ajusta el nombre según sea necesario
             'stock' => $request->stock,
+            'idTipoProducto' => 1, // Asigna el valor adecuado para idTipoProducto
         ]);
-
-        return to_route('admin.productos.index')->with('success', 'Producto Guardado Correctamente.');
+    
+        // Redirige a la vista de índice o realiza alguna acción después de crear el producto
+        return redirect()->route('admin.productos.index')->with('success', 'Producto Guardado Correctamente.');
     }
+    
+    
 
     /**
      * Display the specified resource.

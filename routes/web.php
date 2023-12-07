@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\ReservationController;
 
 use App\Http\Controllers\Admin\KitController;
 use App\Http\Controllers\Admin\ProductoController;
-use App\Http\Controllers\Admin\TiendaController;
+use App\Http\Controllers\Admin\SurtidoController;
 use App\Http\Controllers\Admin\VentaController;
 
 use App\Http\Controllers\Frontend\CarritoDeCompraController;
@@ -50,7 +50,12 @@ Route::get('/kits/{kit}', [FrontendKitController::class, 'show'])->name('kits.sh
 Route::get('/productos', [FrontendProductoController::class, 'index'])->name('productos.index');
 Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.show');
 
+Route::get('/admin/surtidos/{id}/edit', [SurtidoController::class, 'edit'])->name('admin.surtidos.edit');
+Route::get('/admin/surtidos', [SurtidoController::class, 'index'])->name('admin.surtidos.index');
+
 Route::post('/carrito/agregar/{producto}', [CarritoDeCompraController::class, 'agregar'])->name('carrito.agregar');
+Route::post('admin/surtidos/guardar-inventario/{idSurtido}', [SurtidoController::class, 'guardarInventario'])->name('admin.surtidos.guardarInventario');
+
 
 //Route::get('/reservation/step-one', [FrontendReservationController::class, 'stepOne'])->name('reservations.step.one');
 //Route::post('/reservation/step-one', [FrontendReservationController::class, 'storeStepOne'])->name('reservations.store.step.one');
@@ -72,7 +77,7 @@ Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(fun
     Route::get('/', [AdminController::class, 'index'])->name('index');
     Route::resource('/kits', KitController::class);
     Route::resource('/productos', ProductoController::class);
-    Route::resource('/tiendas', TiendaController::class);
+    Route::resource('/surtido', SurtidoController::class);
     Route::resource('/ventas', VentaController::class);
 });
 
