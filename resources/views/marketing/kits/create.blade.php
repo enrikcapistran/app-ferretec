@@ -1,9 +1,4 @@
-<?php
-// Uncomment if needed for debugging
-// dd($kit, $producto, $sucursales, $detalle);
-?>
-
-<x-admin-layout>
+<x-marketing-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Dashboard') }}
@@ -18,12 +13,12 @@
                 </a>
             </div>
             <div class="m-2 p-2 bg-slate-100 rounded">
-                <form id="kitForm" method="PUT" action="{{ route('admin.kits.update', $kit) }}" enctype="multipart/form-data">
+                <form id="kitForm" method="POST" action="{{ route('admin.kits.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="sm:col-span-6">
                         <label for="nombre" class="block text-sm font-medium text-gray-700"> Nombre </label>
                         <div class="mt-1">
-                            <input type="text" id="nombre" name="nombre" value="{{$producto->nombreProducto}}" placeholder="Nombre del Kit" class="@error('nombre') border-red-500 @enderror block w-full transition duration-150 ease-in-out sm:text-sm" />
+                            <input type="text" id="nombre" name="nombre" placeholder="Nombre del Kit" class="@error('nombre') border-red-500 @enderror block w-full transition duration-150 ease-in-out sm:text-sm" />
                             @error('nombre')
                             <div class="text-sm text-red-500">{{ $message }}</div>
                             @enderror
@@ -33,7 +28,7 @@
                     <div class="sm:col-span-6">
                         <label for="imagen" class="block text-sm font-medium text-gray-700"> Imagen </label>
                         <div class="mt-1">
-                            <input type="file" id="imagen" name="imagen" value="{{$producto->imagen}}" class="@error('imagen') border-red-500 @enderror block w-full transition duration-150 ease-in-out sm:text-sm" />
+                            <input type="file" id="imagen" name="imagen" class="@error('imagen') border-red-500 @enderror block w-full transition duration-150 ease-in-out sm:text-sm" />
                             @error('imagen')
                             <div class="text-sm text-red-500">{{ $message }}</div>
                             @enderror
@@ -43,7 +38,7 @@
                     <div class="sm:col-span-6">
                         <label for="precio" class="block text-sm font-medium text-gray-700"> Precio </label>
                         <div class="mt-1">
-                            <input type="number" min="0.00" max="10000.00" value="{{$producto->precioUnitario}}" step="0.01" id="precio" name="precio" class="@error('precio') border-red-500 @enderror block w-full transition duration-150 ease-in-out sm:text-sm" />
+                            <input type="number" min="0.00" max="10000.00" step="0.01" id="precio" name="precio" class="@error('precio') border-red-500 @enderror block w-full transition duration-150 ease-in-out sm:text-sm" />
                             @error('precio')
                             <div class="text-sm text-red-500">{{ $message }}</div>
                             @enderror
@@ -53,7 +48,7 @@
                     <div class="sm:col-span-6 pt-5">
                         <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción</label>
                         <div class="mt-1">
-                            <textarea id="descripcion" rows="3" name="descripcion" class="@error('descripcion') border-red-500 @enderror shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">{{$producto->descripcion}}</textarea>
+                            <textarea id="descripcion" rows="3" name="descripcion" class="@error('descripcion') border-red-500 @enderror shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
                             @error('descripcion')
                             <div class="text-sm text-red-500">{{ $message }}</div>
                             @enderror
@@ -64,7 +59,7 @@
                     <div class="sm:col-span-6 pt-5">
                         <label for="sucursal" class="block text-sm font-medium text-gray-700">Sucursal</label>
                         <div class="mt-1">
-                            <select id="sucursal" name="sucursal" value={{$kit->idSucursal}} class="form-select block w-full mt-1">
+                            <select id="sucursal" name="sucursal" class="form-select block w-full mt-1">
                                 @foreach($sucursales as $sucursal)
                                 <option value="{{ $sucursal->idSucursal }}">{{ $sucursal->nombreSucursal }}</option>
                                 @endforeach
@@ -82,8 +77,8 @@
                         <div class="mt-1 flex">
                             <select id="productSelect" class="form-select block w-full mt-1">
                                 <option value="">Seleccione un producto</option>
-                                @foreach($refacciones as $refaccion)
-                                <option value="{{ $refaccion->idProducto }}">{{ $refaccion->nombreProducto }}</option>
+                                @foreach($productos as $producto)
+                                <option value="{{ $producto->idProducto }}">{{ $producto->nombreProducto }}</option>
                                 @endforeach
                             </select>
                             <input type="number" id="productQuantity" placeholder="Cantidad" class="form-input ml-2">
@@ -96,32 +91,20 @@
                     <!-- Selected Products List -->
                     <div class="sm:col-span-6 pt-5">
                         <label class="block text-sm font-medium text-gray-700">Productos Seleccionados</label>
-                        <ul id="selectedProductsList" class="list-disc pl-5 mt-2">
-                            @foreach($detallesKit as $detalle)
-                            @php
-                            $producto = collect($refacciones)->firstWhere('idProducto', $detalle->idRefaccion);
-                            @endphp
-                            <li id="product-{{ $detalle->idProducto }}">
-                                {{ $producto->nombreProducto }}, Cantidad: {{ $detalle->cantidad }}
-                                <button type="button" onclick="removeProduct('{{ $detalle->idProducto }}', this.parentElement)">
-                                    Eliminar
-                                </button>
-                            </li>
-                            @endforeach
-                        </ul>
+                        <ul id="selectedProductsList" class="list-disc pl-5 mt-2"></ul>
                     </div>
-
                     <div class="mt-6 p-4">
                         <button type="submit" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">
-                            Actualizar
+                            Guardar
                         </button>
                     </div>
+
                 </form>
             </div>
         </div>
 
         <script>
-            var selectedProducts = @json($detallesKit);
+            var selectedProducts = [];
 
             function addProduct() {
                 var select = document.getElementById('productSelect');
@@ -133,13 +116,11 @@
                     return;
                 }
 
-                var isProductAdded = selectedProducts.some(function(product) {
-                    return product.idProducto === idProduct;
-                });
-
-                if (isProductAdded) {
-                    alert('Este producto ya ha sido agregado.');
-                    return;
+                for (var i = 0; i < selectedProducts.length; i++) {
+                    if (selectedProducts[i].idProducto == idProduct) {
+                        alert('Este producto ya ha sido agregado.');
+                        return;
+                    }
                 }
 
                 var productName = select.options[select.selectedIndex].text;
@@ -151,7 +132,7 @@
                 var removeButton = document.createElement('button');
                 removeButton.textContent = 'Eliminar';
                 removeButton.onclick = function() {
-                    removeProduct(idProduct, li);
+                    removeProduct(idProduct);
                 };
                 li.appendChild(removeButton);
                 selectedProductsList.appendChild(li);
@@ -161,22 +142,23 @@
                     , cantidad: quantity
                 });
 
+                // Reset the selection
                 select.value = '';
                 document.getElementById('productQuantity').value = '';
             }
 
-            function removeProduct(idProduct, liElement) {
-                var indexToRemove = selectedProducts.findIndex(function(product) {
-                    return product.idProducto === idProduct;
-                });
-
-                if (indexToRemove > -1) {
-                    selectedProducts.splice(indexToRemove, 1);
-                    liElement.remove();
+            function removeProduct(idProduct) {
+                var productElement = document.getElementById('product-' + idProduct);
+                for (var i = 0; i < selectedProducts.length; i++) {
+                    if (selectedProducts[i].idProducto == idProduct) {
+                        selectedProducts.splice(i, 1);
+                        break;
+                    }
                 }
             }
 
             document.getElementById('kitForm').onsubmit = function(e) {
+                // Clear any previously created hidden inputs
                 document.querySelectorAll('.dynamic-input').forEach(el => el.remove());
 
                 selectedProducts.forEach(function(product, index) {
@@ -184,14 +166,14 @@
                     inputIdProducto.type = 'hidden';
                     inputIdProducto.name = 'productos[' + index + '][idProducto]';
                     inputIdProducto.value = product.idProducto;
-                    inputIdProducto.className = 'dynamic-input';
+                    inputIdProducto.className = 'dynamic-input'; // Add a class for easy removal if needed
                     this.appendChild(inputIdProducto);
 
                     var inputCantidad = document.createElement('input');
                     inputCantidad.type = 'hidden';
                     inputCantidad.name = 'productos[' + index + '][cantidad]';
                     inputCantidad.value = product.cantidad;
-                    inputCantidad.className = 'dynamic-input';
+                    inputCantidad.className = 'dynamic-input'; // Add a class for easy removal if needed
                     this.appendChild(inputCantidad);
                 }, this);
             };
@@ -201,5 +183,9 @@
         @error('productos')
         <div class="text-sm text-red-500">{{ $message }}</div>
         @enderror
+
+
     </div>
-</x-admin-layout>
+    </div>
+    </div>
+</x-marketing-layout>

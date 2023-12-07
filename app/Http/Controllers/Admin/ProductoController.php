@@ -76,6 +76,7 @@ class ProductoController extends Controller
     public function edit(ProductoServicios $producto)
     {
         //
+        //$producto = ProductoServicios::findOrFail($producto->idProducto);
         return view('admin.productos.edit', compact('producto'));
     }
 

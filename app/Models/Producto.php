@@ -12,13 +12,15 @@ class Producto extends Model
     // Set the primary key
     protected $primaryKey = 'idProducto';
 
+    protected $keyType = 'int';
+
     // Custom timestamp column names
     const CREATED_AT = 'creadoEn';
     const UPDATED_AT = 'actualizadoEn';
 
     // Attributes that are mass assignable
     protected $fillable = [
-        'nombreProductos',
+        'nombreProducto',
         'descripcion',
         'imagen',
         'precioUnitario',
