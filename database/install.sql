@@ -33,8 +33,8 @@ CREATE TABLE tipoProducto (
 
 CREATE TABLE usuarios (
   idUsuario INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,  
-  correoElectronico VARCHAR(60) NOT NULL UNIQUE, 
-  contraseña VARCHAR(255) NOT NULL,   
+  email VARCHAR(60) NOT NULL UNIQUE, 
+  password VARCHAR(255) NOT NULL,   
   apellidoPaterno VARCHAR(15) NOT NULL,   
   apellidoMaterno VARCHAR(15) NOT NULL,   
   nombre VARCHAR(30) NOT NULL,   

@@ -14,9 +14,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tipoProducto', function (Blueprint $table) {
-            $table->tinyIncrements('idTipoProducto');
-            $table->string('tipoDeProducto', 20);
+        Schema::create('roles', function (Blueprint $table) {
+            $table->tinyIncrements('idRol');
+            $table->string('tipoDeUsuario', 20);
             $table->timestamp('creadoEn')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('actualizadoEn')->nullable()->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });

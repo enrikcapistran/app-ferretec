@@ -2,25 +2,39 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Producto extends Model
 {
-    use HasFactory;
+    // Define the table associated with the model
+    protected $table = 'productos';
 
+    // Set the primary key
+    protected $primaryKey = 'idProducto';
+
+    // Custom timestamp column names
+    const CREATED_AT = 'creadoEn';
+    const UPDATED_AT = 'actualizadoEn';
+
+    // Attributes that are mass assignable
     protected $fillable = [
-        'nombre',   
+        'nombreProductos',
         'descripcion',
         'imagen',
-        'precio',
-        'stock',
-        'kit_id',
+        'precioUnitario',
+        'idTipoProducto',
+        'idStatus'
     ];
 
-    public function kits()
+    // Relationship with TipoProducto model
+    public function tipoProducto()
     {
-        return $this->belongsToMany(Kit::class);
+        return $this->belongsTo(TipoProducto::class, 'idTipoProducto');
+    }
+
+    // Relationship with Status model
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'idStatus');
     }
 }

@@ -16,7 +16,7 @@ class Marketing
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!auth()->check() || !auth()->user()->es_marketing){
+        if (!auth()->check() || !auth()->user()->isMarketing()) {
             abort(403);
         }
         return $next($request);

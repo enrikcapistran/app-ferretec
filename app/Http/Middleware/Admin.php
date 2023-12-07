@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Models\Usuario;
+
 
 class Admin
 {
@@ -17,7 +19,7 @@ class Admin
     public function handle(Request $request, Closure $next)
     {
         // Verificar si el usuario está autenticado y es un administrador
-        if (auth()->check() && auth()->user()->es_admin) {
+        if (auth()->check() && auth()->user()->isAdmin()) {
             // Si es un administrador, permite el acceso normalmente
             return $next($request);
         }

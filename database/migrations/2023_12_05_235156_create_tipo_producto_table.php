@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -13,9 +14,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_producto', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+
+        Schema::create('tipoProducto', function (Blueprint $table) {
+            $table->tinyIncrements('idTipoProducto');
+            $table->string('tipoDeProducto', 20);
+            $table->timestamp('creadoEn')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('actualizadoEn')->nullable()->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
     }
 

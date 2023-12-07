@@ -21,8 +21,8 @@ class Usuario extends Authenticatable
 
     // Attributes that are mass assignable
     protected $fillable = [
-        'correoElectronico',
-        'contraseña',
+        'email',
+        'password',
         'apellidoPaterno',
         'apellidoMaterno',
         'nombre',
@@ -34,7 +34,7 @@ class Usuario extends Authenticatable
 
     // Hidden attributes
     protected $hidden = [
-        'contraseña',
+        'password',
         'remember_token',
     ];
 
@@ -48,5 +48,35 @@ class Usuario extends Authenticatable
     public function status()
     {
         return $this->belongsTo(Status::class, 'idStatus');
+    }
+
+    public function isAdmin()
+    {
+        return $this->idRol === 1;
+    }
+
+    public function isMarketing()
+    {
+        return $this->idRol === 2;
+    }
+
+    public function isAlmacenista()
+    {
+        return $this->idRol === 3;
+    }
+
+    public function isCajero()
+    {
+        return $this->idRol === 4;
+    }
+
+    public function isClienteNormal()
+    {
+        return $this->idRol === 5;
+    }
+
+    public function isClienteVip()
+    {
+        return $this->idRol === 6;
     }
 }

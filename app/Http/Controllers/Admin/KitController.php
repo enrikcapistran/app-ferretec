@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\KitStoreRequest;
 use App\Models\Producto;
 use App\Models\Kit;
+use App\Models\Sucursal;
+use App\Models\DetalleKit;
+use Illuminate\Support\Facades\Log;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -34,8 +38,10 @@ class KitController extends Controller
     {
         //
         $productos = Producto::all();
+        $sucursales = Sucursal::all();
 
-        return view('admin.kits.create', compact('productos'));
+
+        return view('admin.kits.create', compact('productos'), compact('sucursales'));
     }
 
     /**
@@ -48,13 +54,34 @@ class KitController extends Controller
     {
         $image = $request->file('imagen')->store('public/kits');
 
-        $kit = Kit::create([
-            'nombre' => $request->nombre,
+        Log::info('Message', $request->all());
+
+        $producto = Producto::create([
+            'nombreProducto' => $request->nombre,
             'descripcion' => $request->descripcion,
             'imagen' => $image,
-            'precio' => $request->precio,
-            'stock' => $request->stock,
+            'preciounitario' => $request->precio,
+            'idTipoProducto' => 2,
+            'idStatus' => 11,
         ]);
+
+        $kit = Kit::create([
+            'idProducto' => $producto->idProducto,
+            'idSucursal' => $request->idSucursal,
+        ]);
+
+        // Filter out products without quantity or with quantity as zero, can remove
+        $productos = array_filter($request->productos, function ($producto) {
+            return isset($producto['cantidad']) && $producto['cantidad'] > 0;
+        });
+
+        foreach ($productos as $idProducto => $producto) {
+            $detalleKit = DetalleKit::create([
+                'idKit' => $kit->idKit,
+                'idProducto' => $idProducto,
+                'cantidad' => $producto['cantidad'],
+            ]);
+        }
 
         if ($request->has('productos')) {
             // Attach selected productos to the kit
