@@ -89,7 +89,11 @@
                         <label class="block text-sm font-medium text-gray-700">Productos Seleccionados</label>
                         <ul id="selectedProductsList" class="list-disc pl-5 mt-2"></ul>
                     </div>
-
+                    <div class="mt-6 p-4">
+                        <button type="submit" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">
+                            Guardar
+                        </button>
+                    </div>
 
                 </form>
             </div>
@@ -165,13 +169,7 @@
         <div class="text-sm text-red-500">{{ $message }}</div>
         @enderror
 
-        <div class="mt-6 p-4">
-            <button type="submit" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg
-    text-white">
-                Guardar
-            </button>
-        </div>
-        </form>
+
     </div>
     </div>
     </div>
