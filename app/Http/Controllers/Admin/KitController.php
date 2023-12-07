@@ -23,7 +23,7 @@ class KitController extends Controller
     public function index()
     {
         //
-        $kits = Producto::all()->where('idTipoProducto', '=', 2);
+        $kits = Producto::all()->where('idTipoProducto', '=', 2)->where('idStatus', '=', 11);
 
         //
         return view('admin.kits.index', compact('kits'));
@@ -168,10 +168,17 @@ class KitController extends Controller
     public function destroy(Kit $kit)
     {
         // Delete associated productos directly
-        $kit->productos()->delete();
+        //$kit->productos()->delete();
 
-        // Delete the Kit
-        $kit->delete();
+        // Logic delete kit
+        $kit->update([
+            'idStatus' => 12,
+        ]);
+
+        // Logic delete producto
+        $kit->producto()->update([
+            'idStatus' => 12,
+        ]);
 
         return redirect()->route('admin.kits.index')->with('danger', 'Kit Eliminado.');
     }
