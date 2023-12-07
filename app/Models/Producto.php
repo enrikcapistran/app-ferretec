@@ -39,4 +39,10 @@ class Producto extends Model
     {
         return $this->belongsTo(Status::class, 'idStatus');
     }
+
+    // Verificar si es Kit o Prod Individual
+    public function scopeSeleccionarSoloKits($query)
+    {
+        return $query->where('idTipoProducto', 2);
+    }
 }

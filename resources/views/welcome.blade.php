@@ -20,24 +20,26 @@
         <div class="mt-4 text-center">
             <h3 class="text-2xl font-bold">Productos</h3>
             <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
-                Promociones KITS</h2>
+                Promociones KITS
+            </h2>
         </div>
         <div class="container w-full px-5 py-6 mx-auto">
             <div class="grid lg:grid-cols-4 gap-8 mt-8">
-                @forelse ($kits as $kit)
+                @forelse ($productos as $producto)
                 <div class="max-w-xs overflow-hidden bg-white rounded-lg shadow-lg">
-                    <img class="w-full h-48 object-cover object-center" src="{{ Storage::url($kit->imagen) }}" alt="{{ $kit->nombre }}">
+                    <!-- Agrega aquí el código para mostrar cada producto -->
+                    <img class="w-full h-48 object-cover object-center" src="{{ Storage::url($producto->imagen) }}" alt="{{ $producto->nombreProducto }}">
                     <div class="px-6 py-4">
-                        <h4 class="mb-2 text-xl font-semibold text-green-600 uppercase">{{ $kit->nombre }}</h4>
-                        <!--<p class="text-gray-700">{{ $kit->descripcion }}</p>-->
+                        <h4 class="mb-2 text-xl font-semibold text-green-600 uppercase">{{ $producto->nombreProducto }}</h4>
+                        <p class="text-gray-700">{{ $producto->descripcion }}</p>
                     </div>
                     <div class="flex items-center justify-between px-6 py-4 bg-gray-100">
-                        <span class="text-xl text-green-600">${{ $kit->precio }}</span>
-                        <a href="{{ route('kits.show', $kit->idProducto) }}" class="text-sm text-blue-600 hover:underline">Ver detalles</a>
+                        <span class="text-xl text-green-600">${{ $producto->precioUnitario }}</span>
+                        <a href="{{ route('productos.show', $producto->idProducto) }}" class="text-sm text-blue-600 hover:underline">Ver detalles</a>
                     </div>
                 </div>
                 @empty
-                <p class="text-center text-gray-500">No hay kits disponibles en este momento.</p>
+                <p class="text-center text-gray-500">No hay productos disponibles en este momento.</p>
                 @endforelse
             </div>
         </div>

@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kit;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class WelcomeController extends Controller
 {
     public function index()
     {
-        $kits = Kit::take(4)->get(); //primeros 4 kits
+        $productos = Producto::seleccionarSoloKits()->take(4)->get(); //primeros 4 kits
         //$kits = Kit::all(); // todos los kits
 
-        return view('welcome', ['kits' => $kits]);
+        return view('welcome', ['productos' => $productos]);
     }
 
     public function gracias()

@@ -48,7 +48,7 @@ class ProductoController extends Controller
             'descripcion' => $request->descripcion,
             'imagen' => $imagen,
             'precioUnitario' => $request->precioUnitario,
-            'stock' => $request->stock,
+            //'stock' => $request->stock,
             'idTipoProducto' => 1, //DUDA
             'idStatus' => 1, //DUDA
         ]);
@@ -109,7 +109,7 @@ class ProductoController extends Controller
             'descripcion' => $request->descripcion,
             'imagen' => $imagen,
             'precioUnitario' => $request->precioUnitario,
-            'stock' => $request->stock,
+            //'stock' => $request->stock,
         ]);
 
         return redirect()->route('admin.productos.index')->with('success', 'Producto Actualizado Correctamente.');
