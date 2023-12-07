@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('idProducto')->unsigned()->autoIncrement();
             $table->string('nombreProducto', 100);
             $table->text('descripcion')->nullable();
-            $table->text('imágen')->nullable();
+            $table->text('imagen')->nullable();
             $table->decimal('precioUnitario', 10, 2);
             $table->tinyInteger('idTipoProducto')->unsigned();
             $table->tinyInteger('idStatus')->unsigned()->default(1);
