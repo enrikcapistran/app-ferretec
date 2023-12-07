@@ -54,7 +54,7 @@ class KitController extends Controller
      */
     public function store(KitStoreRequest $request)
     {
-        dd($request);
+        //dd($request);
         $image = $request->file('imagen')->store('public/kits');
 
         //dd($request);
@@ -69,7 +69,7 @@ class KitController extends Controller
             'idStatus' => 11,
         ]);
 
-        dd($producto);
+        //dd($producto);
 
         $usuario = auth()->user();
 
