@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('status', function (Blueprint $table) {
             $table->tinyIncrements('idStatus');
-            $table->string('nombreStatus', 15)->unique();
+            $table->string('nombreStatus', 30)->unique();
             $table->timestamp('creadoEn')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('actualizadoEn')->nullable()->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
