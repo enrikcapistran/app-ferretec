@@ -2,17 +2,17 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DetalleSurtidoController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\TableController;
 use App\Http\Controllers\Admin\ReservationController;
 
 use App\Http\Controllers\Admin\KitController;
 use App\Http\Controllers\Admin\ProductoController;
-use App\Http\Controllers\Admin\TiendaController;
+use App\Http\Controllers\Admin\SurtidoController;
 use App\Http\Controllers\Admin\VentaController;
 
 use App\Http\Controllers\Frontend\CarritoDeCompraController;
-use App\Http\Controllers\SucursalController;
 
 use App\Http\Controllers\Frontend\CategoryController as FrontendCategoryController;
 use App\Http\Controllers\Frontend\MenuController as FrontendMenuController;
@@ -23,6 +23,7 @@ use App\Http\Controllers\Frontend\ProductoController as FrontendProductoControll
 
 
 use App\Http\Controllers\Frontend\ReservationController as FrontendReservationController;
+use App\Http\Controllers\Frontend\SucursalController as FrontendSucursalController;
 use App\Http\Controllers\Frontend\WelcomeController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Category;
@@ -52,13 +53,39 @@ Route::get('/kits/{kit}', [FrontendKitController::class, 'show'])->name('kits.sh
 Route::get('/productos', [FrontendProductoController::class, 'index'])->name('productos.index');
 Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.show');
 
-Route::post('/carrito/agregar/{producto}', [CarritoDeCompraController::class, 'agregar'])->name('carrito.agregar');
+
+
+//Route::post('admin/surtidos/store', 'TuControlador@tuMetodo')->name('admin.surtidos.store');
+
+Route::get('/admin/surtidos/create', [SurtidoController::class, 'create'])->name('admin.surtidos.create');
+Route::post('/admin/surtidos/finalizarSurtido', [SurtidoController::class, 'finalizarSurtido'])->name('admin.surtidos.finalizarSurtido');
+Route::get('/admin/surtidos/{id}/edit', [SurtidoController::class, 'edit'])->name('admin.surtidos.edit');
+Route::get('/admin/surtidos', [SurtidoController::class, 'index'])->name('admin.surtidos.index');
+Route::post('/admin/surtidos/guardar-inventario', [DetalleSurtidoController::class, 'guardarInventario'])->name('admin.surtidos.guardarInventario');
+
+
+
+
+
+Route::prefix('carrito')->group(function () {
+    Route::get('/', [CarritoDeCompraController::class, 'index'])->name('carrito.index');
+    Route::post('/agregar', [CarritoDeCompraController::class, 'agregarProducto'])->name('carrito.agregar');
+    Route::post('/vaciar', [CarritoDeCompraController::class, 'vaciarCarrito'])->name('carrito.vaciar');
+    Route::delete('/quitar/{idProducto}', [CarritoDeCompraController::class, 'quitarProducto'])->name('carrito.quitar');
+    Route::put('/actualizar/{idProducto}', [CarritoDeCompraController::class, 'actualizarProducto'])->name('carrito.actualizar');
+    Route::post('/pagar', [CarritoDeCompraController::class, 'pagar'])->name('carrito.pagar');
+    Route::delete('/eliminar/{idProducto}', [CarritoDeCompraController::class, 'eliminarProducto'])->name('carrito.eliminar');
+    Route::post('/seleccionarCliente', [CarritoDeCompraController::class, 'seleccionarCliente'])->name('carrito.seleccionarCliente');
+});
 
 //Route::get('/reservation/step-one', [FrontendReservationController::class, 'stepOne'])->name('reservations.step.one');
 //Route::post('/reservation/step-one', [FrontendReservationController::class, 'storeStepOne'])->name('reservations.store.step.one');
 //Route::get('/reservation/step-two', [FrontendReservationController::class, 'stepTwo'])->name('reservations.step.two');
 //Route::post('/reservation/step-two', [FrontendReservationController::class, 'storeStepTwo'])->name('reservations.store.step.two');
 Route::get('/gracias', [WelcomeController::class, 'gracias'])->name('gracias');
+
+Route::get('/seleccionar-sucursal/{idSucursal}', [FrontendSucursalController::class, 'seleccionarSucursal'])->name('seleccionar-sucursal');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -73,7 +100,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
 
-    Route::get('/kits', [KitController::class, 'index'])->name('kits.index');;
+    Route::get('/kits', [KitController::class, 'index'])->name('kits.index');
     Route::get('/kits/edit/{idKit}', [KitController::class, 'edit'])->name('kits.update');
     Route::get('/kits/delete/{idKit}', [KitController::class, 'edit'])->name('kits.destroy');
     Route::get('/kits/create', [KitController::class, 'create'])->name('kits.create');
@@ -88,17 +115,9 @@ Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(fun
 
 
     Route::resource('/productos', ProductoController::class);
-    Route::resource('/tiendas', TiendaController::class);
+    Route::resource('/surtido', SurtidoController::class);
     Route::resource('/ventas', VentaController::class);
 });
-Route::post('/seleccionar-sucursal', [SucursalController::class, 'seleccionarSucursal']);
-Route::post('/seleccionar-sucursal', function () {
-    $sucursal = request('sucursal');
 
-    // Almacenar la sucursal seleccionada en la sesión
-    Session::put('sucursal_seleccionada', $sucursal);
-
-    return response()->json(['message' => 'Sucursal seleccionada guardada en la sesión.']);
-});
 
 require __DIR__ . '/auth.php';

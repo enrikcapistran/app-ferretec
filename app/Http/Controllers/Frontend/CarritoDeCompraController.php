@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers\Frontend;
 
+//CLASES
+
+//MODELOS
+use App\Models\Modelos\CarritoModelo;
+
 use App\Http\Controllers\Controller;
 use App\Models\Producto;
+
 use Illuminate\Http\Request;
 
 class CarritoDeCompraController extends Controller
@@ -11,35 +17,73 @@ class CarritoDeCompraController extends Controller
     public function index()
     {
         // Obtener los productos del carrito desde la sesión
-        $carrito = session()->get('carrito', []);
+        $carrito = session()->get('carrito');
+
+        //dd($carrito);
 
         // Puedes pasar los productos a una vista
-        return view('carrito.index', ['productos' => $carrito]);
+        return view('carrito.index', compact('carrito'));
     }
 
-    public function agregar(Producto $producto)
+    public function agregar(int $idProducto, int $cantidad)
     {
-        // Obtener el carrito actual desde la sesión
-        $carrito = session()->get('carrito', []);
+        // Crear un nuevo detalle de carrito
+        $carritoModelo = new CarritoModelo();
 
-        // Verificar si el producto ya está en el carrito
-        if (isset($carrito[$producto->id])) {
-            // Incrementar la cantidad si ya está en el carrito
-            $carrito[$producto->id]['cantidad']++;
-        } else {
-            // Agregar el producto al carrito
-            $carrito[$producto->id] = [
-                'id' => $producto->id,
-                'nombre' => $producto->nombre,
-                'precio' => $producto->precio,
-                'cantidad' => 1,
-            ];
-        }
+        $carritoModelo->agregarAlCarrito($idProducto, $cantidad);
 
+        $carrito = $carritoModelo->obtenerCarrito();
         // Guardar el carrito en la sesión
         session()->put('carrito', $carrito);
 
         // Puedes redirigir a la página del carrito o a la página del producto según tus necesidades
+        return redirect()->back()->with('success', 'Producto agregado al carrito');
+    }
+
+    public function seleccionarCliente()
+    {
+    }
+
+    public function pagar()
+    {
+    }
+
+    public function actualizarProducto(Request $request, int $idProducto)
+    {
+        $carritoModelo = new CarritoModelo();
+
+        $carritoModelo->actualizarProducto($idProducto, $request->cantidad);
+
+        session()->put('carrito', $carritoModelo->obtenerCarrito());
+
+        return redirect()->back()->with('success', 'Producto actualizado');
+    }
+
+    public function quitarProducto(int $idDetalleCarrito)
+    {
+        $carritoModelo = new CarritoModelo();
+
+        $carritoModelo->quitarDelCarrito($idDetalleCarrito);
+
+        session()->put('carrito', $carritoModelo->obtenerCarrito());
+
+        return redirect()->back()->with('success', 'Producto quitado');
+    }
+
+    public function vaciarCarrito()
+    {
+    }
+
+    public function agregarProducto(Request $request)
+    {
+        $carritoModelo = new CarritoModelo();
+
+        $carritoModelo->agregarAlCarrito($request->idProducto, $request->cantidad);
+
+        //dd($carritoModelo->obtenerCarrito());
+
+        session()->put('carrito', $carritoModelo->obtenerCarrito());
+
         return redirect()->back()->with('success', 'Producto agregado al carrito');
     }
 

@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+
+use App\Models\Modelos\sucursalModelo;
 
 class SucursalController extends Controller
 {
@@ -25,13 +26,15 @@ class SucursalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function seleccionarSucursal(Request $request)
+    public function seleccionarSucursal(int $idSucursal)
     {
+        $sucursalModelo = new sucursalModelo();
         // Lógica para guardar la sucursal en la sesión
-        $sucursal = $request->input('sucursal');
-        session(['sucursal' => $sucursal]);
+        $sucursal = $sucursalModelo->obtenerSucursal($idSucursal);
+
+        session()->put('sucursal', $sucursal);
 
         // Devuelve la información de la sucursal seleccionada
-        return response()->json(['sucursal' => $sucursal]);
+        return redirect()->back();
     }
 }

@@ -108,7 +108,7 @@
             <div class="sm:col-span-6 pt-5">
                 <label class="block text-sm font-medium text-gray-700">Productos Seleccionados</label>
                 <ul class="list-disc pl-5 mt-2">
-                    
+
                     @foreach($kit->getDetallesKit() as $detalle)
 
                     @php

@@ -1,32 +1,24 @@
 <x-guest-layout>
     <!-- Ventana Modal para Seleccionar Sucursal -->
-    <div id="modal" style="display: none;">
-        <!-- Fondo Oscuro de la Modal -->
-        <div class="fixed inset-0 z-10 bg-black bg-opacity-50 flex items-center justify-center">
-            <!-- Contenido de la Modal -->
-            <div class="bg-white p-6 rounded-md shadow-lg">
-                <h2 class="text-2xl font-bold mb-4">Selecciona una Sucursal</h2>
-                <div class="grid grid-cols-2 gap-4">
-                    <!-- Opciones de Sucursales -->
-                    <button onclick="elegirSucursal('Sucursal Norte')" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Norte</button>
-                    <button onclick="elegirSucursal('Sucursal Este')" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Este</button>
-                    <button onclick="elegirSucursal('Sucursal Oeste')" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Oeste</button>
-                    <button onclick="elegirSucursal('Sucursal Sur')" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Sur</button>
-                </div>
-
-                <!-- Muestra la sucursal seleccionada -->
-                <p id="sucursalSeleccionada" class="mt-4 text-gray-600"></p>
-
-                <!-- Botón para cerrar la modal después de seleccionar la sucursal -->
-                <button onclick="cerrarModal()" class="mt-4 px-4 py-2 text-white bg-blue-500 rounded-full hover:bg-blue-600 focus:outline-none">
-                    Continuar
-                </button>
+    @if(!session('sucursal'))
+    <div id="modal" class="fixed inset-0 z-10 bg-black bg-opacity-50 flex items-center justify-center">
+        <!-- Contenido de la Modal -->
+        <div class="bg-white p-6 rounded-md shadow-lg">
+            <h2 class="text-2xl font-bold mb-4">Selecciona una Sucursal</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Opciones de Sucursales -->
+                <a href="{{route('seleccionar-sucursal',1)}}" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Norte</a>
+                <a href="{{route('seleccionar-sucursal',2)}}" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Este</a>
+                <a href="{{route('seleccionar-sucursal',3)}}" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Sur</a>
+                <a href="{{route('seleccionar-sucursal',4)}}" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Oeste</a>
             </div>
         </div>
     </div>
+    @endif
+
     <!-- Contenido principal que se muestra después de seleccionar la sucursal -->
     <div id="mainContent" x-show="!showModal">
-        <p>Sucursal seleccionada: <span id="sucursalSeleccionadaMain"></span></p>
+        <p>Sucursal seleccionada: {{session('sucursal') ? session()->get('sucursal')->getNombreSucursal() : ""}}</p>
     </div>
     <!-- Main Hero Content -->
     <div class="container max-w-lg px-4 py-32 mx-auto text-left bg-center bg-no-repeat bg-cover md:max-w-none md:text-center" style="background-image: url('https://irp.cdn-website.com/b8e4de53/DESKTOP/jpg/755.jpg')">
@@ -256,44 +248,15 @@
                     <a href="#" class="text-xl font-medium text-green-500">John Doe</a>
                 </div>
             </div>
-            
+
         </div>
     </section>
     <script>
-        function elegirSucursal(sucursal) {
-            // Guardar la sucursal seleccionada en session mediante Axios
-            axios.post('/seleccionar-sucursal', { sucursal: sucursal })
-                .then(response => {
-                    // Puedes realizar acciones adicionales después de seleccionar la sucursal
-                    console.log(response.data);
-
-                    // Asignar directamente el valor al elemento del DOM
-                    document.getElementById('sucursalSeleccionadaMain').innerText = response.data.sucursal;
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-
-            // Ocultar la modal después de seleccionar la sucursal
-            cerrarModal();
-        }
-
-        function cerrarModal() {
-            // Ocultar la modal
-            document.getElementById('modal').style.display = 'none';
-
-            // Mostrar el contenido principal
-            document.getElementById('mainContent').style.display = 'block';
-        }
-
         // Mostrar la modal al cargar la página
-        window.onload = function () {
+        window.onload = function() {
             document.getElementById('modal').style.display = 'flex';
         };
-        
+
     </script>
 
-    <script type="module" defer>
-        import '/js/app.js'; // Ajusta la ruta según tu configuración
-    </script>
 </x-guest-layout>
