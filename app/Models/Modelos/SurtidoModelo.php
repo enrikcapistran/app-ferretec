@@ -2,10 +2,11 @@
 
 namespace App\Models\Modelos;
 
+use Illuminate\Http\Request;
+use App\Models\PedidoSurtido as SurtidosServicios;
 use App\Models\Clases\PedidoDeSurtido;
 use App\Models\DetalleSurtido;
 use App\Models\Sucursal as sucursalModelo;
-use App\Models\PedidoSurtido as SurtidosServicios;
 use Carbon\Carbon;
 
 
@@ -94,8 +95,9 @@ class SurtidoModelo
     
     public function crearSurtido(Request $request)
     {
-        $surtido = new Surtido();
-        $surtido->idSucursal = $request->input('sucursal');
+        $surtido = new SurtidosServicios();
+        $surtido->idSucursal = $request->input('idSucursal');
+        $surtido->idAlmacen = 1;
         $surtido->save();
     
         $idSurtido = $surtido->id;

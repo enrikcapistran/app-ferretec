@@ -4,6 +4,7 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
+    <form action="{{ route('admin.surtidos.finalizarSurtido') }}" method="post">
 
 
                     <div class="sm:col-span-6 pt-5">
@@ -44,16 +45,15 @@
                         <ul id="selectedProductsList" class="list-disc pl-5 mt-2"></ul>
                     </div>
                     <div class="mt-6 p-4">
-                        
-                        <form method="POST" action="{{ route('admin.surtidos.finalizarSurtido') }}">
-                            @method('post')
-            
-                            <div class="flex justify-end">
-                                <button type="submit" class="px-4 py-2 bg-red-500 hover:bg-red-700 rounded-lg text-white">
-                                    Enviar
-                                </button>
-                    </div>
+<form action="{{ route('admin.surtidos.finalizarSurtido') }}" method="post" id="productForm">
+    <!-- Existing form content... -->
+</form>
 
+                    @csrf
+
+                    <button type="submit" class="ml-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">
+                        Enviar
+                    </button>
                 </form>
             </div>
         </div>

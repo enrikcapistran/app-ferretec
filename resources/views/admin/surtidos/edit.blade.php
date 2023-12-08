@@ -39,10 +39,15 @@
                                     <input type="hidden" name="idSucursal" value="{{ $pedidoSurtido->idSucursal }}" />
                                     <input type="hidden" name="idRefaccion" value="{{ $detalle->idRefaccion }}" />
                                    
+                                  
                                     <input type="number" name="cantidad" placeholder="Ingrese la cantidad" class="bg-black text-white p-2 rounded-md" />
+                                    @if ($pedidoSurtido->idStatus == 1)
                                     <button type="submit" class="ml-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">
                                         Registrar
                                     </button>
+                                    @else
+                                    @endif
+                    
                                 </form>
                             </td>
                         </tr>
@@ -64,7 +69,6 @@
                         </button>
                     </form>
                 @else
-                    <!-- Aquí puedes agregar contenido o código HTML si $pedidoSurtido no es igual a 1 -->
                 @endif
 
                     </form>

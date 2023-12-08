@@ -85,44 +85,17 @@ class SurtidoController extends Controller
     
     
 
-        public function finalizarSurtido(Request $request)
-        {
-            //dd($request);
-            //$productos = $request->input('productos');
-
-            $surtidoModelo = new SurtidoModelo();
-
-            $idSurtido = $this->SurtidoModelo->crearSurtido($request);
-            
-            return redirect()->route('admin.surtidos.index')->with('success', 'Surtido de Sucursal Guardado Correctamente.');
-        }
-
-        
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function finalizarSurtido(Request $request)
+    {    
+      //  dd($request);
+        $surtidoModelo = new SurtidoModelo();
+    
+        $productos = $request->input('productos');
+    
+        $idSurtido = $surtidoModelo->crearSurtido( $request);
+    
+        return redirect()->route('admin.surtidos.index')->with('success', 'Surtido de Sucursal Guardado Correctamente.');
     }
+    
+
 }
