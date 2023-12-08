@@ -42,7 +42,7 @@ class ProductoController extends Controller
     {
         // Obtén la ruta donde se almacenará la imagen
         $imagen = $request->file('imagen')->store('public/productos');
-    
+
         // Crea un nuevo producto con los datos proporcionados
         ProductoServicios::create([
             'nombreProducto' => $request->nombreProducto,
@@ -53,12 +53,12 @@ class ProductoController extends Controller
             'idTipoProducto' => 1, //DUDA
             'idStatus' => 1, //DUDA
         ]);
-    
+
         // Redirige a la vista de índice o realiza alguna acción después de crear el producto
         return redirect()->route('admin.productos.index')->with('success', 'Producto Guardado Correctamente.');
     }
-    
-    
+
+
 
     /**
      * Display the specified resource.
@@ -82,7 +82,6 @@ class ProductoController extends Controller
     public function edit(ProductoServicios $producto)
     {
         //
-        //$producto = ProductoServicios::findOrFail($producto->idProducto);
         return view('admin.productos.edit', compact('producto'));
     }
 

@@ -9,7 +9,6 @@ use App\Models\DetalleSurtido as DetalleSurtidoServicios;
 use App\Models\Sucursal as SucursalServicios;
 use App\Models\Producto as ProductosServicios;
 use App\Models\InventarioSucursal;
-use App\Models\DetalleSurtido;
 use App\Models\Sucursal as sucursalModelo;
 use App\Models\Modelos\SurtidoModelo;
 
@@ -18,19 +17,19 @@ class SurtidoController extends Controller
 
 
     public function index(Request $request)
-{
-    $surtidoModelo = new SurtidoModelo();
+    {
+        $surtidoModelo = new SurtidoModelo();
 
-    $folio = $request->input('folio');
+        $folio = $request->input('folio');
 
-    if ($folio) {
-        $pedidoSurtido = $surtidoModelo->index()->where('idSurtido', $folio)->get();
-    } else {
-        $pedidoSurtido = $surtidoModelo->index()->get();
+        if ($folio) {
+            $pedidoSurtido = $surtidoModelo->index()->where('idSurtido', $folio)->get();
+        } else {
+            $pedidoSurtido = $surtidoModelo->index()->get();
+        }
+
+        return view('admin.surtidos.index', compact('pedidoSurtido'));
     }
-
-    return view('admin.surtidos.index', compact('pedidoSurtido'));
-}
 
 
 
@@ -42,31 +41,34 @@ class SurtidoController extends Controller
         return view('admin.surtidos.create', compact('productos'), compact('sucursales'));
     }
 
-    
+
+    /*
     public function guardarInventario(Request $request, $idSurtido)
     {
+        dd($request);
         $surtidoModelo = new SurtidoModelo();
 
-        $pedidoSurtido = $SurtidoModelo->guardarInventario($idSurtido, $cantidadLlegoData);
+        $pedidoSurtido = $surtidoModelo->guardarInventario($idSurtido, $request->cantidadLlegoData);
 
         return redirect()->route('admin.surtidos.index')->with('success', 'Surtido de Sucursal Guardado Correctamente.');
     }
+    */
 
 
     public function edit($id)
     {
         $surtidoModelo = new SurtidoModelo();
-        $detalleSurtido = new DetalleSurtido();
+        $detalleSurtidoModel = new DetalleSurtidoServicios();
 
         $data = $surtidoModelo->edit($id);
-    
+
         if (!$data) {
             return redirect()->route('ruta_de_error');
         }
-    
+
         $detalleSurtido = $data['detalleSurtido'];
         $pedidoSurtido = $data['pedidoSurtido'];
-    
+
         return view('admin.surtidos.edit', compact('detalleSurtido', 'pedidoSurtido'));
     }
 
@@ -74,27 +76,27 @@ class SurtidoController extends Controller
     public function FinalizarRevicion(Request $request, $idSurtido)
     {
         $surtidoModelo = new SurtidoModelo();
-    
+
         return $surtidoModelo->FinalizarRevicion($request, $idSurtido);
     }
-    
-    
-    
 
-        public function finalizarSurtido(Request $request)
-        {
-            //dd($request);
-            //$productos = $request->input('productos');
 
-            $surtidoModelo = new SurtidoModelo();
 
-            $idSurtido = $this->SurtidoModelo->crearSurtido($request);
-            
-            return redirect()->route('admin.surtidos.index')->with('success', 'Surtido de Sucursal Guardado Correctamente.');
-        }
 
-        
-   
+    public function finalizarSurtido(Request $request)
+    {
+        //dd($request);
+        //$productos = $request->input('productos');
+
+        $surtidoModelo = new SurtidoModelo();
+
+        $idSurtido = $this->SurtidoModelo->crearSurtido($request);
+
+        return redirect()->route('admin.surtidos.index')->with('success', 'Surtido de Sucursal Guardado Correctamente.');
+    }
+
+
+
 
 
 
