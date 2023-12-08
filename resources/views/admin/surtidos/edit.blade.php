@@ -37,7 +37,7 @@
                                     <input type="hidden" name="idSurtido" value="{{ $pedidoSurtido->idSurtido }}" />
                                     <input type="hidden" name="idRefaccion" value="{{ $detalle->idRefaccion }}" />
 
-                                    <input type="number" name="cantidad" placeholder="Ingrese la cantidad" class="bg-black text-white p-2 rounded-md" />
+                                    <input type="number" name="cantidad" placeholder="Ingrese la cantidad" class=" text-black p-2 rounded-md" />
                                     <button type="submit" class="ml-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">
                                         Registrar
                                     </button>
