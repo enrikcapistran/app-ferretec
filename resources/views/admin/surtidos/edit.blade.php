@@ -23,6 +23,8 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <form method="POST" action="{{ route('admin.surtidos.finalizarSurtido') }}">
+
                         @foreach ($detalleSurtido as $detalle)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -34,9 +36,9 @@
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <form action="{{ route('admin.surtidos.guardarInventario') }}" method="post">
                                     @csrf
-                                    <input type="hidden" name="idSurtido" value="{{ $pedidoSurtido->idSurtido }}" />
+                                    <input type="hidden" name="idSucursal" value="{{ $pedidoSurtido->idSucursal }}" />
                                     <input type="hidden" name="idRefaccion" value="{{ $detalle->idRefaccion }}" />
-
+                                   
                                     <input type="number" name="cantidad" placeholder="Ingrese la cantidad" class="bg-black text-white p-2 rounded-md" />
                                     <button type="submit" class="ml-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">
                                         Registrar
@@ -45,8 +47,24 @@
                             </td>
                         </tr>
                         @endforeach
+
                     </tbody>
+
                 </table>
+                    @method('post')
+    
+                    <form action="{{ route('admin.surtidos.index') }}">
+                        @csrf
+                        <input type="hidden" name="idSurtido" value="{{ $pedidoSurtido->idSurtido }}" />
+                        <button type="submit" class="ml-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">
+                            Terminar
+                        </button>
+
+                            @csrf
+                            <!-- Resto de los campos del formulario -->
+                            <button type="submit">Enviar</button>
+                        </form>
+                    </form>
             </div>
         </div>
     </div>

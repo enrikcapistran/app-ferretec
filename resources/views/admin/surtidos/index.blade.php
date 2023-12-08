@@ -79,11 +79,11 @@
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 @switch($pedidoSurtido->idStatus)
-                                    @case(3)
+                                    @case(1)
                                         Pendiente
                                         @break
-                                    @case(4)
-                                        Revisado
+                                    @case(2)
+                                        Recibidos
                                         @break
                                     @default
                                         Error estatus
