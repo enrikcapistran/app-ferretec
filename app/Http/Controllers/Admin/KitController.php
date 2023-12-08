@@ -194,8 +194,6 @@ class KitController extends Controller
      */
     public function eliminarKit(int $idKit)
     {
-
-
         $modelo = new kitModelo();
 
         $kit = $modelo->obtenerKitConDetalle($idKit);

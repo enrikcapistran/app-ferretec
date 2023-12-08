@@ -23,7 +23,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <form method="POST" action="{{ route('admin.surtidos.finalizarSurtido') }}">
+                        <form method="POST" action="{{ route('admin.surtidos.guardarInventario') }}">
 
                         @foreach ($detalleSurtido as $detalle)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -52,18 +52,21 @@
 
                 </table>
                     @method('post')
-    
-                    <form action="{{ route('admin.surtidos.index') }}">
+
+                    @if ($pedidoSurtido->idStatus == 1)
+                    <form action="{{ route('admin.surtidos.FinalizarRevicion') }}" method="post">
                         @csrf
+                        <input type="hidden" name="idSucursal" value="{{ $pedidoSurtido->idSucursal }}" />
+                        <input type="hidden" name="idRefaccion" value="{{ $detalle->idRefaccion }}" />
                         <input type="hidden" name="idSurtido" value="{{ $pedidoSurtido->idSurtido }}" />
                         <button type="submit" class="ml-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">
                             Terminar
                         </button>
+                    </form>
+                @else
+                    <!-- Aquí puedes agregar contenido o código HTML si $pedidoSurtido no es igual a 1 -->
+                @endif
 
-                            @csrf
-                            <!-- Resto de los campos del formulario -->
-                            <button type="submit">Enviar</button>
-                        </form>
                     </form>
             </div>
         </div>

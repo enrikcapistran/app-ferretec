@@ -16,22 +16,23 @@ use App\Models\Modelos\SurtidoModelo;
 class SurtidoController extends Controller
 {
 
-
     public function index(Request $request)
-{
-    $surtidoModelo = new SurtidoModelo();
+    {
+        $surtidoModelo = new SurtidoModelo();
 
-    $folio = $request->input('folio');
+        $pedidoSurtido = $surtidoModelo->index();
 
-    if ($folio) {
-        $pedidoSurtido = $surtidoModelo->index()->where('idSurtido', $folio)->get();
-    } else {
-        $pedidoSurtido = $surtidoModelo->index()->get();
+        $folio = $request->input('folio');
+        if ($folio) {
+            $pedidoSurtido->where('idSurtido', $folio);
+        }
+
+        $pedidoSurtido = $pedidoSurtido->get();
+
+        return view('admin.surtidos.index', compact('pedidoSurtido'));
     }
-
-    return view('admin.surtidos.index', compact('pedidoSurtido'));
-}
-
+    
+   
 
 
     public function create()
@@ -71,11 +72,14 @@ class SurtidoController extends Controller
     }
 
 
-    public function FinalizarRevicion(Request $request, $idSurtido)
+    public function FinalizarRevicion( Request $request)
     {
         $surtidoModelo = new SurtidoModelo();
+        $folio = $request->input('idSurtido');
+
+        $surtido = $surtidoModelo->FinalizarRevicion($folio);
     
-        return $surtidoModelo->FinalizarRevicion($request, $idSurtido);
+        return redirect()->route('admin.surtidos.index')->with('success', 'Surtido Entregado.');
     }
     
     
