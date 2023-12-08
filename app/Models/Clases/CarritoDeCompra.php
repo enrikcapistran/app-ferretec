@@ -69,12 +69,17 @@ class CarritoDeCompra
     }
 
 
-    public function addDetalle(DetalleCarrito $detalle): void
+    public function addDetalle(DetalleCarrito $detalle): bool
     {
         //buscar si existe el detalle
-        //si existe no permitir agregarlo
+        for ($i = 0; $i < count($this->detalles); $i++) {
+            if ($this->detalles[$i]->getProducto()->getIdProducto() === $detalle->getProducto()->getIdProducto()) {
+                return false;
+            }
+        }
 
         array_push($this->detalles, $detalle);
+        return true;
     }
 
     public function removeDetalle(int $idProducto): void

@@ -91,10 +91,10 @@ class CarritoModelo
         $detalle = new DetalleCarrito($this->carrito->getIdCarrito(), $productoObj, $cantidad);
 
         // Agregar el detalle al carrito
-        $this->carrito->addDetalle($detalle);
+        $added = $this->carrito->addDetalle($detalle);
 
         //dd($this->carrito);
-        if (auth()->check())
+        if (auth()->check() && $added)
             $this->detalleCarritoServicio->create([
                 'idCarrito' => $this->carrito->getIdCarrito(),
                 'idProducto' => $idProducto,
@@ -111,7 +111,7 @@ class CarritoModelo
         $this->carrito->removeDetalle($idProducto);
 
         if (auth()->check())
-            $this->detalleCarritoServicio->where(['idProducto', '=', $idProducto], ['idCarrito', '=', $this->carrito->getIdCarrito()])->update(['idStatus' => 2]);
+            $this->detalleCarritoServicio->where(["idProducto", '=', $idProducto], ['idCarrito', '=', $this->carrito->getIdCarrito()])->update(['idStatus' => 2]);
     }
 
     public function actualizarProducto($idProducto, $cantidad)

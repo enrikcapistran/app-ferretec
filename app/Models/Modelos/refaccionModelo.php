@@ -38,4 +38,26 @@ class refaccionModelo
 
         return $refaccionesArray;
     }
+
+    public function getRefaccionesPorSucursalYStock()
+    {
+        $sucursal = session()->get('sucursal');
+        
+        $refaccionesJson = $this->productoServicios->all()->where('idTipoProducto', "=", 1)->where('idStatus', 1);
+        $refaccionesArray = $refaccionesJson->map(function ($refaccion) {
+            $refaccionObj = new Producto(
+                $refaccion->idProducto,
+                $refaccion->nombreProducto,
+                $refaccion->descripcion,
+                $refaccion->imagen,
+                $refaccion->precioUnitario,
+                $refaccion->idTipoProducto,
+                new Status($refaccion->status->idStatus, "Activo")
+            );
+
+            return $refaccionObj;
+        })->toArray();
+
+        return $refaccionesArray;
+    }
 }

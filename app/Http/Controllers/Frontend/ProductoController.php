@@ -3,18 +3,28 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Producto;
 use App\Models\Kit;
 use Illuminate\Http\Request;
+
+use App\Models\Modelos\kitModelo;
+use App\Models\Modelos\refaccionModelo;
+
+use App\Models\Producto;
+
+
 
 class ProductoController extends Controller
 {
     //
     public function index()
     {
+        $kitModelo = new kitModelo();
+        $refaccionesModelo = new refaccionModelo();
+
+        $refacciones = $refaccionesModelo->getRefaccionesPorSucursalYStock();
+
         $productos = Producto::paginate(6);
-        $kits = Kit::all();
-        return view('productos.index', compact('productos'), compact('kits'));
+        return view('productos.index', compact('productos'));
     }
 
     public function show(Producto $producto)
