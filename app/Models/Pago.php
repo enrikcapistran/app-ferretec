@@ -10,10 +10,7 @@ class Pago extends Model
     protected $table = 'pago';
 
     // Set the primary key
-    protected $primaryKey = 'idPago';
-
-    // Disable auto-increment if the primary key is not an integer
-    public $incrementing = false;
+    public $primaryKey = 'idPago';
 
     // Specify the data type of the primary key if it's not an integer
     protected $keyType = 'int';

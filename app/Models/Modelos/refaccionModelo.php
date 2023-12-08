@@ -6,16 +6,19 @@ use App\Models\Clases\Status;
 use App\Models\Clases\Producto;
 
 use App\Models\Producto as productoServicios;
+use App\Models\InventarioSucursal as inventarioSucursalServicios;
 
 class refaccionModelo
 {
 
     private productoServicios $productoServicios;
+    private inventarioSucursalServicios $inventarioSucursalServicios;
 
     public function __construct()
     {
 
         $this->productoServicios = new productoServicios();
+        $this->inventarioSucursalServicios = new inventarioSucursalServicios();
     }
 
     public function getTodasRefacciones()
@@ -37,5 +40,34 @@ class refaccionModelo
         })->toArray();
 
         return $refaccionesArray;
+    }
+
+    public function getProductosPorSucursalYStock()
+    {
+        $sucursal = session()->get('sucursal');
+
+        $stockJson = $this->inventarioSucursalServicios->all()->where('idSucursal', "=", $sucursal->getIdSucursal())->where('idStatus', 1)->where('existencia', ">", 0);
+
+        //dd($productosJson);
+
+        $productosArray = $stockJson->map(function ($stock) {
+            $producto = $stock->producto()->first();
+
+            $productoObj = new Producto(
+                $producto->idProducto,
+                $producto->nombreProducto,
+                $producto->descripcion,
+                $producto->imagen,
+                $producto->precioUnitario,
+                $producto->idTipoProducto,
+                new Status($producto->status->idStatus, "Activo")
+            );
+
+            $productoObj->setStock($stock->existencia);
+
+            return $productoObj;
+        })->toArray();
+
+        return array_values($productosArray);
     }
 }

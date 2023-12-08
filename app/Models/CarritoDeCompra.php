@@ -9,11 +9,10 @@ class CarritoDeCompra extends Model
     // Define the table associated with the model
     protected $table = 'carritoDeCompra';
 
-    // Indicar que el modelo no tiene llave primaria incremental
-    public $incrementing = false;
-
     // Indicar que la llave primaria es compuesta
     protected $primaryKey = 'idCarrito';
+
+    public $incrementing = true;
 
     // Desactivar el uso de timestamps
     public $timestamps = false;

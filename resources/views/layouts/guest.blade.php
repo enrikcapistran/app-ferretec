@@ -15,6 +15,22 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans text-gray-900 antialiased">
+    <!-- Ventana Modal para Seleccionar Sucursal -->
+    @if(!session('sucursal'))
+    <div id="modal" class="fixed inset-0 z-10 bg-black bg-opacity-50 flex items-center justify-center">
+        <!-- Contenido de la Modal -->
+        <div class="bg-white p-6 rounded-md shadow-lg">
+            <h2 class="text-2xl font-bold mb-4">Selecciona una Sucursal</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Opciones de Sucursales -->
+                <a href="{{route('seleccionar-sucursal',1)}}" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Norte</a>
+                <a href="{{route('seleccionar-sucursal',2)}}" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Este</a>
+                <a href="{{route('seleccionar-sucursal',3)}}" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Sur</a>
+                <a href="{{route('seleccionar-sucursal',4)}}" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Oeste</a>
+            </div>
+        </div>
+    </div>
+    @endif
     <div class="bg-white shadow-md sticky top-0 w-full" x-data="{ isOpen: false }">
         <nav class="container px-12 py-8 mx-auto md:flex md:justify-between md:items-center">
             <div class="flex items-center justify-between">
@@ -34,6 +50,9 @@
 
             <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
             <div :class="isOpen ? 'flex' : 'hidden'" class="flex-col mt-8 space-y-4 md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0">
+                @if(session('sucursal'))
+                <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-md hover:text-blue-700 pl-8" href="{{ route('sucursal.clear') }}">{{session('sucursal')->getNombreSucursal()}}</a>
+                @endif
                 <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700" href="/">Inicio</a>
                 <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700" href="{{ route('productos.index') }}">Productos</a>
                 <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700" href="{{ route('carrito.index') }}">Carrito de Compra</a>

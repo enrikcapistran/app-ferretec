@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('idCarrito')->unsigned();
             $table->integer('idProducto')->unsigned();
             $table->tinyInteger('cantidad')->unsigned();
-            $table->foreign('idCarrito')->references('idCarrito')->on('carritoDeCompra');
+            $table->foreign('idCarrito')->references('idCarrito')->on('carritoDeCompra')->onDelete('cascade');
             $table->foreign('idProducto')->references('idProducto')->on('productos');
             $table->index(['idCarrito', 'idProducto']);
         });

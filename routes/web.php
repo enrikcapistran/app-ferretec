@@ -31,6 +31,8 @@ use App\Models\Reservation;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
+use App\Http\Controllers\Frontend\pagoController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -58,12 +60,13 @@ Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('
 //Route::post('admin/surtidos/store', 'TuControlador@tuMetodo')->name('admin.surtidos.store');
 
 Route::get('/admin/surtidos/create', [SurtidoController::class, 'create'])->name('admin.surtidos.create');
-Route::post('/admin/surtidos/finalizarSurtido', [SurtidoController::class, 'finalizarSurtido'])->name('admin.surtidos.finalizarSurtido');
 Route::get('/admin/surtidos/{id}/edit', [SurtidoController::class, 'edit'])->name('admin.surtidos.edit');
 Route::get('/admin/surtidos', [SurtidoController::class, 'index'])->name('admin.surtidos.index');
 Route::post('/admin/surtidos/guardar-inventario', [DetalleSurtidoController::class, 'guardarInventario'])->name('admin.surtidos.guardarInventario');
+Route::post('/admin/surtidos/finalizarSurtido', [SurtidoController::class, 'finalizarSurtido'])->name('admin.surtidos.finalizarSurtido');
+Route::post('/admin/surtidos/FinalizarRevicion', [SurtidoController::class, 'FinalizarRevicion'])->name('admin.surtidos.FinalizarRevicion');
 
-
+Route::get('/pagar', [pagoController::class, 'pagar'])->name('pagar');
 
 
 
@@ -73,7 +76,6 @@ Route::prefix('carrito')->group(function () {
     Route::post('/vaciar', [CarritoDeCompraController::class, 'vaciarCarrito'])->name('carrito.vaciar');
     Route::delete('/quitar/{idProducto}', [CarritoDeCompraController::class, 'quitarProducto'])->name('carrito.quitar');
     Route::put('/actualizar/{idProducto}', [CarritoDeCompraController::class, 'actualizarProducto'])->name('carrito.actualizar');
-    Route::post('/pagar', [CarritoDeCompraController::class, 'pagar'])->name('carrito.pagar');
     Route::delete('/eliminar/{idProducto}', [CarritoDeCompraController::class, 'eliminarProducto'])->name('carrito.eliminar');
     Route::post('/seleccionarCliente', [CarritoDeCompraController::class, 'seleccionarCliente'])->name('carrito.seleccionarCliente');
 });
@@ -85,6 +87,7 @@ Route::prefix('carrito')->group(function () {
 Route::get('/gracias', [WelcomeController::class, 'gracias'])->name('gracias');
 
 Route::get('/seleccionar-sucursal/{idSucursal}', [FrontendSucursalController::class, 'seleccionarSucursal'])->name('seleccionar-sucursal');
+Route::get('/limpiar-sucursal', [FrontendSucursalController::class, 'limpiarSucural'])->name('sucursal.clear');
 
 
 Route::get('/dashboard', function () {

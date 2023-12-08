@@ -40,7 +40,11 @@ class CarritoDeCompra
 
     public function getTotal(): float
     {
-        return $this->total;
+        $total = 0;
+        foreach ($this->detalles as $detalle) {
+            $total += $detalle->calcularSubtotal();
+        }
+        return $total;
     }
 
     public function getIdCarrito(): ?int
@@ -68,13 +72,23 @@ class CarritoDeCompra
         $this->detalles = $detalles;
     }
 
+    public function setIdCarrito(int $idCarrito): void
+    {
+        $this->idCarrito = $idCarrito;
+    }
 
-    public function addDetalle(DetalleCarrito $detalle): void
+
+    public function addDetalle(DetalleCarrito $detalle): bool
     {
         //buscar si existe el detalle
-        //si existe no permitir agregarlo
+        for ($i = 0; $i < count($this->detalles); $i++) {
+            if ($this->detalles[$i]->getProducto()->getIdProducto() === $detalle->getProducto()->getIdProducto()) {
+                return false;
+            }
+        }
 
         array_push($this->detalles, $detalle);
+        return true;
     }
 
     public function removeDetalle(int $idProducto): void

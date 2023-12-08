@@ -1,25 +1,4 @@
 <x-guest-layout>
-    <!-- Ventana Modal para Seleccionar Sucursal -->
-    @if(!session('sucursal'))
-    <div id="modal" class="fixed inset-0 z-10 bg-black bg-opacity-50 flex items-center justify-center">
-        <!-- Contenido de la Modal -->
-        <div class="bg-white p-6 rounded-md shadow-lg">
-            <h2 class="text-2xl font-bold mb-4">Selecciona una Sucursal</h2>
-            <div class="grid grid-cols-2 gap-4">
-                <!-- Opciones de Sucursales -->
-                <a href="{{route('seleccionar-sucursal',1)}}" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Norte</a>
-                <a href="{{route('seleccionar-sucursal',2)}}" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Este</a>
-                <a href="{{route('seleccionar-sucursal',3)}}" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Sur</a>
-                <a href="{{route('seleccionar-sucursal',4)}}" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Oeste</a>
-            </div>
-        </div>
-    </div>
-    @endif
-
-    <!-- Contenido principal que se muestra después de seleccionar la sucursal -->
-    <div id="mainContent" x-show="!showModal">
-        <p>Sucursal seleccionada: {{session('sucursal') ? session()->get('sucursal')->getNombreSucursal() : ""}}</p>
-    </div>
     <!-- Main Hero Content -->
     <div class="container max-w-lg px-4 py-32 mx-auto text-left bg-center bg-no-repeat bg-cover md:max-w-none md:text-center" style="background-image: url('https://irp.cdn-website.com/b8e4de53/DESKTOP/jpg/755.jpg')">
         <h1 class="mt-20 font-mono text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 hover:text-blue-700 md:text-center sm:leading-none lg:text-5xl">
@@ -36,34 +15,7 @@
     </div>
     <!-- End Main Hero Content -->
     <!-- Inicio Seccion Promociones Kits -->
-    <section class="mt-8 bg-white">
-        <div class="mt-4 text-center">
-            <h3 class="text-2xl font-bold">Productos</h3>
-            <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
-                Promociones KITS
-            </h2>
-        </div>
-        <div class="container w-full px-5 py-6 mx-auto">
-            <div class="grid lg:grid-cols-4 gap-8 mt-8">
-                @forelse ($productos as $producto)
-                <div class="max-w-xs overflow-hidden bg-white rounded-lg shadow-lg">
-                    <!-- Agrega aquí el código para mostrar cada producto -->
-                    <img class="w-full h-48 object-cover object-center" src="{{ Storage::url($producto->imagen) }}" alt="{{ $producto->nombreProducto }}">
-                    <div class="px-6 py-4">
-                        <h4 class="mb-2 text-xl font-semibold text-green-600 uppercase">{{ $producto->nombreProducto }}</h4>
-                        <p class="text-gray-700">{{ Str::limit($producto->descripcion, 140, '...') }}</p>
-                    </div>
-                    <div class="flex items-center justify-between px-6 py-4 bg-gray-100">
-                        <span class="text-xl text-green-600">${{ $producto->precioUnitario }}</span>
-                        <a href="{{ route('productos.show', $producto->idProducto) }}" class="text-sm text-blue-600 hover:underline">Ver detalles</a>
-                    </div>
-                </div>
-                @empty
-                <p class="text-center text-gray-500">No hay productos disponibles en este momento.</p>
-                @endforelse
-            </div>
-        </div>
-    </section>
+
 
     <section class="px-2 py-32 bg-white md:px-0">
         <div class="container items-center max-w-6xl px-8 mx-auto xl:px-6">
@@ -96,6 +48,7 @@
     @php
     //dd(auth()->user()->isAdmin())
     @endphp
+
     <!-- Section for different user roles -->
     @if(auth()->check())
     @if(auth()->user()->isAdmin())
