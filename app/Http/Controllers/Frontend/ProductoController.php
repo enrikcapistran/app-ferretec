@@ -12,7 +12,7 @@ class ProductoController extends Controller
     //
     public function index()
     {
-        $productos = Producto::all();
+        $productos = Producto::paginate(5);
         $kits = Kit::all();
         return view('productos.index', compact('productos'), compact('kits'));
     }

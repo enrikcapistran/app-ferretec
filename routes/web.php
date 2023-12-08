@@ -27,6 +27,7 @@ use App\Http\Controllers\ProfileController;
 use App\Models\Category;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,5 +91,13 @@ Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(fun
     Route::resource('/ventas', VentaController::class);
 });
 
+Route::post('/seleccionar-sucursal', function () {
+    $sucursal = request('sucursal');
+
+    // Almacenar la sucursal seleccionada en la sesión
+    Session::put('sucursal_seleccionada', $sucursal);
+
+    return response()->json(['message' => 'Sucursal seleccionada guardada en la sesión.']);
+});
 
 require __DIR__ . '/auth.php';

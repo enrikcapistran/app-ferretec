@@ -1,4 +1,32 @@
 <x-guest-layout>
+    <!-- Ventana Modal para Seleccionar Sucursal -->
+    <div x-data="{ showModal: true, sucursalSeleccionada: '' }">
+        <!-- Fondo Oscuro de la Modal -->
+        <div x-show="showModal" class="fixed inset-0 z-10 bg-black bg-opacity-50 flex items-center justify-center">
+            <!-- Contenido de la Modal -->
+            <div class="bg-white p-6 rounded-md shadow-lg">
+                <h2 class="text-2xl font-bold mb-4">Selecciona una Sucursal</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- Opciones de Sucursales -->
+                    <button @click="elegirSucursal('Sucursal Norte')" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Norte</button>
+                    <button @click="elegirSucursal('Sucursal Este')" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Este</button>
+                    <button @click="elegirSucursal('Sucursal Oeste')" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Oeste</button>
+                    <button @click="elegirSucursal('Sucursal Sur')" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Sur</button>
+                </div>
+
+                <!-- Muestra la sucursal seleccionada -->
+                <p x-show="sucursalSeleccionada" class="mt-4 text-gray-600">Sucursal seleccionada: <span x-text="sucursalSeleccionada"></span></p>
+
+                <!-- Botón para cerrar la modal después de seleccionar la sucursal -->
+                <button @click="showModal = false" class="mt-4 px-4 py-2 text-white bg-blue-500 rounded-full hover:bg-blue-600 focus:outline-none">
+                    Continuar
+                </button>
+            </div>
+        </div>
+
+        <!-- Contenido principal que se muestra después de seleccionar la sucursal -->
+        <div x-show="!showModal">
+    </div>
     <!-- Main Hero Content -->
     <div class="container max-w-lg px-4 py-32 mx-auto text-left bg-center bg-no-repeat bg-cover md:max-w-none md:text-center" style="background-image: url('https://irp.cdn-website.com/b8e4de53/DESKTOP/jpg/755.jpg')">
         <h1 class="mt-20 font-mono text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 hover:text-blue-700 md:text-center sm:leading-none lg:text-5xl">
@@ -227,6 +255,24 @@
                     <a href="#" class="text-xl font-medium text-green-500">John Doe</a>
                 </div>
             </div>
+            <p>Sucursal seleccionada: <span x-text="alpinejs.sucursalSeleccionada"></span></p>
         </div>
     </section>
+    <script>
+        function elegirSucursal(sucursal) {
+            // Guardar la sucursal seleccionada en session mediante Axios
+            axios.post('/seleccionar-sucursal', { sucursal: sucursal })
+                .then(response => {
+                    // Puedes realizar acciones adicionales después de seleccionar la sucursal
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+    
+            // Ocultar la modal después de seleccionar la sucursal
+            window.alpinejs.showModal = false;
+        }
+    </script>
+    
 </x-guest-layout>

@@ -14,14 +14,22 @@
                         <div class="flex items-center justify-between p-4">
                             <span class="text-xl text-green-600">${{ $producto->precioUnitario }}</span>
                         </div>
-                        <div class="mt-4">
-                            <a href="{{ route('productos.show', $producto->idProducto) }}" class="block w-full px-4 py-2 text-center text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                        <div class="flex items-center justify-between px-4 py-2 bg-gray-100">
+                            <a href="{{ route('productos.show', $producto->idProducto) }}" class="block w-1/2 text-center text-blue-500 hover:text-blue-700 focus:outline-none">
                                 Ver Detalles
+                            </a>
+                            <a href="{{ route('carrito.agregar', $producto->idProducto) }}" class="block w-1/2 text-center text-green-500 hover:text-green-700 focus:outline-none">
+                                Agregar al Carrito
                             </a>
                         </div>
                     </div>
                 </a>
             @endforeach
+        </div>
+
+        <!-- Paginación -->
+        <div class="mt-8">
+            {{ $productos->links() }}
         </div>
     </div>
 </x-guest-layout>
