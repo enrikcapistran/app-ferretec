@@ -5,7 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PedidoSurtido as SurtidosServicios;
+use App\Models\DetalleSurtido as DetalleSurtidoServicios;
+use App\Models\Sucursal as SucursalServicios;
+use App\Models\Producto as ProductosServicios;
+use App\Models\InventarioSucursal;
 use App\Models\DetalleSurtido;
+use App\Models\Sucursal AS sucursalModelo;
 
 
 class SurtidoController extends Controller
@@ -26,13 +31,14 @@ class SurtidoController extends Controller
         return view('admin.surtidos.index', compact('pedidoSurtido'));
     }
 
-    
-    
-    
 
     public function create()
     {
-        //
+        $productos = ProductosServicios::all()->where('idTipoProducto', '=', 1);
+        $sucursales = SucursalServicios::all();
+
+        return view('admin.surtidos.create', compact('productos'), compact('sucursales'));
+
     }
 
     public function guardarInventario(Request $request, $idSurtido)
@@ -40,20 +46,25 @@ class SurtidoController extends Controller
         $cantidadLlegoData = $request->input('cantidadLlego');
     
         if (!is_array($cantidadLlegoData)) {
-            // Manejar el caso en el que no se recibió un array correctamente
-            // (por ejemplo, redirigir con un mensaje de error)
+            return redirect()->route('admin.surtidos.index')->with('success', 'No se proporcionaron datos.');
         }
     
         foreach ($cantidadLlegoData as $idRefaccion => $cantidadLlego) {
-            InventarioSucursal::create([
-                'idSucursal' => $idSurtido,
-                'idProducto' => $idRefaccion,
-                'existencia' => $cantidadLlego,
-            ]);
+            $inventario = InventarioSucursal::where('idSucursal', $idSurtido)
+                                            ->where('idProducto', $idRefaccion)
+                                            ->first();
+    
+            if ($inventario) {
+                $inventario->existencia += $cantidadLlego;
+                $inventario->save();
+            } else {
+
+            }
         }
     
         return redirect()->route('admin.surtidos.index')->with('success', 'Surtido de Sucursal Guardado Correctamente.');
     }
+    
     
 
 
@@ -74,7 +85,7 @@ class SurtidoController extends Controller
         $detalleSurtido = DetalleSurtido::where('idSurtido', $id)->get();
     
         if ($detalleSurtido->isEmpty()) {
-            return redirect()->route('ruta_de_error');
+            return redirect()->route('admin.surtidos.index')->with('success', 'No se encontraron datos.');
         }
     
         return view('admin.surtidos.edit', compact('detalleSurtido', 'pedidoSurtido'));
@@ -85,6 +96,30 @@ class SurtidoController extends Controller
     {
         //
     }
+
+    public function finalizarSurtido(Request $request)
+    {
+        $validatedData = $request->validate([
+            'sucursal' => 'required',
+            'productos.*.idProducto' => 'required',
+            'productos.*.cantidad' => 'required|integer',
+        ]);
+    
+        $surtido = Surtido::create([
+            'idSucursal' => $request->sucursal,
+        ]);
+    
+        foreach ($request->productos as $producto) {
+            DetalleSurtido::create([
+                'idSurtido' => $surtido->id,
+                'idProducto' => $producto['idProducto'],
+                'cantidad' => $producto['cantidad'],
+            ]);
+        }
+    
+        return redirect()->route('admin.surtidos.index')->with('success', 'Surtido de Sucursal Guardado Correctamente.');
+    }
+    
 
     /**
      * Remove the specified resource from storage.

@@ -26,7 +26,7 @@ class PedidosSurtidos extends Seeder
             PedidoSurtido::create([
                 'idSucursal' => $pedidoSurtido[1],
                 'fechaDePedido' => $pedidoSurtido[2],
-                'idStatus' => $pedidoSurtido[4],
+                'idStatus' => $pedidoSurtido[3],
             ]);
         }
     }

@@ -8,17 +8,26 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             </div>
-            
+            <h1 class="text-3xl text-center font-bold text-gray-800 dark:text-gray-200">Surtidos de sucursales</h1>
             <div class="mb-4">
                 <form action="{{ route('admin.surtidos.index') }}" method="GET">
                     <label for="folio" class="sr-only">Buscar por folio</label>
                     <input type="text" id="folio" name="folio" placeholder="Buscar por folio" class="px-4 py-2 border border-gray-300 rounded-md" value="{{ request('folio') }}">
                     <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md">Buscar</button>
-                </form>
+                    
+                    <div style="text-align: right;">
+                        <a href="{{ route('admin.surtidos.create') }}" class="px-4 py-2 bg-green-500 hover:bg-green-700 rounded-lg text-white">
+                            Nuevo Surtido
+                        </a>    
+                    </div>
+                </form> 
             </div>
+
             
+
             @if($pedidoSurtido->isNotEmpty())
                 <div class="relative overflow-x-auto">
+                   
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <!-- Encabezado de la tabla y filas de datos -->
                     </table>

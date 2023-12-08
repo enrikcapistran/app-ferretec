@@ -43,20 +43,42 @@
                                     {{ $detalle->cantidad }}
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <input type="number" pattern="\d*" name="cantidadLlego[{{ $detalle->idRefaccion }}]" placeholder="Ingrese la cantidad" class="bg-black text-white p-2 rounded-md" />
-                                </td>
+                                    <input type="number" pattern="\d*" id="cantidadLlego{{ $detalle->idRefaccion }}" name="cantidadLlego[{{ $detalle->idRefaccion }}]" placeholder="Ingrese la cantidad" class="bg-black text-white p-2 rounded-md" />
+
+                                    <!-- Agrega un botón para activar la función JavaScript -->
+                                    <button onclick="obtenerValor()">Obtener Valor</button>
+                                    
+                                    <!-- Agrega un elemento donde mostrar el valor -->
+                                    <div id="valorMostrado"></div>
+                                    
+                                    <script>
+                                        function obtenerValor() {
+                                            // Obtiene el elemento de entrada por su ID
+                                            var inputElement = document.getElementById("cantidadLlego{{ $detalle->idRefaccion }}");
+                                            
+                                            // Obtiene el valor del campo de entrada
+                                            var valor = inputElement.value;
+                                            
+                                            // Muestra el valor en un elemento div
+                                            document.getElementById("valorMostrado").innerHTML = "Valor ingresado: " + valor;
+                                        }
+                                    </script>                                </td>
                             </tr>
                         @endforeach
                         
 
-                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <form action="{{ route('admin.surtidos.guardarInventario', ['idSurtido' => $pedidoSurtido->idSurtido]) }}" method="post">
-                                        @csrf
-                                        <button type="submit" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">
-                                            Guardar
-                                        </button>
-                                    </form>
-                                </td>
+                        <form action="{{ route('admin.surtidos.guardarInventario', ['idSurtido' => $pedidoSurtido->idSurtido]) }}" method="post">
+                            @csrf
+                            <div class="relative overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                    <!-- Cabecera y cuerpo de la tabla... -->
+                                </table>
+                            </div>
+                            <button type="submit" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">
+                                Guardar
+                            </button>
+                        </form>
+                        
 
                                 
                         </tbody>

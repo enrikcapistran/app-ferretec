@@ -14,13 +14,12 @@ class DetallesSurtidosSeeder extends Seeder
      */
     public function run()
     {
-        // Datos de muestra para 5 detalles de surtido
         $detallesSurtidos = [
             ['1', '1', '10'],
             ['1', '2', '5'],
             ['2', '3', '8'],
-            ['2', '4', '15'],
-            ['2', '5', '12'],
+            ['2', '1', '15'],
+            ['2', '1', '12'],
         ];
 
         foreach ($detallesSurtidos as $detalleSurtido) {

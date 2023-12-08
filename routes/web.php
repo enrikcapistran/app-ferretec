@@ -50,8 +50,15 @@ Route::get('/kits/{kit}', [FrontendKitController::class, 'show'])->name('kits.sh
 Route::get('/productos', [FrontendProductoController::class, 'index'])->name('productos.index');
 Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.show');
 
+
+Route::get('/admin/surtidos/create', [SurtidoController::class, 'create'])->name('admin.surtidos.create');
+
+//Route::post('admin/surtidos/store', 'TuControlador@tuMetodo')->name('admin.surtidos.store');
+
+Route::post('/admin/surtidos/finalizarSurtido', [SurtidoController::class, 'finalizarSurtido'])->name('admin.surtidos.finalizarSurtido');
 Route::get('/admin/surtidos/{id}/edit', [SurtidoController::class, 'edit'])->name('admin.surtidos.edit');
 Route::get('/admin/surtidos', [SurtidoController::class, 'index'])->name('admin.surtidos.index');
+
 
 Route::post('/carrito/agregar/{producto}', [CarritoDeCompraController::class, 'agregar'])->name('carrito.agregar');
 Route::post('admin/surtidos/guardar-inventario/{idSurtido}', [SurtidoController::class, 'guardarInventario'])->name('admin.surtidos.guardarInventario');
