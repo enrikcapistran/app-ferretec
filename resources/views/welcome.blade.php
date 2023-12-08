@@ -294,6 +294,6 @@
     </script>
 
     <script type="module" defer>
-        import './js/app.js'; // Ajusta la ruta según tu configuración
+        import '/js/app.js'; // Ajusta la ruta según tu configuración
     </script>
 </x-guest-layout>
