@@ -23,7 +23,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <form method="POST" action="{{ route('admin.surtidos.guardarInventario') }}">
 
                         @foreach ($detalleSurtido as $detalle)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -38,10 +37,8 @@
                                     @csrf
                                     <input type="hidden" name="idSucursal" value="{{ $pedidoSurtido->idSucursal }}" />
                                     <input type="hidden" name="idRefaccion" value="{{ $detalle->idRefaccion }}" />
-                                   
-                                  
-                                    <input type="number" name="cantidad" placeholder="Ingrese la cantidad" class="bg-black text-white p-2 rounded-md" />
-                                    @if ($pedidoSurtido->idStatus == 1)
+
+                                    <input type="number" name="cantidad" placeholder="Ingrese la cantidad" class=" text-black p-2 rounded-md" />
                                     <button type="submit" class="ml-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">
                                         Registrar
                                     </button>
@@ -56,22 +53,13 @@
                     </tbody>
 
                 </table>
-                    @method('post')
-
-                    @if ($pedidoSurtido->idStatus == 1)
-                    <form action="{{ route('admin.surtidos.FinalizarRevicion') }}" method="post">
-                        @csrf
-                        <input type="hidden" name="idSucursal" value="{{ $pedidoSurtido->idSucursal }}" />
-                        <input type="hidden" name="idRefaccion" value="{{ $detalle->idRefaccion }}" />
-                        <input type="hidden" name="idSurtido" value="{{ $pedidoSurtido->idSurtido }}" />
-                        <button type="submit" class="ml-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">
-                            Terminar
-                        </button>
-                    </form>
-                @else
-                @endif
-
-                    </form>
+                <form method="POST" action="{{ route('admin.surtidos.finalizarSurtido') }}">
+                    @csrf
+                    <input type="hidden" name="idSurtido" value="{{ $pedidoSurtido->idSurtido }}" />
+                    <button type="submit" class="ml-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">
+                        Finalizar Surtido
+                    </button>
+                </form>
             </div>
         </div>
     </div>

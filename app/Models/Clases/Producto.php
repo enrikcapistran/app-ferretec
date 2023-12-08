@@ -11,6 +11,7 @@ class Producto
     protected float $precioUnitario;
     protected int $idTipoProducto;
     protected ?Status $status;
+    protected ?int $stock;
 
     public function __construct(?int $idProducto, string $nombreProducto, string $descripcion, string $imagen, float $precioUnitario, int $idTipoProducto, Status $status = new Status(1))
     {
@@ -52,6 +53,12 @@ class Producto
         return $this->status;
     }
 
+    public function getStock(): ?int
+    {
+        return $this->stock;
+    }
+
+
     //setters
     public function setIdProducto(int $idProducto): void
     {
@@ -80,5 +87,10 @@ class Producto
     public function setstatus(Status $status): void
     {
         $this->status = $status;
+    }
+
+    public function setStock(int $stock): void
+    {
+        $this->stock = $stock;
     }
 }

@@ -36,4 +36,21 @@ class SucursalModelo
 
         return $sucursalesArr;
     }
+
+    public function obtenerSucursal(int $idSucursal)
+    {
+        $sucursalJson = $this->sucursalServicios->find($idSucursal);
+
+        $sucursalObj = new Sucursal();
+
+        $sucursalObj->setIdSucursal($sucursalJson->idSucursal);
+        $sucursalObj->setNombreSucursal($sucursalJson->nombreSucursal);
+        $sucursalObj->setCalle($sucursalJson->calle);
+        $sucursalObj->setColonia($sucursalJson->colonia);
+        $sucursalObj->setNumero($sucursalJson->numero);
+        $sucursalObj->setCP($sucursalJson->CP);
+        $sucursalObj->setTelefono($sucursalJson->telefono);
+
+        return $sucursalObj;
+    }
 }
