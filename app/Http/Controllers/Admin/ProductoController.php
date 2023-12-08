@@ -83,7 +83,6 @@ class ProductoController extends Controller
     {
         //
         //$producto = ProductoServicios::findOrFail($producto->idProducto);
-        //$producto = ProductoServicios::findOrFail($producto->idProducto);
         return view('admin.productos.edit', compact('producto'));
     }
 
