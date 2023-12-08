@@ -25,17 +25,13 @@ class SucursalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function elegirSucursal(Request $request)
+    public function seleccionarSucursal(Request $request)
     {
-        // Validaciones y lógica para guardar la sucursal seleccionada
-        $request->validate([
-            'sucursal' => 'required|in:sucursal1,sucursal2,sucursal3,sucursal4',
-        ]);
+        // Lógica para guardar la sucursal en la sesión
+        $sucursal = $request->input('sucursal');
+        session(['sucursal' => $sucursal]);
 
-        // Guarda la sucursal en la sesión
-        session(['sucursalSeleccionada' => $request->input('sucursal')]);
-
-        // Redirecciona a la ruta que desees después de elegir la sucursal
-        return redirect()->route('/'); // Reemplaza 'nombre_de_la_ruta' con la ruta real
+        // Devuelve la información de la sucursal seleccionada
+        return response()->json(['sucursal' => $sucursal]);
     }
 }

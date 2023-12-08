@@ -267,8 +267,8 @@
                     // Puedes realizar acciones adicionales después de seleccionar la sucursal
                     console.log(response.data);
 
-                    // Muestra la sucursal seleccionada en el contenido principal
-                    document.getElementById('sucursalSeleccionadaMain').innerText = response.data;
+                    // Asignar directamente el valor al elemento del DOM
+                    document.getElementById('sucursalSeleccionadaMain').innerText = response.data.sucursal;
                 })
                 .catch(error => {
                     console.error(error);
@@ -290,10 +290,10 @@
         window.onload = function () {
             document.getElementById('modal').style.display = 'flex';
         };
+        
     </script>
 
-<script type="module" defer>
-    import './js/app.js'; // Ajusta la ruta según tu configuración
-  </script>
-  
+    <script type="module" defer>
+        import './js/app.js'; // Ajusta la ruta según tu configuración
+    </script>
 </x-guest-layout>

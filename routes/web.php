@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\TiendaController;
 use App\Http\Controllers\Admin\VentaController;
 
 use App\Http\Controllers\Frontend\CarritoDeCompraController;
+use App\Http\Controllers\SucursalController;
 
 use App\Http\Controllers\Frontend\CategoryController as FrontendCategoryController;
 use App\Http\Controllers\Frontend\MenuController as FrontendMenuController;
@@ -90,7 +91,7 @@ Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(fun
     Route::resource('/tiendas', TiendaController::class);
     Route::resource('/ventas', VentaController::class);
 });
-
+Route::post('/seleccionar-sucursal', [SucursalController::class, 'seleccionarSucursal']);
 Route::post('/seleccionar-sucursal', function () {
     $sucursal = request('sucursal');
 
