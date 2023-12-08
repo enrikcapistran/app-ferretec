@@ -29,7 +29,7 @@
                                 <form action="{{ route('carrito.actualizar', $detalleCarrito->getProducto()->getIdProducto()) }}" method="POST">
                                     @csrf
                                     @method('PUT')
-                                    <input type="number" name="cantidad" value="{{ $detalleCarrito->getCantidad() }}" class="w-16 px-2 py-1 text-center border rounded">
+                                    <input type="number" name="cantidad" min="1" value="{{ $detalleCarrito->getCantidad() }}" class="w-16 px-2 py-1 text-center border rounded">
                             </td>
                             <td class="px-6 py-6 border-b text-lg">${{ number_format($detalleCarrito->getProducto()->getPrecioUnitario() * $detalleCarrito->getCantidad(), 2) }}</td>
                             <td class="px-6 py-6 border-b">
@@ -43,11 +43,16 @@
                             </td>
                         </tr>
                         @endforeach
+                        <tr>
+                            <td colspan="3" class="px-6 py-6 font-bold text-right uppercase">Total</td>
+                            <td class="px-6 py-6 font-bold text-lg">${{ number_format($carrito->getTotal(), 2) }}</td>
+                            <td></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
             <div class="flex justify-end mt-8">
-                <a href="{{ route('carrito.pagar') }}" class="px-8 py-4 text-xl font-bold text-white bg-green-600 rounded-full hover:bg-green-700 focus:outline-none">
+                <a href="{{ route('pagar') }}" class="px-8 py-4 text-xl font-bold text-white bg-green-600 rounded-full hover:bg-green-700 focus:outline-none">
                     Proceder al Pago
                 </a>
             </div>

@@ -43,10 +43,6 @@ class CarritoDeCompraController extends Controller
     {
     }
 
-    public function pagar()
-    {
-    }
-
     public function actualizarProducto(Request $request, int $idProducto)
     {
         $carritoModelo = new CarritoModelo();

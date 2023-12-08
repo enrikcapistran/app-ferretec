@@ -40,7 +40,11 @@ class CarritoDeCompra
 
     public function getTotal(): float
     {
-        return $this->total;
+        $total = 0;
+        foreach ($this->detalles as $detalle) {
+            $total += $detalle->calcularSubtotal();
+        }
+        return $total;
     }
 
     public function getIdCarrito(): ?int
@@ -66,6 +70,11 @@ class CarritoDeCompra
     public function setDetalles(array $detalles): void
     {
         $this->detalles = $detalles;
+    }
+
+    public function setIdCarrito(int $idCarrito): void
+    {
+        $this->idCarrito = $idCarrito;
     }
 
 

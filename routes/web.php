@@ -31,6 +31,8 @@ use App\Models\Reservation;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
+use App\Http\Controllers\Frontend\pagoController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -64,6 +66,7 @@ Route::get('/admin/surtidos', [SurtidoController::class, 'index'])->name('admin.
 Route::post('/admin/surtidos/guardar-inventario', [DetalleSurtidoController::class, 'guardarInventario'])->name('admin.surtidos.guardarInventario');
 
 
+Route::get('/pagar', [pagoController::class, 'pagar'])->name('pagar');
 
 
 
@@ -73,7 +76,6 @@ Route::prefix('carrito')->group(function () {
     Route::post('/vaciar', [CarritoDeCompraController::class, 'vaciarCarrito'])->name('carrito.vaciar');
     Route::delete('/quitar/{idProducto}', [CarritoDeCompraController::class, 'quitarProducto'])->name('carrito.quitar');
     Route::put('/actualizar/{idProducto}', [CarritoDeCompraController::class, 'actualizarProducto'])->name('carrito.actualizar');
-    Route::post('/pagar', [CarritoDeCompraController::class, 'pagar'])->name('carrito.pagar');
     Route::delete('/eliminar/{idProducto}', [CarritoDeCompraController::class, 'eliminarProducto'])->name('carrito.eliminar');
     Route::post('/seleccionarCliente', [CarritoDeCompraController::class, 'seleccionarCliente'])->name('carrito.seleccionarCliente');
 });

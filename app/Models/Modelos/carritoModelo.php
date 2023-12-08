@@ -27,19 +27,20 @@ class CarritoModelo
         $this->detalleCarritoServicio = new DetalleCarritoServicio();
         $this->ProductoServicio = new ProductoServicio();
 
-        $sucuralId = session()->get('sucursal')->getIdSucursal();
+        $sucursalId = session()->get('sucursal')->getIdSucursal();
 
         if (!auth()->check()) {
-            $this->carrito = session()->get('carrito') ?? new CarritoDeCompra(null, $sucuralId);
+            $this->carrito = session()->get('carrito') ?? new CarritoDeCompra(null, $sucursalId);
             session()->put('carrito', $this->carrito);
             return;
         }
 
-        $usuario = auth()->user()->idUsuario;
+        $usuarioId = auth()->user()->idUsuario;
 
-        $carritoUsuarioSucursal = $this->carritoServicio->obtenerCarrito($usuario, $sucuralId);
+        $carritoUsuarioSucursal = $this->carritoServicio->obtenerCarrito($usuarioId, $sucursalId);
         if ($carritoUsuarioSucursal) {
             $this->carrito = new CarritoDeCompra($carritoUsuarioSucursal->idUsuario, $carritoUsuarioSucursal->idSucursal, $carritoUsuarioSucursal->idStatus, $carritoUsuarioSucursal->idCarrito);
+
 
             $detalles = $this->detalleCarritoServicio->where('idCarrito', '=', $this->carrito->getIdCarrito())->get();
             //dd($detalles);
@@ -57,12 +58,14 @@ class CarritoModelo
                 $this->carrito->addDetalle(new DetalleCarrito($detalle->idCarrito, $producto, $detalle->cantidad, $detalle->idDetalleCarrito));
             }
         } else {
-            $this->carrito = new CarritoDeCompra(1, $sucuralId);
-            $this->carritoServicio->create([
-                'idUsuario' => $usuario,
-                'idSucursal' => $sucuralId,
+            $this->carrito = new CarritoDeCompra($usuarioId, $sucursalId);
+            $carrito = $this->carritoServicio->create([
+                'idUsuario' => $usuarioId,
+                'idSucursal' => $sucursalId,
                 'idStatus' => 1,
             ]);
+
+            $this->carrito->setIdCarrito($carrito->idCarrito);
         }
 
         session()->put('carrito', $this->carrito);
@@ -110,8 +113,10 @@ class CarritoModelo
     {
         $this->carrito->removeDetalle($idProducto);
 
-        if (auth()->check())
-            $this->detalleCarritoServicio->where(["idProducto", '=', $idProducto], ['idCarrito', '=', $this->carrito->getIdCarrito()])->update(['idStatus' => 2]);
+        if (auth()->check()) {
+            //dd($idProducto);
+            $this->detalleCarritoServicio->where([['idCarrito', '=', $this->carrito->getIdCarrito()], ['idProducto', '=', $idProducto]])->delete();
+        }
     }
 
     public function actualizarProducto($idProducto, $cantidad)
@@ -119,7 +124,7 @@ class CarritoModelo
         $this->carrito->actualizarDetalle($idProducto, $cantidad);
 
         if (auth()->check())
-            $this->detalleCarritoServicio->where('idDetalleCarrito', '=', $idProducto)->update(['cantidad' => $cantidad]);
+            $this->detalleCarritoServicio->where('idProducto', '=', $idProducto)->update(['cantidad' => $cantidad]);
 
         session()->put('carrito', $this->carrito);
 

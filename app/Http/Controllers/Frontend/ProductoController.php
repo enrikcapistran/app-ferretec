@@ -18,12 +18,11 @@ class ProductoController extends Controller
     //
     public function index()
     {
-        $kitModelo = new kitModelo();
-        $refaccionesModelo = new refaccionModelo();
+        //$kitModelo = new kitModelo();
+        $productosModelo = new refaccionModelo();
 
-        $refacciones = $refaccionesModelo->getRefaccionesPorSucursalYStock();
+        $productos = $productosModelo->getProductosPorSucursalYStock();
 
-        $productos = Producto::paginate(6);
         return view('productos.index', compact('productos'));
     }
 
