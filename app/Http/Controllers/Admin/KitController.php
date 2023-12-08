@@ -71,13 +71,10 @@ class KitController extends Controller
         try {
             $modelo = new kitModelo();
 
-            $boolean = $modelo->eliminarRefaccion($idRefaccion);
+            $modelo->eliminarRefaccion($idRefaccion);
 
-            if ($boolean) {
-                return redirect()->back()->with('success', 'Producto eliminado del kit.');
-            } else {
-                return redirect()->back()->with('danger', 'Error al eliminar el producto del kit.');
-            }
+
+            return redirect()->back()->with('success', 'Producto eliminado del kit.');
         } catch (\Throwable $th) {
             return redirect()->back()->with('danger', 'Error al eliminar el producto del kit.');
         }

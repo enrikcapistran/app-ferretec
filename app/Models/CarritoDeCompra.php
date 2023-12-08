@@ -9,17 +9,20 @@ class CarritoDeCompra extends Model
     // Define the table associated with the model
     protected $table = 'carritoDeCompra';
 
-    // Set the primary key
-    protected $primaryKey = 'idCarrito';
+    // Indicar que el modelo no tiene llave primaria incremental
+    public $incrementing = false;
 
-    // Custom timestamp column names
-    const CREATED_AT = 'creadoEn';
-    const UPDATED_AT = 'actualizadoEn';
+    // Indicar que la llave primaria es compuesta
+    protected $primaryKey = ['idUsuario', 'idSucursal'];
+
+    // Desactivar el uso de timestamps
+    public $timestamps = false;
 
     // Attributes that are mass assignable
     protected $fillable = [
         'idUsuario',
-        'idStatus'
+        'idSucursal',
+        'idStatus',
     ];
 
     // Relationship with Usuario model
@@ -34,36 +37,24 @@ class CarritoDeCompra extends Model
         return $this->belongsTo(Status::class, 'idStatus');
     }
 
-    public function detalles()
+    // Relationship with Sucursal model
+    public function sucursal()
     {
-        return $this->hasMany(DetalleCarrito::class, 'idCarrito');
+        return $this->belongsTo(Sucursal::class, 'idSucursal');
     }
 
-    public function agregar(Producto $producto)
+    // Relationship with DetalleCarrito model
+    public function detalles()
     {
-        // Aquí puedes agregar la lógica para agregar el producto al carrito
-        // Por ejemplo, puedes usar la sesión para almacenar los productos en el carrito
+        return $this->hasMany(DetalleCarrito::class, 'idCarrito', 'idUsuario', 'idSucursal');
+    }
 
-        $carrito = session()->get('carrito', []);
-
-        // Verificar si el producto ya está en el carrito
-        if (isset($carrito[$producto->id])) {
-            // Incrementar la cantidad si ya está en el carrito
-            $carrito[$producto->id]['cantidad']++;
-        } else {
-            // Agregar el producto al carrito
-            $carrito[$producto->id] = [
-                'id' => $producto->id,
-                'nombre' => $producto->nombre,
-                'precio' => $producto->precio,
-                'cantidad' => 1,
-            ];
-        }
-
-        // Guardar el carrito en la sesión
-        session()->put('carrito', $carrito);
-
-        // Puedes redirigir a la página del producto o a la página del carrito, según tus necesidades
-        return redirect()->back()->with('success', 'Producto agregado al carrito');
+    // Custom method to obtain a specific cart
+    public function obtenerCarrito(int $idUsuario, int $idSucursal)
+    {
+        return CarritoDeCompra::where('idUsuario', $idUsuario)
+            ->where('idSucursal', $idSucursal)
+            ->where('idStatus', 1)
+            ->first();
     }
 }

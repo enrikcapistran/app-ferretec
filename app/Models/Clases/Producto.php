@@ -12,7 +12,7 @@ class Producto
     protected int $idTipoProducto;
     protected ?Status $status;
 
-    public function __construct(?int $idProducto, string $nombreProducto, string $descripcion, string $imagen, float $precioUnitario, int $idTipoProducto, Status $status)
+    public function __construct(?int $idProducto, string $nombreProducto, string $descripcion, string $imagen, float $precioUnitario, int $idTipoProducto, Status $status = new Status(1))
     {
         $this->idProducto = $idProducto;
         $this->nombreProducto = $nombreProducto;

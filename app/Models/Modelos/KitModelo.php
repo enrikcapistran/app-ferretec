@@ -19,8 +19,9 @@ class KitModelo
 {
 
     protected ?Kit $kit;
-    private productoServicios $productoServicios;
+
     private kitServicios $kitServicios;
+    private productoServicios $productoServicios;
     private detalleKitServicios $detalleKitServicios;
     private sucursalServicios $sucursalServicios;
     private usuarioServicios $usuarioServicios;
@@ -28,6 +29,7 @@ class KitModelo
     public function __construct(Kit $kit = null)
     {
         $this->kit = session()->get('kit') ?? $kit;
+        
         $this->productoServicios = new productoServicios();
         $this->kitServicios = new kitServicios();
         $this->detalleKitServicios = new detalleKitServicios();

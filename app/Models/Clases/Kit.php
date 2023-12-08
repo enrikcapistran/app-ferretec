@@ -23,6 +23,7 @@ class Kit extends Producto
         $this->descripcion = "";
         $this->imagen = "";
         $this->precioUnitario = 0;
+        
         $usr = $usuarioCreador ?? new Usuario();
         $usr->setIdUsuario(auth()->user()->idUsuario);
 

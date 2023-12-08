@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('detalleCarrito', function (Blueprint $table) {
+            $table->id('idDetalleCarrito');
             $table->integer('idCarrito')->unsigned();
             $table->integer('idProducto')->unsigned();
             $table->tinyInteger('cantidad')->unsigned();

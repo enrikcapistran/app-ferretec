@@ -10,13 +10,14 @@ class DetalleCarrito extends Model
     protected $table = 'detalleCarrito';
 
     // Indicate that the model does not use auto-incrementing
-    public $incrementing = false;
+    public $primaryKey = 'idDetalleCarrito';
 
     // Disable timestamps if they are not required
     public $timestamps = false;
 
     // Attributes that are mass assignable
     protected $fillable = [
+        'idDetalleCarrito',
         'idCarrito',
         'idProducto',
         'cantidad'

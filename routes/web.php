@@ -50,7 +50,19 @@ Route::get('/kits/{kit}', [FrontendKitController::class, 'show'])->name('kits.sh
 Route::get('/productos', [FrontendProductoController::class, 'index'])->name('productos.index');
 Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.show');
 
-Route::post('/carrito/agregar/{producto}', [CarritoDeCompraController::class, 'agregar'])->name('carrito.agregar');
+
+
+
+Route::prefix('carrito')->group(function () {
+    Route::get('/', [CarritoDeCompraController::class, 'index'])->name('carrito.index');
+    Route::post('/agregar', [CarritoDeCompraController::class, 'agregarProducto'])->name('carrito.agregar');
+    Route::post('/vaciar', [CarritoDeCompraController::class, 'vaciarCarrito'])->name('carrito.vaciar');
+    Route::delete('/quitar/{idProducto}', [CarritoDeCompraController::class, 'quitarProducto'])->name('carrito.quitar');
+    Route::put('/actualizar/{idProducto}', [CarritoDeCompraController::class, 'actualizarProducto'])->name('carrito.actualizar');
+    Route::post('/pagar', [CarritoDeCompraController::class, 'pagar'])->name('carrito.pagar');
+    Route::delete('/eliminar/{idProducto}', [CarritoDeCompraController::class, 'eliminarProducto'])->name('carrito.eliminar');
+    Route::post('/seleccionarCliente', [CarritoDeCompraController::class, 'seleccionarCliente'])->name('carrito.seleccionarCliente');
+});
 
 //Route::get('/reservation/step-one', [FrontendReservationController::class, 'stepOne'])->name('reservations.step.one');
 //Route::post('/reservation/step-one', [FrontendReservationController::class, 'storeStepOne'])->name('reservations.store.step.one');
@@ -71,7 +83,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
 
-    Route::get('/kits', [KitController::class, 'index'])->name('kits.index');;
+    Route::get('/kits', [KitController::class, 'index'])->name('kits.index');
     Route::get('/kits/edit/{idKit}', [KitController::class, 'edit'])->name('kits.update');
     Route::get('/kits/delete/{idKit}', [KitController::class, 'edit'])->name('kits.destroy');
     Route::get('/kits/create', [KitController::class, 'create'])->name('kits.create');

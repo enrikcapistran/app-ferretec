@@ -43,6 +43,6 @@ class Producto extends Model
     // Verificar si es Kit o Prod Individual
     public function scopeSeleccionarSoloKits($query)
     {
-        return $query->where('idTipoProducto', 2)->where('idStatus', 13);   
+        return $query->where('idTipoProducto', 2)->where('idStatus', 2);
     }
 }
