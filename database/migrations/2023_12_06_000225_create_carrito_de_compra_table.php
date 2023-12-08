@@ -5,7 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class CreateCarritoDeCompraTable extends Migration
-class CreateCarritoDeCompraTable extends Migration
 {
     public function up()
     {
@@ -16,23 +15,16 @@ class CreateCarritoDeCompraTable extends Migration
             $table->tinyInteger('idStatus')->unsigned()->default(1);
             $table->timestamps();
 
-            // Definir las llaves foráneas
-            $table->foreign('idSucursal')->references('idSucursal')->on('sucursales');
 
             // Definir las llaves foráneas
             $table->foreign('idSucursal')->references('idSucursal')->on('sucursales');
             $table->foreign('idUsuario')->references('idUsuario')->on('usuarios');
             $table->foreign('idStatus')->references('idStatus')->on('status');
-
-            // Definir la llave compuesta
-            $table->primary(['idUsuario', 'idSucursal']);
         });
     }
 
     public function down()
     {
         Schema::dropIfExists('carritoDeCompra');
-        Schema::dropIfExists('carritoDeCompra');
     }
-}
 }

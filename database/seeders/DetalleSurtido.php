@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\DetalleSurtido;
 use Illuminate\Database\Seeder;
 
-class DetallesSurtidosSeeder extends Seeder
+class DetallesSurtido extends Seeder
 {
     /**
      * Run the database seeds.

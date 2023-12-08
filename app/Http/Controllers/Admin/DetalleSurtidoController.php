@@ -12,9 +12,8 @@ class DetalleSurtidoController extends Controller
 
     public function index()
     {
-
     }
-    
+
 
     public function create()
     {
@@ -26,19 +25,20 @@ class DetalleSurtidoController extends Controller
         //
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $detalleSurtido = DetalleSurtido::where('idSurtido', $id)->get();
-    
+        dd($request);
+
+        $detalleSurtido = DetalleSurtidoServicios::where('idSurtido', $id)->get();
+
         if ($detalleSurtido->isEmpty()) {
             return redirect()->route('ruta_de_error');
         }
-            return $this->index($id);
+        return $this->index($id);
     }
-    
+
 
     public function edit($id)
     {
-
     }
 }

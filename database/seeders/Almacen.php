@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Almacen;
+use App\Models\Almacen as AlmacenServicio;
 use Illuminate\Database\Seeder;
 
 class Almacen extends Seeder
@@ -26,7 +26,7 @@ class Almacen extends Seeder
         ];
 
         foreach ($almacenes as $almacenData) {
-            Almacen::create($almacenData);
+            AlmacenServicio::create($almacenData);
         }
     }
 }

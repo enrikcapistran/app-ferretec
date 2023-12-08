@@ -1,9 +1,10 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePedidoSurtidoTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +14,13 @@ class CreatePedidoSurtidoTable extends Migration
     public function up()
     {
         Schema::create('pedidoSurtido', function (Blueprint $table) {
-            $table->id('idSurtido');
-            $table->unsignedBigInteger('idAlmacen');
-            $table->unsignedBigInteger('idSucursal');
+            $table->integer('idSurtido')->unsigned()->autoIncrement();
+            $table->integer('idAlmacen')->unsigned();
+            $table->integer('idSucursal')->unsigned();
             $table->timestamp('fechaDePedido')->default(now());
             $table->timestamp('fechaDeRecibido')->default(now());
             $table->tinyInteger('idStatus')->unsigned()->default(1);
+
             $table->foreign('idStatus')->references('idStatus')->on('status');
             $table->foreign('idAlmacen')->references('idAlmacen')->on('almacen');
             $table->foreign('idSucursal')->references('idSucursal')->on('sucursales');
@@ -36,4 +38,4 @@ class CreatePedidoSurtidoTable extends Migration
     {
         Schema::dropIfExists('pedidoSurtido');
     }
-}
+};

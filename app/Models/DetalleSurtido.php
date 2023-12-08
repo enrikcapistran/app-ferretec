@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class DetalleSurtido extends Model
 {
-    protected $table = 'detalleSurtido';
+    protected $table = 'detallesurtido';
+
     protected $primaryKey = 'idSurtidoDetalle';
+    
     const CREATED_AT = 'creadoEn';
     const UPDATED_AT = 'actualizadoEn';
 
