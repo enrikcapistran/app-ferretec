@@ -15,11 +15,7 @@
                     <input type="text" id="folio" name="folio" placeholder="Buscar por folio" class="px-4 py-2 border border-gray-300 rounded-md" value="{{ request('folio') }}">
                     <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md">Buscar</button>
                     
-                    <div style="text-align: right;">
-                        <a href="{{ route('admin.surtidos.create') }}" class="px-4 py-2 bg-green-500 hover:bg-green-700 rounded-lg text-white">
-                            Nuevo Surtido
-                        </a>    
-                    </div>
+                   
                 </form> 
             </div>
 
