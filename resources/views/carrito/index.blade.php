@@ -2,6 +2,7 @@
     <section class="py-12 bg-gray-100">
         <div class="container mx-auto">
             <h2 class="text-4xl font-bold text-center text-gray-700">Carrito de Compras</h2>
+
             @if (session('carrito') && count($carrito->getDetalles()) > 0)
             <div class="mt-8">
                 <table class="w-full text-left bg-white rounded-lg shadow-md">
@@ -25,16 +26,16 @@
                             </td>
                             <td class="px-6 py-6 border-b text-lg">${{ $detalleCarrito->getProducto()->getPrecioUnitario() }}</td>
                             <td class="px-6 py-6 border-b text-lg">
-                                <form action="{{ route('carrito.actualizar', $detalleCarrito->getIdDetalleCarrito()) }}" method="POST">
+                                <form action="{{ route('carrito.actualizar', $detalleCarrito->getProducto()->getIdProducto()) }}" method="POST">
                                     @csrf
                                     @method('PUT')
                                     <input type="number" name="cantidad" value="{{ $detalleCarrito->getCantidad() }}" class="w-16 px-2 py-1 text-center border rounded">
                             </td>
                             <td class="px-6 py-6 border-b text-lg">${{ number_format($detalleCarrito->getProducto()->getPrecioUnitario() * $detalleCarrito->getCantidad(), 2) }}</td>
                             <td class="px-6 py-6 border-b">
-                                <button type="submit" class="text-lg text-blue-600 hover:underline">Actualizar</button>
+                                <button type="submit" class="text-lg text-blue-600  hover:underline">Actualizar</button>
                                 </form>
-                                <form action="{{ route('carrito.quitar', $detalleCarrito->getIdDetalleCarrito()) }}" method="POST">
+                                <form action="{{ route('carrito.quitar', $detalleCarrito->getProducto()->getIdProducto()) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-lg text-red-600 hover:underline ml-4">Eliminar</a>

@@ -13,7 +13,7 @@ class CarritoDeCompra extends Model
     public $incrementing = false;
 
     // Indicar que la llave primaria es compuesta
-    protected $primaryKey = ['idUsuario', 'idSucursal'];
+    protected $primaryKey = 'idCarrito';
 
     // Desactivar el uso de timestamps
     public $timestamps = false;
@@ -46,7 +46,7 @@ class CarritoDeCompra extends Model
     // Relationship with DetalleCarrito model
     public function detalles()
     {
-        return $this->hasMany(DetalleCarrito::class, 'idCarrito', 'idUsuario', 'idSucursal');
+        return $this->hasMany(DetalleCarrito::class, 'idCarrito');
     }
 
     // Custom method to obtain a specific cart

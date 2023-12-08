@@ -5,13 +5,13 @@ namespace App\Models\Clases;
 class CarritoDeCompra
 {
     private ?int $idCarrito;
-    private int $idUsuario;
+    private ?int $idUsuario;
     private int $idStatus;
     private int $idSucursal;
     private float $total;
     private array $detalles;
 
-    public function __construct(int $idUsuario, int $idSucursal,  int $idStatus = 1, ?int $idCarrito = null)
+    public function __construct(?int $idUsuario, int $idSucursal,  int $idStatus = 1, ?int $idCarrito = null)
     {
         $this->idCarrito = $idCarrito;
         $this->idSucursal = $idSucursal;
@@ -28,7 +28,7 @@ class CarritoDeCompra
     {
         return $this->idStatus;
     }
-    public function getIdSucursal(): int
+    public function getIdSucursal(): ?int
     {
         return $this->idSucursal;
     }
@@ -77,10 +77,10 @@ class CarritoDeCompra
         array_push($this->detalles, $detalle);
     }
 
-    public function removeDetalle(int $idDetalleCarrito): void
+    public function removeDetalle(int $idProducto): void
     {
         for ($i = 0; $i < count($this->detalles); $i++) {
-            if ($this->detalles[$i]->getIdDetalleCarrito() === $idDetalleCarrito) {
+            if ($this->detalles[$i]->getProducto()->getIdProducto() === $idProducto) {
                 unset($this->detalles[$i]);
             }
         }
@@ -89,10 +89,10 @@ class CarritoDeCompra
         //buscar si existe el detalle
     }
 
-    public function actualizarDetalle(int $idDetalleCarrito, int $cantidad): void
+    public function actualizarDetalle(int $idProducto, int $cantidad): void
     {
         for ($i = 0; $i < count($this->detalles); $i++) {
-            if ($this->detalles[$i]->getIdDetalleCarrito() === $idDetalleCarrito) {
+            if ($this->detalles[$i]->getProducto()->getIdProducto() === $idProducto) {
                 $this->detalles[$i]->setCantidad($cantidad);
             }
         }

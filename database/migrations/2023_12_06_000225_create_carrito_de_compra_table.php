@@ -9,6 +9,7 @@ class CreateCarritoDeCompraTable extends Migration
     public function up()
     {
         Schema::create('carritoDeCompra', function (Blueprint $table) {
+            $table->integer('idCarrito')->primary()->unsigned();
             $table->integer('idUsuario')->unsigned();
             $table->integer('idSucursal')->unsigned();
             $table->tinyInteger('idStatus')->unsigned()->default(1);
@@ -18,9 +19,6 @@ class CreateCarritoDeCompraTable extends Migration
             $table->foreign('idSucursal')->references('idSucursal')->on('sucursales');
             $table->foreign('idUsuario')->references('idUsuario')->on('usuarios');
             $table->foreign('idStatus')->references('idStatus')->on('status');
-
-            // Definir la llave compuesta
-            $table->primary(['idUsuario', 'idSucursal']);
         });
     }
 

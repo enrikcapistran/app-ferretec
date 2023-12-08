@@ -17,8 +17,7 @@ class CarritoDeCompraController extends Controller
     public function index()
     {
         // Obtener los productos del carrito desde la sesión
-        $carritoModelo = new CarritoModelo();
-        $carrito = $carritoModelo->obtenerCarrito();
+        $carrito = session()->get('carrito');
 
         //dd($carrito);
 
@@ -28,14 +27,12 @@ class CarritoDeCompraController extends Controller
 
     public function agregar(int $idProducto, int $cantidad)
     {
-        // Obtener el carrito actual desde la sesión
-        $carrito = session()->get('carrito');
-
         // Crear un nuevo detalle de carrito
         $carritoModelo = new CarritoModelo();
+
         $carritoModelo->agregarAlCarrito($idProducto, $cantidad);
 
-
+        $carrito = $carritoModelo->obtenerCarrito();
         // Guardar el carrito en la sesión
         session()->put('carrito', $carrito);
 
@@ -51,10 +48,11 @@ class CarritoDeCompraController extends Controller
     {
     }
 
-    public function actualizarProducto(Request $request, int $idDetalleCarrito)
+    public function actualizarProducto(Request $request, int $idProducto)
     {
         $carritoModelo = new CarritoModelo();
-        $carritoModelo->actualizarProducto($idDetalleCarrito, $request->cantidad);
+
+        $carritoModelo->actualizarProducto($idProducto, $request->cantidad);
 
         session()->put('carrito', $carritoModelo->obtenerCarrito());
 
@@ -64,6 +62,7 @@ class CarritoDeCompraController extends Controller
     public function quitarProducto(int $idDetalleCarrito)
     {
         $carritoModelo = new CarritoModelo();
+
         $carritoModelo->quitarDelCarrito($idDetalleCarrito);
 
         session()->put('carrito', $carritoModelo->obtenerCarrito());
@@ -75,8 +74,17 @@ class CarritoDeCompraController extends Controller
     {
     }
 
-    public function agregarProducto()
+    public function agregarProducto(Request $request)
     {
+        $carritoModelo = new CarritoModelo();
+
+        $carritoModelo->agregarAlCarrito($request->idProducto, $request->cantidad);
+
+        //dd($carritoModelo->obtenerCarrito());
+
+        session()->put('carrito', $carritoModelo->obtenerCarrito());
+
+        return redirect()->back()->with('success', 'Producto agregado al carrito');
     }
 
     // Otros métodos según sea necesario

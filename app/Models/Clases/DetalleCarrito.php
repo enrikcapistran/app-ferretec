@@ -38,7 +38,7 @@ class DetalleCarrito
         return $this->cantidad;
     }
 
-    public function getIdDetalleCarrito(): int
+    public function getIdDetalleCarrito(): ?int
     {
         return $this->idDetalleCarrito;
     }
