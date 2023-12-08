@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class KitStoreRequest extends FormRequest
+class InventarioSucursalesStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,12 @@ class KitStoreRequest extends FormRequest
     public function rules()
     {
         return [
-
-            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'productos' => 'array', // Adjust based on your requirements
-            'productos.*' => 'exists:productos,idProducto', // Ensure each producto exists in the productos table
+            'idSucursal' => 'required|exists:sucursales,idSucursal',
+            'idProducto' => 'required|exists:productos,idProducto',
+            'existencia' => 'required|integer|min:0',
+            'stockMaximo' => 'required|integer|min:0',
+            'stockMinimo' => 'required|integer|min:0',
+            'idStatus' => 'required|exists:status,idStatus',
         ];
     }
 }

@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\ReservationController;
 
 use App\Http\Controllers\Admin\KitController;
 use App\Http\Controllers\Admin\ProductoController;
-use App\Http\Controllers\Admin\TiendaController;
+use App\Http\Controllers\Admin\SurtidoController;
 use App\Http\Controllers\Admin\VentaController;
 
 use App\Http\Controllers\Frontend\CarritoDeCompraController;
@@ -49,6 +49,16 @@ Route::get('/kits', [FrontendKitController::class, 'index'])->name('kits.index')
 Route::get('/kits/{kit}', [FrontendKitController::class, 'show'])->name('kits.show');
 Route::get('/productos', [FrontendProductoController::class, 'index'])->name('productos.index');
 Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.show');
+
+
+Route::get('/admin/surtidos/create', [SurtidoController::class, 'create'])->name('admin.surtidos.create');
+
+//Route::post('admin/surtidos/store', 'TuControlador@tuMetodo')->name('admin.surtidos.store');
+
+Route::post('/admin/surtidos/finalizarSurtido', [SurtidoController::class, 'finalizarSurtido'])->name('admin.surtidos.finalizarSurtido');
+Route::get('/admin/surtidos/{id}/edit', [SurtidoController::class, 'edit'])->name('admin.surtidos.edit');
+Route::get('/admin/surtidos', [SurtidoController::class, 'index'])->name('admin.surtidos.index');
+
 
 
 
@@ -98,7 +108,7 @@ Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(fun
 
 
     Route::resource('/productos', ProductoController::class);
-    Route::resource('/tiendas', TiendaController::class);
+    Route::resource('/surtido', SurtidoController::class);
     Route::resource('/ventas', VentaController::class);
 });
 

@@ -34,8 +34,8 @@
                 <x-admin-nav-link :href="route('admin.kits.index')" :active="request()->routeIs('admin.kits.index')">
                     {{ __('Kits') }}
                 </x-admin-nav-link>
-                <x-admin-nav-link :href="route('admin.tiendas.index')" :active="request()->routeIs('admin.tiendas.index')">
-                    {{ __('Tiendas') }}
+                <x-admin-nav-link :href="route('admin.surtido.index')" :active="request()->routeIs('admin.surtido.index')">
+                    {{ __('Surtidos') }}
                 </x-admin-nav-link>
                 <x-admin-nav-link :href="route('admin.ventas.index')" :active="request()->routeIs('admin.ventas.index')">
                     {{ __('Ventas') }}

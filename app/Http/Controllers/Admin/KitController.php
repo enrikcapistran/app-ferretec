@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 //CLASES
 use App\Models\Clases\Kit;
+//CLASES
+use App\Models\Clases\Kit;
 use App\Http\Controllers\Controller;
 
 //MODELOS

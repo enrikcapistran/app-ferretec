@@ -26,6 +26,16 @@ class Status extends Seeder
             'nombreStatus' => 'Inactivo',
         ]);
 
+        ModelsStatus::create([
+            'idStatus' => '3',
+            'nombreStatus' => 'Pendiente',
+        ]);
+
+        ModelsStatus::create([
+            'idStatus' => '4',
+            'nombreStatus' => 'Revisado',
+        ]);
+
         //Status for kits
         ModelsStatus::create([
             'idStatus' => '11',
