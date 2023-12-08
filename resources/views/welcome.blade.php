@@ -1,25 +1,4 @@
 <x-guest-layout>
-    <!-- Ventana Modal para Seleccionar Sucursal -->
-    @if(!session('sucursal'))
-    <div id="modal" class="fixed inset-0 z-10 bg-black bg-opacity-50 flex items-center justify-center">
-        <!-- Contenido de la Modal -->
-        <div class="bg-white p-6 rounded-md shadow-lg">
-            <h2 class="text-2xl font-bold mb-4">Selecciona una Sucursal</h2>
-            <div class="grid grid-cols-2 gap-4">
-                <!-- Opciones de Sucursales -->
-                <a href="{{route('seleccionar-sucursal',1)}}" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Norte</a>
-                <a href="{{route('seleccionar-sucursal',2)}}" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Este</a>
-                <a href="{{route('seleccionar-sucursal',3)}}" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Sur</a>
-                <a href="{{route('seleccionar-sucursal',4)}}" class="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none">Sucursal Oeste</a>
-            </div>
-        </div>
-    </div>
-    @endif
-
-    <!-- Contenido principal que se muestra después de seleccionar la sucursal -->
-    <div id="mainContent" x-show="!showModal">
-        <p>Sucursal seleccionada: {{session('sucursal') ? session()->get('sucursal')->getNombreSucursal() : ""}}</p>
-    </div>
     <!-- Main Hero Content -->
     <div class="container max-w-lg px-4 py-32 mx-auto text-left bg-center bg-no-repeat bg-cover md:max-w-none md:text-center" style="background-image: url('https://irp.cdn-website.com/b8e4de53/DESKTOP/jpg/755.jpg')">
         <h1 class="mt-20 font-mono text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 hover:text-blue-700 md:text-center sm:leading-none lg:text-5xl">

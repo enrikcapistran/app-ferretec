@@ -85,6 +85,7 @@ Route::prefix('carrito')->group(function () {
 Route::get('/gracias', [WelcomeController::class, 'gracias'])->name('gracias');
 
 Route::get('/seleccionar-sucursal/{idSucursal}', [FrontendSucursalController::class, 'seleccionarSucursal'])->name('seleccionar-sucursal');
+Route::get('/limpiar-sucursal', [FrontendSucursalController::class, 'limpiarSucural'])->name('sucursal.clear');
 
 
 Route::get('/dashboard', function () {

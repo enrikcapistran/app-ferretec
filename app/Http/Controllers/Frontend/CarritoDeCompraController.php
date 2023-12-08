@@ -16,10 +16,9 @@ class CarritoDeCompraController extends Controller
 {
     public function index()
     {
-        // Obtener los productos del carrito desde la sesión
-        $carrito = session()->get('carrito');
+        $modeloCarrito = new CarritoModelo();
 
-        //dd($carrito);
+        $carrito = $modeloCarrito->obtenerCarrito();
 
         // Puedes pasar los productos a una vista
         return view('carrito.index', compact('carrito'));

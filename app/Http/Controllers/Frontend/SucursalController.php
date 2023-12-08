@@ -37,4 +37,14 @@ class SucursalController extends Controller
         // Devuelve la información de la sucursal seleccionada
         return redirect()->back();
     }
+
+    public function limpiarSucural()
+    {
+        session()->forget('sucursal');
+        session()->forget('carrito');
+
+
+        // Devuelve la información de la sucursal seleccionada
+        return redirect('/');
+    }
 }

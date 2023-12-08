@@ -9,7 +9,7 @@ class CreateCarritoDeCompraTable extends Migration
     public function up()
     {
         Schema::create('carritoDeCompra', function (Blueprint $table) {
-            $table->integer('idCarrito')->primary()->unsigned();
+            $table->integer('idCarrito')->autoIncrement()->unsigned();
             $table->integer('idUsuario')->unsigned();
             $table->integer('idSucursal')->unsigned();
             $table->tinyInteger('idStatus')->unsigned()->default(1);

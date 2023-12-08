@@ -27,17 +27,17 @@ class CarritoModelo
         $this->detalleCarritoServicio = new DetalleCarritoServicio();
         $this->ProductoServicio = new ProductoServicio();
 
-        $sucural = 1; //session()->get('sucursal');
+        $sucuralId = session()->get('sucursal')->getIdSucursal();
 
         if (!auth()->check()) {
-            $this->carrito = session()->get('carrito') ?? new CarritoDeCompra(null, $sucural);
+            $this->carrito = session()->get('carrito') ?? new CarritoDeCompra(null, $sucuralId);
             session()->put('carrito', $this->carrito);
             return;
         }
 
         $usuario = auth()->user()->idUsuario;
 
-        $carritoUsuarioSucursal = $this->carritoServicio->obtenerCarrito($usuario, $sucural);
+        $carritoUsuarioSucursal = $this->carritoServicio->obtenerCarrito($usuario, $sucuralId);
         if ($carritoUsuarioSucursal) {
             $this->carrito = new CarritoDeCompra($carritoUsuarioSucursal->idUsuario, $carritoUsuarioSucursal->idSucursal, $carritoUsuarioSucursal->idStatus, $carritoUsuarioSucursal->idCarrito);
 
@@ -57,10 +57,10 @@ class CarritoModelo
                 $this->carrito->addDetalle(new DetalleCarrito($detalle->idCarrito, $producto, $detalle->cantidad, $detalle->idDetalleCarrito));
             }
         } else {
-            $this->carrito = new CarritoDeCompra(1, $sucural);
+            $this->carrito = new CarritoDeCompra(1, $sucuralId);
             $this->carritoServicio->create([
                 'idUsuario' => $usuario,
-                'idSucursal' => $sucural,
+                'idSucursal' => $sucuralId,
                 'idStatus' => 1,
             ]);
         }
@@ -93,6 +93,7 @@ class CarritoModelo
         // Agregar el detalle al carrito
         $this->carrito->addDetalle($detalle);
 
+        //dd($this->carrito);
         if (auth()->check())
             $this->detalleCarritoServicio->create([
                 'idCarrito' => $this->carrito->getIdCarrito(),
