@@ -23,11 +23,13 @@ use App\Http\Controllers\Frontend\ProductoController as FrontendProductoControll
 
 
 use App\Http\Controllers\Frontend\ReservationController as FrontendReservationController;
+use App\Http\Controllers\Frontend\SucursalController as FrontendSucursalController;
 use App\Http\Controllers\Frontend\WelcomeController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Category;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,6 +83,9 @@ Route::prefix('carrito')->group(function () {
 //Route::get('/reservation/step-two', [FrontendReservationController::class, 'stepTwo'])->name('reservations.step.two');
 //Route::post('/reservation/step-two', [FrontendReservationController::class, 'storeStepTwo'])->name('reservations.store.step.two');
 Route::get('/gracias', [WelcomeController::class, 'gracias'])->name('gracias');
+
+Route::get('/seleccionar-sucursal/{idSucursal}', [FrontendSucursalController::class, 'seleccionarSucursal'])->name('seleccionar-sucursal');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

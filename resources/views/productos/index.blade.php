@@ -1,27 +1,31 @@
 <x-guest-layout>
-    <div class="container px-6 py-8">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-10">
-            @foreach ($productos as $producto)
-                <a href="{{ route('productos.show', $producto->idProducto) }}" class="max-w-xs mb-8">
-                    <div class="rounded-lg overflow-hidden shadow-lg">
-                        <img class="w-full h-48 object-cover" src="{{ Storage::url($producto->imagen) }}" alt="Image" />
-                        <div class="px-6 py-4">
-                            <h4 class="mb-3 text-xl font-semibold tracking-tight text-green-600 uppercase">
-                                {{ $producto->nombreProducto }}
-                            </h4>
-                            <p class="leading-normal text-gray-700">{{ $producto->descripcion }}.</p>
+    <div class="container mx-auto px-6 py-8">
+        <div class="grid grid-cols-1 sm:grid-cols-1 gap-6">
+            @foreach ($productos->chunk(2) as $productosRow)
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    @foreach ($productosRow as $producto)
+                        <div class="flex items-center space-x-4 bg-white p-4 rounded-lg shadow-lg">
+                            <img class="w-32 h-32 object-cover" src="{{ Storage::url($producto->imagen) }}" alt="Image" />
+                            <div class="flex flex-col">
+                                <h4 class="text-lg font-semibold text-green-600">{{ $producto->nombreProducto }}</h4>
+                                <p class="text-gray-700">{{ Str::limit($producto->descripcion, 100) }}</p>
+                                <div class="flex items-center space-x-2 mt-2">
+                                    <span class="text-base font-semibold text-green-600">${{ $producto->precioUnitario }}</span>
+                                    <a href="{{ route('productos.show', $producto->idProducto) }}" class="text-sm text-blue-500 hover:text-blue-700 focus:outline-none">
+                                        Ver Detalles
+                                    </a>
+                                    <a href="{{ route('carrito.agregar', $producto->idProducto) }}" class="text-sm text-green-500 hover:text-green-700 focus:outline-none">
+                                        Agregar al Carrito
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex items-center justify-between p-4">
-                            <span class="text-xl text-green-600">${{ $producto->precioUnitario }}</span>
-                        </div>
-                        <div class="mt-4">
-                            <a href="{{ route('productos.show', $producto->idProducto) }}" class="block w-full px-4 py-2 text-center text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
-                                Ver Detalles
-                            </a>
-                        </div>
-                    </div>
-                </a>
+                    @endforeach
+                </div>
             @endforeach
         </div>
+        <div class="mt-8">
+            {{ $productos->links() }}
+        </div>
     </div>
-</x-guest-layout>
+</x-guest-layout>  
