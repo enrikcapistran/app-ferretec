@@ -76,10 +76,7 @@
 
             <!-- Agrega barras verticales "|" entre los elementos -->
             <span class="text-gray-700 md:text-2xl mx-2">|</span>
-                <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 text-lg hover:text-blue-700 transition-all duration-300 ease-in-out transform hover:scale-105" href="/">
-                    Inicio
-                </a>
-
+        
                 <a class="flex items-center text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 text-lg hover:text-blue-700 transition-all duration-300 ease-in-out transform hover:scale-105" href="{{ route('productos.index') }}">
                     <img src="{{ asset('storage/productos.gif') }}" alt="Productos" class="w-6 h-6 mr-2">
                     Productos
