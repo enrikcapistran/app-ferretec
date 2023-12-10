@@ -19,7 +19,6 @@ class SurtidoModelo
     public function __construct(Kit $SurtidoModelo = null)
     {
         $this->SurtidosServicios = new SurtidosServicios();
-
     }
 
     public function index()
@@ -29,29 +28,9 @@ class SurtidoModelo
     }
 
 
-    
-    public function guardarInventario(Request $request, $idSurtido, $cantidadLlegoData )
+
+    public function guardarInventario($idSurtido, $cantidadLlegoData)
     {
-
-        $cantidadLlegoData = $request->input('cantidadLlego');
-
-        if (!is_array($cantidadLlegoData)) {
-            return redirect()->route('admin.surtidos.index')->with('success', 'No se proporcionaron datos.');
-        }
-
-        foreach ($cantidadLlegoData as $idRefaccion => $cantidadLlego) {
-            $inventario = InventarioSucursal::where('idSucursal', $idSurtido)
-                ->where('idProducto', $idRefaccion)
-                ->first();
-
-            if ($inventario) {
-                $inventario->existencia += $cantidadLlego;
-                $inventario->save();
-            } else {
-            }
-        }
-
-        return redirect()->route('admin.surtidos.index')->with('success', 'Surtido de Sucursal Guardado Correctamente.');
     }
 
 
@@ -77,23 +56,23 @@ class SurtidoModelo
     public function FinalizarRevicion($id)
     {
         $pedidoSurtido = SurtidosServicios::find($id);
-    
+
         if (!$pedidoSurtido) {
             return redirect()->route('ruta_de_error');
         }
-        
+
         $pedidoSurtido->update(['idStatus' => 2]);
-        
+
         $detalleSurtido = DetalleSurtido::where('idSurtido', $id)->get();
-    
+
         if ($detalleSurtido->isEmpty()) {
             return redirect()->route('admin.surtidos.index')->with('success', 'No se encontraron datos.');
         }
-    
+
         return view('admin.surtidos.edit', compact('detalleSurtido', 'pedidoSurtido'));
     }
-    
-    
+
+
 
 
 
@@ -105,9 +84,9 @@ class SurtidoModelo
         $surtido = new Surtido();
         $surtido->idSucursal = $request->input('sucursal');
         $surtido->save();
-    
+
         $idSurtido = $surtido->id;
-    
+
         foreach ($productos as $producto) {
             $detalleSurtido = new DetalleSurtido();
             $detalleSurtido->idSurtido = $idSurtido;

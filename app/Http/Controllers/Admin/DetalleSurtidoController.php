@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DetalleSurtido as DetalleSurtidoServicios;
 use App\Models\InventarioSucursal as InventarioSucursalServicios;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Services\DetalleSurtidoSerivicos;
+use App\Models\Modelos\DetalleSurtidoModelo;
 
 
 
@@ -15,29 +14,23 @@ use App\Http\Controllers\Services\DetalleSurtidoSerivicos;
 
 class DetalleSurtidoController extends Controller
 {
-    public function guardarInventario (Request $request)
+    public function guardarInventario(Request $request)
     {
+        //dd($request);
         $idSucursal = $request->input('idSucursal');
         $idRefaccion = $request->input('idRefaccion');
         $cantidad = $request->input('cantidad');
-    
-        try {
-    
-            InventarioSucursalServicios::where('idSucursal', $idSucursal)
-            ->where('idProducto', $idRefaccion)
-            ->increment('existencia', (int)$cantidad);
 
-            return back()->with('success', 'Detalles del surtido actualizados correctamente.');
+        $detalleSurtidoModelo = new DetalleSurtidoModelo();
 
-        } catch (\Exception $e) {
-            dd($e->getMessage());
-            return back()->with('error', 'Error al actualizar los detalles del surtido: ' . $e->getMessage());
-        }
+        $detalleSurtidoModelo->guardarInventario($idSucursal, $idRefaccion, $cantidad);
+
+        return back()->with('success', 'Detalles del surtido actualizados correctamente.');
     }
-    
-    
-    
-    
+
+
+
+
 
 
     public function index()
