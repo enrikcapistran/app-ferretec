@@ -1,18 +1,19 @@
 <x-guest-layout>
     <!-- Main Hero Content -->
-    <div class="container max-w-lg px-4 py-32 mx-auto text-left bg-center bg-no-repeat bg-cover md:max-w-none md:text-center" style="background-image: url('https://irp.cdn-website.com/b8e4de53/DESKTOP/jpg/755.jpg')">
-        <h1 class="mt-20 font-mono text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 hover:text-blue-700 md:text-center sm:leading-none lg:text-5xl">
-            <span class="inline md:block">Bienvenido a FerreTec</span>
+    <div class="container max-w-lg px-4 py-44 mx-auto text-center bg-center bg-no-repeat bg-cover md:max-w-none" style="background-image: url('https://irp.cdn-website.com/b8e4de53/DESKTOP/jpg/755.jpg')">
+        <h1 class="mt-20 text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 hover:text-blue-700 md:text-5xl sm:leading-none">
+            Bienvenido a FerreTec
         </h1>
-        <div class="mx-auto mt-2 text-black-500 md:text-center lg:text-lg">
-            Con La Calidad Y Precio Que Buscas
+        <div class="mx-auto mt-2 text-gray-600 md:text-lg lg:text-xl">
+            Con la calidad y precio que buscas
         </div>
         <div class="mt-8">
-            <a href="/productos" type="button" class="px-6 py-3 text-base font-bold text-white bg-green-600 rounded-full hover:bg-green-500 focus:outline-none">
+            <a href="/productos" type="button" class="px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-500 focus:outline-none transition-all duration-300 ease-in-out transform hover:scale-105">
                 Ver Productos
             </a>
         </div>
     </div>
+    
     <!-- End Main Hero Content -->
     <!-- Inicio Seccion Promociones Kits -->
     
