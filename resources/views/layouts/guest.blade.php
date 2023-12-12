@@ -34,9 +34,11 @@
     <div class="bg-white shadow-md sticky top-0 w-full" x-data="{ isOpen: false }">
         <nav class="container px-12 py-8 mx-auto md:flex md:justify-between md:items-center">
             <div class="flex items-center justify-between">
-                <a class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700" href="/">
-                    FerreTec
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    <img src="{{ asset('storage/logo-ferretec.png') }}" 
+                    alt="FerreTec" style="height: 50px; width: auto;">
                 </a>
+                
                 <!-- Mobile menu button -->
                 <div @click="isOpen = !isOpen" class="flex md:hidden">
                     <button type="button" class="text-gray-800 hover:text-gray-400 focus:outline-none focus:text-gray-400" aria-label="toggle menu">
@@ -47,38 +49,81 @@
                     </button>
                 </div>
             </div>
-
+            
+            <!-- Agrega barras verticales "|" entre los elementos -->
+            <span class="text-gray-700 md:text-2xl mx-2">|</span>
             <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
             <div :class="isOpen ? 'flex' : 'hidden'" class="flex-col mt-8 space-y-4 md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0">
-                @if(session('sucursal'))
-                <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-md hover:text-blue-700 pl-8" href="{{ route('sucursal.clear') }}">{{session('sucursal')->getNombreSucursal()}}</a>
-                @endif
-                <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700" href="/">Inicio</a>
-                <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700" href="{{ route('productos.index') }}">Productos</a>
-                <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700" href="{{ route('carrito.index') }}">Carrito de Compra</a>
+                <!-- Sucursal y Ubicación Icono -->
+                <div class="flex items-center mx-auto">
+                    <img src="{{ asset('storage/ubicacion.png') }}" alt="Ubicación" class="w-6 h-6 mr-2 bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-md hover:text-blue-700">
+                    @if(session('sucursal'))
+                        <a class="text-md text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-md hover:text-blue-700" href="{{ route('sucursal.clear') }}">
+                            {{ session('sucursal')->getNombreSucursal() }}
+                        </a>
+                    @endif
+                </div>
+                <!-- Barra de búsqueda para buscar productos de la sucursal -->
+                <form action="{{ route('buscar-productos') }}" method="GET" class="flex items-center">
+                    <input type="text" name="query" placeholder="Buscar productos..." class="p-2 border border-gray-300 rounded-md mr-2 focus:outline-none">
+                    <button type="submit" class="flex items-center text-lg bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-md hover:text-blue-700">
+                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-5.2-5.2"></path>
+                            <circle cx="10" cy="10" r="8"></circle>
+                        </svg>
+                    </button>
+                </form>
 
+            <!-- Agrega barras verticales "|" entre los elementos -->
+            <span class="text-gray-700 md:text-2xl mx-2">|</span>
+        
+                <a class="flex items-center text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 text-lg hover:text-blue-700 transition-all duration-300 ease-in-out transform hover:scale-105" href="{{ route('productos.index') }}">
+                    <img src="{{ asset('storage/productos.gif') }}" alt="Productos" class="w-6 h-6 mr-2">
+                    Productos
+                </a>
+                
+                
                 @auth
-                <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <a class="flex items-center text-lg text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 hover:text-blue-700 transition-all duration-300 ease-in-out transform hover:scale-105" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <img src="{{ asset('storage/logout.gif') }}" alt="Cerrar Sesión" class="w-6 h-6 mr-2">
                     Cerrar Sesión
                 </a>
+                
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
                 @else
-                <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700" href="{{ route('admin.index') }}">Iniciar Sesión</a>
+                <a class="flex items-center text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 text-lg hover:text-blue-700 transition-all duration-300 ease-in-out transform hover:scale-105" href="{{ route('admin.index') }}">
+                    <img src="{{ asset('storage/usuario.png') }}" alt="Usuario" class="w-6 h-6 mr-2 filter grayscale hover:grayscale-0">
+                    Iniciar Sesión
+                </a>
+                
+                
+                
                 @endauth
 
-
                 @auth
-                <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 text-lg hover:text-blue-700 transition-all duration-300 ease-in-out transform hover:scale-105" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
 
                 </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
                 @else
-                <a class="text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 md:text-2xl hover:text-blue-700" href="{{ route('register') }}">Registro</a>
+                <a class="flex items-center text-transparent bg-clip-text bg-gradient-to-r from-black to-blue-700 text-lg hover:text-blue-700 transition-all duration-300 ease-in-out transform hover:scale-105" href="{{ route('register') }}">
+                    <img src="{{ asset('storage/nuevousuario.png') }}" alt="Nuevo Usuario" class="w-6 h-6 mr-2">
+                    Registro
+                </a>
+                
                 @endauth
+                
+                <a class="text-white text-lg hover:text-white transition-all duration-300 ease-in-out transform hover:scale-105 p-2 rounded-md bg-gradient-to-tr from-blue-900 via-blue-700 to-blue-500" href="{{ route('carrito.index') }}">
+                    <svg class="w-10 h-9 inline-block mr-2" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1h4l3 12h11l2-9H6"></path>
+                        <circle cx="12" cy="19" r="2"></circle>
+                    </svg>Carrito
+                </a>
+                
             </div>
         </nav>
     </div>

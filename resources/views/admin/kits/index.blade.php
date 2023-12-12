@@ -45,7 +45,7 @@
                                 <img src="{{ Storage::url($kit->getImagen()) }}" class="w-16 h-16 rounded">
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ $kit->getPrecioUnitario() }}
+                                ${{ number_format($kit->getPrecioUnitario(), 2) }}
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <div class="flex space-x-2">

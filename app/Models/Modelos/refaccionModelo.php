@@ -46,12 +46,23 @@ class refaccionModelo
     {
         $sucursal = session()->get('sucursal');
 
+        $usuario = auth()->user();
+
+        //dd($usuario->idRol);
+
+
         $stockJson = $this->inventarioSucursalServicios->all()->where('idSucursal', "=", $sucursal->getIdSucursal())->where('idStatus', 1)->where('existencia', ">", 0);
+
+
 
         //dd($productosJson);
 
-        $productosArray = $stockJson->map(function ($stock) {
+        $productosArray = $stockJson->map(function ($stock) use ($usuario) {
             $producto = $stock->producto()->first();
+
+            if ($producto->idTipoProducto == 2 && (is_null($usuario) || $usuario->idRol != 6)) {
+                return null;
+            }
 
             $productoObj = new Producto(
                 $producto->idProducto,
@@ -66,7 +77,7 @@ class refaccionModelo
             $productoObj->setStock($stock->existencia);
 
             return $productoObj;
-        })->toArray();
+        })->filter()->toArray();
 
         return array_values($productosArray);
     }
