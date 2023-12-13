@@ -36,7 +36,7 @@ class CarritoDeCompraController extends Controller
         session()->put('carrito', $carrito);
 
         // Puedes redirigir a la página del carrito o a la página del producto según tus necesidades
-        return redirect()->back()->with('success', 'Producto agregado al carrito');
+        return redirect()->back()->with('success', 'Producto Agregado al Carrito');
     }
 
     public function seleccionarCliente()
@@ -51,7 +51,7 @@ class CarritoDeCompraController extends Controller
 
         session()->put('carrito', $carritoModelo->obtenerCarrito());
 
-        return redirect()->back()->with('success', 'Producto actualizado');
+        return redirect()->back()->with('warning', 'Producto Actualizado');
     }
 
     public function quitarProducto(int $idDetalleCarrito)
@@ -62,7 +62,7 @@ class CarritoDeCompraController extends Controller
 
         session()->put('carrito', $carritoModelo->obtenerCarrito());
 
-        return redirect()->back()->with('success', 'Producto quitado');
+        return redirect()->back()->with('danger', 'Producto Eliminado del Carrito');
     }
 
     public function vaciarCarrito()
