@@ -11,7 +11,7 @@ class Producto
     protected float $precioUnitario;
     protected int $idTipoProducto;
     protected ?Status $status;
-    protected ?int $stock;
+    protected ?int $stock = 0;
 
     public function __construct(?int $idProducto, string $nombreProducto, string $descripcion, string $imagen, float $precioUnitario, int $idTipoProducto, Status $status = new Status(1))
     {
