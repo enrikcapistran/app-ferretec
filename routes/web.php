@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\ReservationController;
 use App\Http\Controllers\Admin\KitController;
 use App\Http\Controllers\Admin\ProductoController;
 use App\Http\Controllers\Admin\SurtidoController;
-use App\Http\Controllers\Admin\VentaController;
+use App\Http\Controllers\Admin\MaterializacionController;
 
 use App\Http\Controllers\Frontend\CarritoDeCompraController;
 
@@ -115,10 +115,13 @@ Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(fun
     Route::delete('/kit/eliminarRefaccion/{idRefaccion}', [KitController::class, 'eliminarRefaccion'])->name('kits.eliminarRefaccion');
     Route::delete('/kit/eliminar/{idKit}', [KitController::class, 'eliminarKit'])->name('kits.eliminarKit');
 
+    Route::get('/materializacion/{idKit}', [MaterializacionController::class, 'materializarShow'])->name('materializar');
+    Route::post('/materializacion/guardar', [MaterializacionController::class, 'guardarMaterializacion'])->name('materializar.guardar');
+
 
     Route::resource('/productos', ProductoController::class);
     Route::resource('/surtido', SurtidoController::class);
-    Route::resource('/ventas', VentaController::class);
+    Route::resource('/materializacion', MaterializacionController::class);
 });
 
 

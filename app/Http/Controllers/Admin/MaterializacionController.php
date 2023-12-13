@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Modelos\KitModelo;
 use Illuminate\Http\Request;
+use App\Models\Modelos\refaccionModelo;
 
-class VentaController extends Controller
+class MaterializacionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +16,39 @@ class VentaController extends Controller
      */
     public function index()
     {
-        //
-        return view('admin.ventas.index');
+        $kitModelo = new KitModelo();
+        $productos = $kitModelo->obtenerKitsAprovados();
+
+        return view('admin.materializacion.index', compact('productos'));
+    }
+
+    public function materializarShow(int $idKit)
+    {
+        $kitModelo = new KitModelo();
+
+        $kit = $kitModelo->obtenerKitConDetalle($idKit);
+
+        $refaccionModelo = new refaccionModelo();
+
+        $refacciones = $refaccionModelo->getTodasRefacciones();
+
+        $max = $kitModelo->maxKitsPosibles(22);
+
+        return view('admin.materializacion.materializar', compact('kit', 'refacciones', 'max'));
+    }
+
+    public function guardarMaterializacion(Request $request)
+    {
+        $kitModelo = new KitModelo();
+
+        if ($request->input('cantidad') > $kitModelo->maxKitsPosibles($request->input('idKit'))) {
+            return redirect()->route('admin.materializacion.index')->with('error', 'No hay suficientes refacciones para materializar');
+        }
+
+        $kitModelo->materializarKit($request->input('idKit'), $request->input('cantidad'), $request->input('refaccion'));
+
+
+        return redirect()->route('admin.materializacion.index')->with('success', 'Materializacion guardada con exito');
     }
 
     /**
