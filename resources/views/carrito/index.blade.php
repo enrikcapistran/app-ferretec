@@ -24,7 +24,7 @@
                                     <span class="text-lg">{{ $detalleCarrito->getProducto()->getNombreProducto() }}</span>
                                 </div>
                             </td>
-                            <td class="px-6 py-6 border-b text-lg">${{ $detalleCarrito->getProducto()->getPrecioUnitario() }}</td>
+                            <td class="px-6 py-6 border-b text-lg">${{ number_format($detalleCarrito->getProducto()->getPrecioUnitario() * $detalleCarrito->getCantidad(), 2) }}</td>
                             <td class="px-6 py-6 border-b text-lg">
                                 <form action="{{ route('carrito.actualizar', $detalleCarrito->getProducto()->getIdProducto()) }}" method="POST">
                                     @csrf
@@ -52,7 +52,7 @@
                 </table>
             </div>
             <div class="flex justify-end mt-8">
-                <a href="{{ route('pago.paso-uno') }}" class="px-8 py-4 text-xl font-bold text-white bg-green-600 rounded-full hover:bg-green-700 focus:outline-none">
+                <a href="{{ route('carrito.index') }}" class="px-8 py-4 text-xl font-bold text-white bg-green-600 rounded-full hover:bg-green-700 focus:outline-none">
                     Proceder al Pago
                 </a>
                 

@@ -31,23 +31,7 @@
             @endforeach
         </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Find all the "Agregar a Carrito" buttons
-            var addToCartButtons = document.querySelectorAll('.btn-light-blue');
-
-            // Add click event listener to each button
-            addToCartButtons.forEach(function (button) {
-                button.addEventListener('click', function () {
-                    // Show a basic alert
-                    alert('Producto agregado exitosamente al carrito');
-                });
-            });
-        });
-    </script>
 </x-guest-layout>
-
-
 
 <style>
     /* Existing styles for buttons */
