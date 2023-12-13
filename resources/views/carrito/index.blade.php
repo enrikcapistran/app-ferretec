@@ -52,11 +52,11 @@
                 </table>
             </div>
             <div class="flex justify-end mt-8">
-                <a href="{{ route('pago.step-one') }}" class="px-8 py-4 text-xl font-bold text-white bg-green-600 rounded-full hover:bg-green-700 focus:outline-none">
+                <a href="{{ route('pago.step-one') }}" class="px-8 py-4 text-xl font-bold text-white bg-blue-600 rounded-full hover:bg-blue-700 focus:outline-none mr-10">
                     Proceder al Pago
                 </a>
-                
             </div>
+            
             @else
             <p class="text-center text-lg mt-6">Tu carrito de compras está vacío.</p>
             @endif
