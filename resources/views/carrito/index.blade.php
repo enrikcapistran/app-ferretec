@@ -9,7 +9,7 @@
                     <thead class="bg-blue-800">
                         <tr>
                             <th class="px-6 py-4 text-lg font-bold text-white">Producto</th>
-                            <th class="px-6 py-4 text-lg font-bold text-white">Precio</th>
+                            <th class="px-6 py-4 text-lg font-bold text-white">Precio Unitario</th>
                             <th class="px-6 py-4 text-lg font-bold text-white">Cantidad</th>
                             <th class="px-6 py-4 text-lg font-bold text-white">Total</th>
                             <th class="px-6 py-4 text-lg font-bold text-white">Acciones</th>
@@ -24,7 +24,7 @@
                                     <span class="text-lg">{{ $detalleCarrito->getProducto()->getNombreProducto() }}</span>
                                 </div>
                             </td>
-                            <td class="px-6 py-6 border-b text-lg">${{ number_format($detalleCarrito->getProducto()->getPrecioUnitario() * $detalleCarrito->getCantidad(), 2) }}</td>
+                            <td class="px-6 py-6 border-b text-lg">${{ number_format($detalleCarrito->getProducto()->getPrecioUnitario(), 2) }}</td>
                             <td class="px-6 py-6 border-b text-lg">
                                 <form action="{{ route('carrito.actualizar', $detalleCarrito->getProducto()->getIdProducto()) }}" method="POST">
                                     @csrf
