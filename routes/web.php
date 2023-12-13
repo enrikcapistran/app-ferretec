@@ -31,7 +31,7 @@ use App\Models\Reservation;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
-use App\Http\Controllers\Frontend\pagoController;
+use App\Http\Controllers\Frontend\PagoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,9 +66,8 @@ Route::post('/admin/surtidos/guardar-inventario', [DetalleSurtidoController::cla
 Route::post('/admin/surtidos/finalizarSurtido', [SurtidoController::class, 'finalizarSurtido'])->name('admin.surtidos.finalizarSurtido');
 Route::post('/admin/surtidos/FinalizarRevicion', [SurtidoController::class, 'FinalizarRevicion'])->name('admin.surtidos.FinalizarRevicion');
 
-Route::get('/pagar', [pagoController::class, 'pagar'])->name('pagar');
-
-
+Route::get('/pagar', [PagoController::class, 'pagar'])->name('pagar');
+Route::get('reservations/step-one', [PagoController::class, 'stepOne'])->name('reservations.step-one');
 
 Route::prefix('carrito')->group(function () {
     Route::get('/', [CarritoDeCompraController::class, 'index'])->name('carrito.index');

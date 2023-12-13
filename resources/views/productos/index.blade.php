@@ -31,7 +31,23 @@
             @endforeach
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Find all the "Agregar a Carrito" buttons
+            var addToCartButtons = document.querySelectorAll('.btn-light-blue');
+
+            // Add click event listener to each button
+            addToCartButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    // Show a basic alert
+                    alert('Producto agregado exitosamente al carrito');
+                });
+            });
+        });
+    </script>
 </x-guest-layout>
+
+
 
 <style>
     /* Existing styles for buttons */
@@ -48,7 +64,6 @@
         background-color: #2779bd;
     }
 
-    /* Updated styles for "Ver Detalles" button */
     .btn-dark-blue {
         padding: 0.5rem 1rem;
         background-color: #1a4d6e; /* Darker blue */
@@ -76,3 +91,4 @@
         background-color: #4a8acf; /* Adjust the hover color if needed */
     }
 </style>
+
