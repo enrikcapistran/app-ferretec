@@ -45,4 +45,14 @@ class Producto extends Model
     {
         return $query->where('idTipoProducto', 2)->where('idStatus', 2);
     }
+
+    // Verificar si es Kit o Prod Individual
+    public static function buscar($query)
+    {
+        return self::where('nombreProducto', 'like', '%' . $query . '%')
+            ->orWhere('descripcion', 'like', '%' . $query . '%')
+            ->orderByRaw("CASE WHEN nombreProducto LIKE '{$query}%' THEN 1 ELSE 2 END")
+            ->orderBy('nombreProducto')
+            ->get();
+    }
 }
