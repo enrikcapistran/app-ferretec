@@ -10,7 +10,7 @@ use App\Models\Pago;
 use App\Models\LineaDeVenta;
 use App\Models\Modelos\pagoModelo;
 
-class pagoController extends Controller
+class PagoController extends Controller
 {
     //
     public function pagar()
@@ -20,4 +20,23 @@ class pagoController extends Controller
 
         return redirect('/')->with('success', 'Pago realizado con éxito');
     }
+
+    public function stepOne()
+{
+    return view('pago.step-one');
+}
+
+    public function stepTwo()
+    {
+        return view('pago.step-two');
+    }
+
+    public function procesarPago(Request $request)
+    {
+        $pagoModelo = new pagoModelo();
+        $pagoModelo->pagar();
+
+        return redirect('/')->with('success', 'Compra Realizada Exitosamente');
+    }
+
 }

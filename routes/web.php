@@ -31,7 +31,7 @@ use App\Models\Reservation;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
-use App\Http\Controllers\Frontend\PagoController;
+use App\Http\Controllers\Frontend\PagoController as FrontendPagoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,10 +45,12 @@ use App\Http\Controllers\Frontend\PagoController;
 */
 
 Route::get('/', [WelcomeController::class, 'index']);
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 //Route::get('/categories', [FrontendCategoryController::class, 'index'])->name('categories.index');
 //Route::get('/categories/{category}', [FrontendCategoryController::class, 'show'])->name('categories.show');
 //Route::get('/menus', [FrontendMenuController::class, 'index'])->name('menus.index');
-
+Route::post('/pago/procesarPago', [FrontendPagoController::class, 'procesarPago'])
+    ->name('pago.procesarPago');
 
 Route::get('/kits', [FrontendKitController::class, 'index'])->name('kits.index');
 Route::get('/kits/{kit}', [FrontendKitController::class, 'show'])->name('kits.show');
@@ -79,6 +81,10 @@ Route::prefix('carrito')->group(function () {
     Route::post('/seleccionarCliente', [CarritoDeCompraController::class, 'seleccionarCliente'])->name('carrito.seleccionarCliente');
 });
 
+Route::get('/pago/step-one', [FrontendPagoController::class, 'stepOne'])->name('pago.step-one');
+Route::post('/pago/step-one', [FrontendPagoController::class, 'stepOne'])->name('pago.process-step-one');
+Route::get('/pago/step-two', [FrontendPagoController::class, 'stepTwo'])->name('pago.step-two');
+Route::post('/pago/step-two', [FrontendPagoController::class, 'stepTwo'])->name('pago.process-step-two');
 //Route::get('/reservation/step-one', [FrontendReservationController::class, 'stepOne'])->name('reservations.step.one');
 //Route::post('/reservation/step-one', [FrontendReservationController::class, 'storeStepOne'])->name('reservations.store.step.one');
 //Route::get('/reservation/step-two', [FrontendReservationController::class, 'stepTwo'])->name('reservations.step.two');
