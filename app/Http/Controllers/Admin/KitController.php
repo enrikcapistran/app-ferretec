@@ -145,16 +145,17 @@ class KitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    /*
     public function update(Request $request, Kit $kit)
     {
-        /*
+
         $request->validate([
             'nombre' => 'required',
             'descripcion' => 'required',
             'precio' => 'required',
             'stock' => 'required',
         ]);
-        */
+
 
 
         $producto = $kit->producto();
@@ -185,6 +186,7 @@ class KitController extends Controller
 
         return redirect()->route('admin.kits.index')->with('success', 'Kit Actualizado Correctamente.');
     }
+    */
 
     /**
      * Remove the specified resource from storage.
@@ -194,6 +196,8 @@ class KitController extends Controller
      */
     public function eliminarKit(int $idKit)
     {
+
+
         $modelo = new kitModelo();
 
         $kit = $modelo->obtenerKitConDetalle($idKit);

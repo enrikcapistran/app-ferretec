@@ -10,11 +10,7 @@ use Illuminate\Support\Str;
 
 class ProductosRefacciones extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+ 
     public function run()
     {
 

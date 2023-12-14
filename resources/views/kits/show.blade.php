@@ -5,8 +5,7 @@
             <div class="px-6 py-4">
                 <h4 class="mb-3 text-xl font-semibold tracking-tight text-green-600 uppercase">
                     {{ $kit->nombre }}</h4>
-                <p class="leading-normal text-gray-700">
-                    {{ $kit->descripcion }}
+                <p class="leading-normal text-gray-700">{{ $kit->descripcion }}
                 </p>
             </div>
             <div class="flex items-center justify-between p-4">

@@ -13,54 +13,70 @@
                 Folio {{ $pedidoSurtido->idSurtido }}
             </th>
 
-            <div class="relative overflow-x-auto">
+            <form method="POST" action="{{ route('admin.surtidos.FinalizarRevicion') }}">
+                @csrf
+                <input type="hidden" name="idSucursal" value="{{ $pedidoSurtido->idSucursal }}" />
+                <input type="hidden" name="idSurtido" value="{{ $pedidoSurtido->idSurtido }}" />
+
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3">ID Refaccion</th>
-                            <th scope="col" class="px-6 py-3">Cantidad que debio llegar</th>
-                            <th scope="col" class="px-6 py-3">Cantidad que llego</th>
+                            <th scope="col" class="px-6 py-3">Cantidad que debió llegar</th>
+                            <th scope="col" class="px-6 py-3">Cantidad que llegó</th>
                         </tr>
                     </thead>
                     <tbody>
-
                         @foreach ($detalleSurtido as $detalle)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{ $detalle->idRefaccion }}
+                                <input type="hidden" name="idRefaccion[]" value="{{ $detalle->idRefaccion }}" />
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{ $detalle->cantidad }}
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <form action="{{ route('admin.surtidos.guardarInventario') }}" method="post">
-                                    @csrf
-                                    <input type="hidden" name="idSucursal" value="{{ $pedidoSurtido->idSucursal }}" />
-                                    <input type="hidden" name="idRefaccion" value="{{ $detalle->idRefaccion }}" />
-
-                                    <input type="number" name="cantidad" placeholder="Ingrese la cantidad" class=" text-black p-2 rounded-md" />
-                                    <button type="submit" class="ml-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">
-                                        Registrar
-                                    </button>
-                                    @else
-                                    @endif
-                    
-                                </form>
+                                <input type="number" name="cantidades[]" placeholder="Ingrese la cantidad" class="text-black p-2 rounded-md" />
                             </td>
                         </tr>
-                        @endforeach
-
+                    @endforeach
+                    
                     </tbody>
-
                 </table>
-                <form method="POST" action="{{ route('admin.surtidos.finalizarSurtido') }}">
-                    @csrf
-                    <input type="hidden" name="idSurtido" value="{{ $pedidoSurtido->idSurtido }}" />
+                @if($pedidoSurtido->idStatus == 1)
                     <button type="submit" class="ml-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">
-                        Finalizar Surtido
+                        Registrar surtido
                     </button>
-                </form>
-            </div>
+                @else
+                    <p>Surtido recibido con éxito.</p>
+                @endif
+
+            </form>
+
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $('form').submit(function() {
+                        var cantidades = $('input[name="cantidades[]"]');
+                        var isEmpty = false;
+
+                        cantidades.each(function() {
+                            if ($(this).val() === '') {
+                                isEmpty = true;
+                                return false;
+                            }
+                        });
+
+                        if (isEmpty) {
+                            alert('Por favor, complete todas las cantidades antes de enviar el formulario.');
+                            return false;
+                        }
+
+                        return true;
+                    });
+                });
+            </script>
         </div>
     </div>
 </x-admin-layout>

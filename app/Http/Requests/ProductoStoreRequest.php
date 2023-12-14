@@ -24,10 +24,10 @@ class ProductoStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => 'required|string|max:255',
+            'nombreProducto' => 'required|string|max:255',
             'descripcion' => 'required|string',
             'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'precio' => 'required|numeric|min:0',
+            'precioUnitario' => 'required|numeric|min:0',
         ];
     }
 }

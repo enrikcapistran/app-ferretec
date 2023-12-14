@@ -53,9 +53,7 @@
                     <div class="sm:col-span-6 pt-5">
                         <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción</label>
                         <div class="mt-1">
-                            <textarea id="descripcion" rows="3" name="descripcion" class="@error('descripcion') border-red-500 @enderror shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
-                            {{$kit->getDescripcion()}}
-                            </textarea>
+                            <textarea id="descripcion" rows="3" name="descripcion" class="@error('descripcion') border-red-500 @enderror shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">{{$kit->getDescripcion()}}</textarea>
                             @error('descripcion')
                             <div class="text-sm text-red-500">{{ $message }}</div>
                             @enderror

@@ -14,19 +14,7 @@ use App\Models\Modelos\DetalleSurtidoModelo;
 
 class DetalleSurtidoController extends Controller
 {
-    public function guardarInventario(Request $request)
-    {
-        //dd($request);
-        $idSucursal = $request->input('idSucursal');
-        $idRefaccion = $request->input('idRefaccion');
-        $cantidad = $request->input('cantidad');
 
-        $detalleSurtidoModelo = new DetalleSurtidoModelo();
-
-        $detalleSurtidoModelo->guardarInventario($idSucursal, $idRefaccion, $cantidad);
-
-        return back()->with('success', 'Detalles del surtido actualizados correctamente.');
-    }
 
 
 
