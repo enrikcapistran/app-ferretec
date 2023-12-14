@@ -238,7 +238,9 @@ class KitModelo
 
         $kitJson = $this->kitServicios->all()->where('idProducto', '=', $idKit)->first();
 
-        $sucursalJson = $this->sucursalServicios->all()->where('idSucursal', '=', $kitJson->idSucursal)->first();
+        //dd($kitJson);
+
+        $sucursalJson = $this->sucursalServicios->all()->where('idSucursal', $kitJson->idSucursal)->first();
         $sucursalObj =  new Sucursal();
         $sucursalObj->setIdSucursal($sucursalJson->idSucursal);
         $sucursalObj->setNombreSucursal($sucursalJson->nombreSucursal);

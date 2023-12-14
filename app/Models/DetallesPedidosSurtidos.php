@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DetalleSurtido extends Model
+class DetallesPedidosSurtidos extends Model
 {
-    protected $table = 'detallesurtido';
+    protected $table = 'detallesPedidosSurtidos';
 
     protected $primaryKey = 'idSurtidoDetalle';
     

@@ -64,9 +64,9 @@ Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('
 Route::get('/admin/surtidos/create', [SurtidoController::class, 'create'])->name('admin.surtidos.create');
 Route::get('/admin/surtidos/{id}', [SurtidoController::class, 'edit'])->name('admin.surtidos.edit');
 Route::get('/admin/surtidos', [SurtidoController::class, 'index'])->name('admin.surtidos.index');
-Route::post('/admin/surtidos/guardar-inventario', [DetalleSurtidoController::class, 'guardarInventario'])->name('admin.surtidos.guardarInventario');
-Route::post('/admin/surtidos/finalizarSurtido', [SurtidoController::class, 'finalizarSurtido'])->name('admin.surtidos.finalizarSurtido');
 Route::post('/admin/surtidos/FinalizarRevicion', [SurtidoController::class, 'FinalizarRevicion'])->name('admin.surtidos.FinalizarRevicion');
+
+//Route::post('/admin/surtidos/finalizarSurtido', [SurtidoController::class, 'finalizarSurtido'])->name('admin.surtidos.finalizarSurtido');
 
 Route::get('/pagar', [FrontendPagoController::class, 'pagar'])->name('pagar');
 Route::get('reservations/step-one', [FrontendPagoController::class, 'stepOne'])->name('reservations.step-one');
@@ -93,7 +93,7 @@ Route::get('/gracias', [WelcomeController::class, 'gracias'])->name('gracias');
 
 Route::get('/seleccionar-sucursal/{idSucursal}', [FrontendSucursalController::class, 'seleccionarSucursal'])->name('seleccionar-sucursal');
 Route::get('/limpiar-sucursal', [FrontendSucursalController::class, 'limpiarSucural'])->name('sucursal.clear');
-Route::get('/buscar-productos', [FrontendProductoController::class, 'buscarProductos'])->name('buscar-productos');
+Route::get('/buscar-productos', [FrontendProductoController::class, 'buscarProductos'])->name('buscar-productos');Route::get('/buscar-productos', [ProductoController::class, 'buscarProductos'])->name('buscar-productos');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

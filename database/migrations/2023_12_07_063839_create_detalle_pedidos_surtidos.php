@@ -6,14 +6,10 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
-        Schema::create('detallesurtido', function (Blueprint $table) {
+        Schema::create('detallesPedidosSurtidos', function (Blueprint $table) {
             $table->integer('idSurtido')->unsigned();
             $table->integer('idRefaccion')->unsigned();
             $table->integer('cantidad');
@@ -27,13 +23,9 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
     public function down()
     {
-        Schema::dropIfExists('detalleSurtido');
+        Schema::dropIfExists('detallesPedidosSurtidos');
     }
 };
