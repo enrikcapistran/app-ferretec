@@ -234,61 +234,68 @@ class KitModelo
 
     public function obtenerKitConDetalle(int $idKit): Kit
     {
-        $productoJson = $this->productoServicios->all()->where('idTipoProducto', '=', 2)->where('idProducto', '=', $idKit)->first();
+        $kits = $this->productoServicios->where('idTipoProducto', '=', 2)->where('idStatus', '=', 13)->get();
 
-        $kitJson = $this->kitServicios->all()->where('idProducto', '=', $idKit)->first();
+        $kitsArray = array_values($kits->map(function ($kitEloquent) {
 
-        //dd($kitJson);
+            $kitJson = $this->kitServicios->all()->where('idProducto', '=', $kitEloquent->idProducto)->first();
 
-        $sucursalJson = $this->sucursalServicios->all()->where('idSucursal', $kitJson->idSucursal)->first();
-        $sucursalObj =  new Sucursal();
-        $sucursalObj->setIdSucursal($sucursalJson->idSucursal);
-        $sucursalObj->setNombreSucursal($sucursalJson->nombreSucursal);
-        $sucursalObj->setCalle($sucursalJson->calle);
-        $sucursalObj->setColonia($sucursalJson->colonia);
-        $sucursalObj->setNumero($sucursalJson->numero);
-        $sucursalObj->setCP($sucursalJson->CP);
-        $sucursalObj->setTelefono($sucursalJson->telefono);
-        $sucursalObj->setStatus(new Status($sucursalJson->status->idStatus, $sucursalJson->status->nombreStatus));
-
-
-        $detallesKitJson = $this->detalleKitServicios->all()->where('idKit', '=', $idKit);
-
-        $usuarioCreadorJson = $this->usuarioServicios->all()->where('idUsuario', '=', $kitJson->idUsuarioCreador)->first();
-
-        $usuarioCreadorObj = new Usuario();
-        $usuarioCreadorObj->setIdUsuario($usuarioCreadorJson->idUsuario);
-        $usuarioCreadorObj->setNombre($usuarioCreadorJson->nombre);
-        $usuarioCreadorObj->setApellidoPaterno($usuarioCreadorJson->apellidoPaterno);
-        $usuarioCreadorObj->setApellidoMaterno($usuarioCreadorJson->apellidoMaterno);
-        $usuarioCreadorObj->setEmail($usuarioCreadorJson->email);
-        $usuarioCreadorObj->setFechaNacimiento($usuarioCreadorJson->fechaNacimiento);
-        $usuarioCreadorObj->setIdRol($usuarioCreadorJson->idRol);
+            $sucursalJson = $this->sucursalServicios->all()->where('idSucursal', '=', $kitJson->idSucursal)->first();
+            $sucursalObj =  new Sucursal();
+            $sucursalObj->setIdSucursal($sucursalJson->idSucursal);
+            $sucursalObj->setNombreSucursal($sucursalJson->nombreSucursal);
+            $sucursalObj->setCalle($sucursalJson->calle);
+            $sucursalObj->setColonia($sucursalJson->colonia);
+            $sucursalObj->setNumero($sucursalJson->numero);
+            $sucursalObj->setCP($sucursalJson->CP);
+            $sucursalObj->setTelefono($sucursalJson->telefono);
+            $sucursalObj->setStatus(new Status($sucursalJson->status->idStatus, $sucursalJson->status->nombreStatus));
 
 
-        $detallesKitArr = $detallesKitJson->map(function ($detalleKit) {
+            $detallesKitJson = $this->detalleKitServicios->all()->where('idKit', '=', $kitEloquent->idProducto);
 
-            return new DetalleKit(
-                $detalleKit->idKit,
-                $detalleKit->idRefaccion,
-                $detalleKit->cantidad,
-            );
-        });
+            $usuarioCreadorJson = $this->usuarioServicios->all()->where('idUsuario', '=', $kitJson->idUsuarioCreador)->first();
 
-        //dd($productoJson);
-        $kitObj = new Kit();
-        $kitObj->setIdProducto($productoJson->idProducto);
-        $kitObj->setNombreProducto($productoJson->nombreProducto);
-        $kitObj->setDescripcion($productoJson->descripcion);
-        $kitObj->setImagen($productoJson->imagen);
-        $kitObj->setPrecioUnitario($productoJson->precioUnitario);
-        $kitObj->setIdTipoProducto($productoJson->idTipoProducto);
-        $kitObj->setStatus(new Status($productoJson->status->idStatus, $productoJson->status->nombreStatus));
-        $kitObj->setSucursal($sucursalObj);
-        $kitObj->setUsuarioCreador($usuarioCreadorObj);
-        $kitObj->setDetallesKit($detallesKitArr->toArray());
+            $usuarioCreadorObj = new Usuario();
+            $usuarioCreadorObj->setIdUsuario($usuarioCreadorJson->idUsuario);
+            $usuarioCreadorObj->setNombre($usuarioCreadorJson->nombre);
+            $usuarioCreadorObj->setApellidoPaterno($usuarioCreadorJson->apellidoPaterno);
+            $usuarioCreadorObj->setApellidoMaterno($usuarioCreadorJson->apellidoMaterno);
+            $usuarioCreadorObj->setEmail($usuarioCreadorJson->email);
+            $usuarioCreadorObj->setFechaNacimiento($usuarioCreadorJson->fechaNacimiento);
+            $usuarioCreadorObj->setIdRol($usuarioCreadorJson->idRol);
 
-        return $kitObj;
+
+            $detallesKitArr = $detallesKitJson->map(function ($detalleKit) {
+
+                return new DetalleKit(
+                    $detalleKit->idKit,
+                    $detalleKit->idRefaccion,
+                    $detalleKit->cantidad,
+                );
+            });
+
+            $stock = $this->inventarioSucursalServicios->all()->where('idProducto', '=', $kitEloquent->idProducto)->where('idSucursal', '=', $kitJson->idSucursal)->first();
+            $stock = $stock->existencia ?? 0;
+
+
+            $kitObj = new Kit();
+            $kitObj->setIdProducto($kitEloquent->idProducto);
+            $kitObj->setNombreProducto($kitEloquent->nombreProducto);
+            $kitObj->setDescripcion($kitEloquent->descripcion);
+            $kitObj->setImagen($kitEloquent->imagen);
+            $kitObj->setPrecioUnitario($kitEloquent->precioUnitario);
+            $kitObj->setIdTipoProducto($kitEloquent->idTipoProducto);
+            $kitObj->setStatus(new Status($kitEloquent->status->idStatus, $kitEloquent->status->nombreStatus));
+            $kitObj->setSucursal($sucursalObj);
+            $kitObj->setUsuarioCreador($usuarioCreadorObj);
+            $kitObj->setDetallesKit($detallesKitArr->toArray());
+            $kitObj->setStock($stock);
+
+            return $kitObj;
+        })->toArray());
+
+        return $kitsArray[0];
     }
 
     public function eliminarDiseñoKit(Producto $kitProducto)
