@@ -32,7 +32,7 @@ class MaterializacionController extends Controller
 
         $refacciones = $refaccionModelo->getTodasRefacciones();
 
-        $max = $kitModelo->maxKitsPosibles(22);
+        $max = $kitModelo->maxKitsPosibles($idKit);
 
         return view('admin.materializacion.materializar', compact('kit', 'refacciones', 'max'));
     }

@@ -234,7 +234,8 @@ class KitModelo
 
     public function obtenerKitConDetalle(int $idKit): Kit
     {
-        $kits = $this->productoServicios->where('idTipoProducto', '=', 2)->where('idStatus', '=', 13)->get();
+        $kits = $this->productoServicios->where('idProducto',  $idKit)->where('idStatus', '=', 13)->get();
+
 
         $kitsArray = array_values($kits->map(function ($kitEloquent) {
 
@@ -295,7 +296,12 @@ class KitModelo
             return $kitObj;
         })->toArray());
 
-        return $kitsArray[0];
+        foreach ($kitsArray as $kit) {
+            return $kit;
+        }
+
+        //return $kitEncontrado;
+        return new Kit();
     }
 
     public function eliminarDiseñoKit(Producto $kitProducto)
