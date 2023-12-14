@@ -81,4 +81,10 @@ class refaccionModelo
 
         return array_values($productosArray);
     }
+
+    public function getProductosMovil()
+    {
+        $refaccionesJson = $this->productoServicios->all()->whereIn('idStatus', [1, 13])->values();
+        return $refaccionesJson;
+    }
 }

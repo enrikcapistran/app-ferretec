@@ -68,8 +68,8 @@ Route::post('/admin/surtidos/guardar-inventario', [DetalleSurtidoController::cla
 Route::post('/admin/surtidos/finalizarSurtido', [SurtidoController::class, 'finalizarSurtido'])->name('admin.surtidos.finalizarSurtido');
 Route::post('/admin/surtidos/FinalizarRevicion', [SurtidoController::class, 'FinalizarRevicion'])->name('admin.surtidos.FinalizarRevicion');
 
-Route::get('/pagar', [PagoController::class, 'pagar'])->name('pagar');
-Route::get('reservations/step-one', [PagoController::class, 'stepOne'])->name('reservations.step-one');
+Route::get('/pagar', [FrontendPagoController::class, 'pagar'])->name('pagar');
+Route::get('reservations/step-one', [FrontendPagoController::class, 'stepOne'])->name('reservations.step-one');
 
 Route::prefix('carrito')->group(function () {
     Route::get('/', [CarritoDeCompraController::class, 'index'])->name('carrito.index');

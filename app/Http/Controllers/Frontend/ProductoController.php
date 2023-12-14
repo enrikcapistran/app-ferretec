@@ -52,4 +52,13 @@ class ProductoController extends Controller
         // Retornar la vista con los resultados de la búsqueda
         return view('productos.resultados', compact('resultados'));
     }
+
+    public function allProductosMovil()
+    {
+        $productosModelo = new refaccionModelo();
+
+        $productos = $productosModelo->getProductosMovil();
+
+        return response()->json($productos);
+    }
 }
