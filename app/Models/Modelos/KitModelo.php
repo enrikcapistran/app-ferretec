@@ -14,6 +14,8 @@ use App\Models\Producto as productoServicios;
 use App\Models\DetalleKit as detalleKitServicios;
 use App\Models\Sucursal as sucursalServicios;
 use App\Models\Usuario as usuarioServicios;
+use App\Models\InventarioSucursal as inventarioSucursalServicios;
+
 
 class KitModelo
 {
@@ -25,16 +27,18 @@ class KitModelo
     private detalleKitServicios $detalleKitServicios;
     private sucursalServicios $sucursalServicios;
     private usuarioServicios $usuarioServicios;
+    private inventarioSucursalServicios $inventarioSucursalServicios;
 
     public function __construct(Kit $kit = null)
     {
         $this->kit = session()->get('kit') ?? $kit;
-        
+
         $this->productoServicios = new productoServicios();
         $this->kitServicios = new kitServicios();
         $this->detalleKitServicios = new detalleKitServicios();
         $this->sucursalServicios = new sucursalServicios();
         $this->usuarioServicios = new usuarioServicios();
+        $this->inventarioSucursalServicios = new inventarioSucursalServicios();
     }
 
     public function iniciarNuevoKit()
@@ -89,6 +93,14 @@ class KitModelo
             'idUsuarioCreador' => $this->kit->getUsuarioCreador()->getIdUsuario(),
             'idStatus' => $this->kit->getStatus()->getIdStatus(),
         ]);
+
+        foreach ($this->kit->getDetallesKit() as $detalleKit) {
+            $this->detalleKitServicios->create([
+                'idKit' => $kit->idProducto,
+                'idRefaccion' => $detalleKit->getIdRefaccion(),
+                'cantidad' => $detalleKit->getCantidad(),
+            ]);
+        }
 
         session()->forget('kit');
     }
@@ -154,9 +166,75 @@ class KitModelo
         return $kitsArray;
     }
 
+    public function obtenerKitsAprovados()
+    {
+        $kits = $this->productoServicios->where('idTipoProducto', '=', 2)->where('idStatus', '=', 13)->get();
+
+        $kitsArray = array_values($kits->map(function ($kitEloquent) {
+
+            $kitJson = $this->kitServicios->all()->where('idProducto', '=', $kitEloquent->idProducto)->first();
+
+            $sucursalJson = $this->sucursalServicios->all()->where('idSucursal', '=', $kitJson->idSucursal)->first();
+            $sucursalObj =  new Sucursal();
+            $sucursalObj->setIdSucursal($sucursalJson->idSucursal);
+            $sucursalObj->setNombreSucursal($sucursalJson->nombreSucursal);
+            $sucursalObj->setCalle($sucursalJson->calle);
+            $sucursalObj->setColonia($sucursalJson->colonia);
+            $sucursalObj->setNumero($sucursalJson->numero);
+            $sucursalObj->setCP($sucursalJson->CP);
+            $sucursalObj->setTelefono($sucursalJson->telefono);
+            $sucursalObj->setStatus(new Status($sucursalJson->status->idStatus, $sucursalJson->status->nombreStatus));
+
+
+            $detallesKitJson = $this->detalleKitServicios->all()->where('idKit', '=', $kitEloquent->idProducto);
+
+            $usuarioCreadorJson = $this->usuarioServicios->all()->where('idUsuario', '=', $kitJson->idUsuarioCreador)->first();
+
+            $usuarioCreadorObj = new Usuario();
+            $usuarioCreadorObj->setIdUsuario($usuarioCreadorJson->idUsuario);
+            $usuarioCreadorObj->setNombre($usuarioCreadorJson->nombre);
+            $usuarioCreadorObj->setApellidoPaterno($usuarioCreadorJson->apellidoPaterno);
+            $usuarioCreadorObj->setApellidoMaterno($usuarioCreadorJson->apellidoMaterno);
+            $usuarioCreadorObj->setEmail($usuarioCreadorJson->email);
+            $usuarioCreadorObj->setFechaNacimiento($usuarioCreadorJson->fechaNacimiento);
+            $usuarioCreadorObj->setIdRol($usuarioCreadorJson->idRol);
+
+
+            $detallesKitArr = $detallesKitJson->map(function ($detalleKit) {
+
+                return new DetalleKit(
+                    $detalleKit->idKit,
+                    $detalleKit->idRefaccion,
+                    $detalleKit->cantidad,
+                );
+            });
+
+            $stock = $this->inventarioSucursalServicios->all()->where('idProducto', '=', $kitEloquent->idProducto)->where('idSucursal', '=', $kitJson->idSucursal)->first();
+            $stock = $stock->existencia ?? 0;
+
+
+            $kitObj = new Kit();
+            $kitObj->setIdProducto($kitEloquent->idProducto);
+            $kitObj->setNombreProducto($kitEloquent->nombreProducto);
+            $kitObj->setDescripcion($kitEloquent->descripcion);
+            $kitObj->setImagen($kitEloquent->imagen);
+            $kitObj->setPrecioUnitario($kitEloquent->precioUnitario);
+            $kitObj->setIdTipoProducto($kitEloquent->idTipoProducto);
+            $kitObj->setStatus(new Status($kitEloquent->status->idStatus, $kitEloquent->status->nombreStatus));
+            $kitObj->setSucursal($sucursalObj);
+            $kitObj->setUsuarioCreador($usuarioCreadorObj);
+            $kitObj->setDetallesKit($detallesKitArr->toArray());
+            $kitObj->setStock($stock);
+
+            return $kitObj;
+        })->toArray());
+
+        return $kitsArray;
+    }
+
     public function obtenerKitConDetalle(int $idKit): Kit
     {
-        $productoJson = $this->productoServicios->all()->where('idTipoProducto', '=', 2)->where('idStatus', '=', 11)->where('idProducto', '=', $idKit)->first();
+        $productoJson = $this->productoServicios->all()->where('idTipoProducto', '=', 2)->where('idProducto', '=', $idKit)->first();
 
         $kitJson = $this->kitServicios->all()->where('idProducto', '=', $idKit)->first();
 
@@ -195,6 +273,7 @@ class KitModelo
             );
         });
 
+        //dd($productoJson);
         $kitObj = new Kit();
         $kitObj->setIdProducto($productoJson->idProducto);
         $kitObj->setNombreProducto($productoJson->nombreProducto);
@@ -227,7 +306,7 @@ class KitModelo
     public function aprobarKit(Producto $kitProducto)
     {
 
-        $kitProducto->setstatus(new Status(12));
+        $kitProducto->setstatus(new Status(13));
 
         $this->productoServicios->where('idProducto', '=', $kitProducto->getIdProducto())->update([
             'idStatus' => 1,
@@ -241,7 +320,7 @@ class KitModelo
     public function rechazarKit(Producto $kitProducto)
     {
 
-        $kitProducto->setstatus(new Status(13));
+        $kitProducto->setstatus(new Status(14));
 
         $this->productoServicios->where('idProducto', '=', $kitProducto->getIdProducto())->update([
             'idStatus' => 2,
@@ -250,5 +329,55 @@ class KitModelo
         $this->kitServicios->where('idProducto', '=', $kitProducto->getIdProducto())->update([
             'idStatus' => 4,
         ]);
+    }
+
+    public function maxKitsPosibles(int $idKit)
+    {
+        $kitJson = $this->obtenerKitConDetalle($idKit);
+
+        $maxPosible = 100000000;
+
+        foreach ($kitJson->getDetallesKit() as $detalleKit) {
+
+            $stock = $this->inventarioSucursalServicios->all()->where('idProducto', '=', $detalleKit->getIdRefaccion())->where('idSucursal', '=', $kitJson->getSucursal()->getIdSucursal())->first();
+            $stock = $stock->existencia ?? 0;
+            //dd($stock);
+
+            $maxPosible = $stock / $detalleKit->getCantidad() < $maxPosible ? $stock / $detalleKit->getCantidad() : $maxPosible;
+        }
+
+        return $maxPosible;
+    }
+
+    public function materializarKit(int $idKit, int $cantidad)
+    {
+        $kitJson = $this->obtenerKitConDetalle($idKit);
+
+        foreach ($kitJson->getDetallesKit() as $detalleKit) {
+            $stock = $this->inventarioSucursalServicios->all()->where('idProducto', '=', $detalleKit->getIdRefaccion())->where('idSucursal', '=', $kitJson->getSucursal()->getIdSucursal())->first();
+            $stock = $stock->existencia ?? 0;
+
+            $this->inventarioSucursalServicios->where('idProducto', '=', $detalleKit->getIdRefaccion())->where('idSucursal', '=', $kitJson->getSucursal()->getIdSucursal())->update([
+                'existencia' => $stock - ($detalleKit->getCantidad() * $cantidad),
+            ]);
+        }
+
+        // Check if kit already exists in inventory
+        $existe = $this->inventarioSucursalServicios->where('idProducto', '=', $idKit)->where('idSucursal', '=', $kitJson->getSucursal()->getIdSucursal())->first();
+
+        if ($existe) {
+            // Increment existing stock
+            $this->inventarioSucursalServicios->where('idProducto', '=', $idKit)->where('idSucursal', '=', $kitJson->getSucursal()->getIdSucursal())->increment('existencia', $cantidad);
+        } else {
+            // Create new inventory record
+            $this->inventarioSucursalServicios->create([
+                'idSucursal' => $kitJson->getSucursal()->getIdSucursal(),
+                'idProducto' => $idKit,
+                'existencia' => $cantidad,
+                'stockMaximo' => 0,
+                'stockMinimo' => 0,
+                'idStatus' => 1,
+            ]);
+        }
     }
 }

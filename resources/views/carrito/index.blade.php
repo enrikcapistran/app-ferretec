@@ -1,18 +1,18 @@
 <x-guest-layout>
-    <section class="py-12 bg-gray-100">
+    <section class="py-12">
         <div class="container mx-auto">
             <h2 class="text-4xl font-bold text-center text-gray-700">Carrito de Compras</h2>
 
             @if (session('carrito') && count($carrito->getDetalles()) > 0)
             <div class="mt-8">
-                <table class="w-full text-left bg-white rounded-lg shadow-md">
-                    <thead class="bg-gray-300">
+                <table class="w-2/3 text-left bg-white rounded-lg shadow-md mx-auto">
+                    <thead class="bg-blue-800">
                         <tr>
-                            <th class="px-6 py-4 text-lg font-bold text-gray-600">Producto</th>
-                            <th class="px-6 py-4 text-lg font-bold text-gray-600">Precio</th>
-                            <th class="px-6 py-4 text-lg font-bold text-gray-600">Cantidad</th>
-                            <th class="px-6 py-4 text-lg font-bold text-gray-600">Total</th>
-                            <th class="px-6 py-4 text-lg font-bold text-gray-600">Acciones</th>
+                            <th class="px-6 py-4 text-lg font-bold text-white">Producto</th>
+                            <th class="px-6 py-4 text-lg font-bold text-white">Precio Unitario</th>
+                            <th class="px-6 py-4 text-lg font-bold text-white">Cantidad</th>
+                            <th class="px-6 py-4 text-lg font-bold text-white">Total</th>
+                            <th class="px-6 py-4 text-lg font-bold text-white">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -24,7 +24,7 @@
                                     <span class="text-lg">{{ $detalleCarrito->getProducto()->getNombreProducto() }}</span>
                                 </div>
                             </td>
-                            <td class="px-6 py-6 border-b text-lg">${{ $detalleCarrito->getProducto()->getPrecioUnitario() }}</td>
+                            <td class="px-6 py-6 border-b text-lg">${{ number_format($detalleCarrito->getProducto()->getPrecioUnitario(), 2) }}</td>
                             <td class="px-6 py-6 border-b text-lg">
                                 <form action="{{ route('carrito.actualizar', $detalleCarrito->getProducto()->getIdProducto()) }}" method="POST">
                                     @csrf
@@ -51,11 +51,20 @@
                     </tbody>
                 </table>
             </div>
-            <div class="flex justify-end mt-8">
-                <a href="{{ route('pagar') }}" class="px-8 py-4 text-xl font-bold text-white bg-green-600 rounded-full hover:bg-green-700 focus:outline-none">
-                    Proceder al Pago
-                </a>
+            <div class="flex justify-end mt-8 w-2/3 mx-auto">
+                @auth
+                    <a href="{{ route('pago.step-one') }}" class="px-8 py-4 text-xl font-bold text-white bg-blue-600 rounded-full hover:bg-blue-700 focus:outline-none mr-10">
+                        Proceder al Pago
+                    </a>
+                @else
+                    <a href="{{ route('register') }}" class="px-8 py-4 text-xl font-bold text-white bg-blue-600 rounded-full hover:bg-blue-700 focus:outline-none mr-10">
+                        Proceder al Pago
+                    </a>
+                @endauth
             </div>
+
+            
+            
             @else
             <p class="text-center text-lg mt-6">Tu carrito de compras está vacío.</p>
             @endif

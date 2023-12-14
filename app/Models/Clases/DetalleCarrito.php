@@ -74,4 +74,9 @@ class DetalleCarrito
     {
         return $this->producto->getPrecioUnitario() * $this->cantidad;
     }
+
+    public function getSubtotal()
+    {
+        return $this->producto->getPrecioUnitario() * $this->cantidad;
+    }
 }

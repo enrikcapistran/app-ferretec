@@ -48,6 +48,50 @@
         background-color: #2779bd;
     }
 
+    .btn-dark-blue {
+        padding: 0.5rem 1rem;
+        background-color: #1a4d6e; /* Darker blue */
+        color: #fff;
+        text-decoration: none;
+        border-radius: 0.25rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-dark-blue:hover {
+        background-color: #153b54; /* Adjust the hover color if needed */
+    }
+
+    /* Updated styles for "Agregar a Carrito" button */
+    .btn-light-blue {
+        padding: 0.5rem 1rem;
+        background-color: #4297d3; /* Lighter blue */
+        color: #fff;
+        text-decoration: none;
+        border-radius: 0.25rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-light-blue:hover {
+        background-color: #4a8acf; /* Adjust the hover color if needed */
+    }
+</style>
+
+
+<style>
+    /* Existing styles for buttons */
+    .btn-blue {
+        padding: 0.5rem 1rem;
+        background-color: #3490dc;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 0.25rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-blue:hover {
+        background-color: #2779bd;
+    }
+
     /* Updated styles for "Ver Detalles" button */
     .btn-dark-blue {
         padding: 0.5rem 1rem;

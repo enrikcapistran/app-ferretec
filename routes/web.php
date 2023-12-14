@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\ReservationController;
 use App\Http\Controllers\Admin\KitController;
 use App\Http\Controllers\Admin\ProductoController;
 use App\Http\Controllers\Admin\SurtidoController;
-use App\Http\Controllers\Admin\VentaController;
+use App\Http\Controllers\Admin\MaterializacionController;
 
 use App\Http\Controllers\Frontend\CarritoDeCompraController;
 
@@ -31,7 +31,7 @@ use App\Models\Reservation;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
-use App\Http\Controllers\Frontend\pagoController;
+use App\Http\Controllers\Frontend\PagoController as FrontendPagoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,10 +45,12 @@ use App\Http\Controllers\Frontend\pagoController;
 */
 
 Route::get('/', [WelcomeController::class, 'index']);
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 //Route::get('/categories', [FrontendCategoryController::class, 'index'])->name('categories.index');
 //Route::get('/categories/{category}', [FrontendCategoryController::class, 'show'])->name('categories.show');
 //Route::get('/menus', [FrontendMenuController::class, 'index'])->name('menus.index');
-
+Route::post('/pago/procesarPago', [FrontendPagoController::class, 'procesarPago'])
+    ->name('pago.procesarPago');
 
 Route::get('/kits', [FrontendKitController::class, 'index'])->name('kits.index');
 Route::get('/kits/{kit}', [FrontendKitController::class, 'show'])->name('kits.show');
@@ -64,11 +66,8 @@ Route::get('/admin/surtidos/{id}', [SurtidoController::class, 'edit'])->name('ad
 Route::get('/admin/surtidos', [SurtidoController::class, 'index'])->name('admin.surtidos.index');
 Route::post('/admin/surtidos/FinalizarRevicion', [SurtidoController::class, 'FinalizarRevicion'])->name('admin.surtidos.FinalizarRevicion');
 
-//Route::post('/admin/surtidos/finalizarSurtido', [SurtidoController::class, 'finalizarSurtido'])->name('admin.surtidos.finalizarSurtido');
-
-Route::get('/pagar', [pagoController::class, 'pagar'])->name('pagar');
-
-
+Route::get('/pagar', [PagoController::class, 'pagar'])->name('pagar');
+Route::get('reservations/step-one', [PagoController::class, 'stepOne'])->name('reservations.step-one');
 
 Route::prefix('carrito')->group(function () {
     Route::get('/', [CarritoDeCompraController::class, 'index'])->name('carrito.index');
@@ -80,6 +79,10 @@ Route::prefix('carrito')->group(function () {
     Route::post('/seleccionarCliente', [CarritoDeCompraController::class, 'seleccionarCliente'])->name('carrito.seleccionarCliente');
 });
 
+Route::get('/pago/step-one', [FrontendPagoController::class, 'stepOne'])->name('pago.step-one');
+Route::post('/pago/step-one', [FrontendPagoController::class, 'stepOne'])->name('pago.process-step-one');
+Route::get('/pago/step-two', [FrontendPagoController::class, 'stepTwo'])->name('pago.step-two');
+Route::post('/pago/step-two', [FrontendPagoController::class, 'stepTwo'])->name('pago.process-step-two');
 //Route::get('/reservation/step-one', [FrontendReservationController::class, 'stepOne'])->name('reservations.step.one');
 //Route::post('/reservation/step-one', [FrontendReservationController::class, 'storeStepOne'])->name('reservations.store.step.one');
 //Route::get('/reservation/step-two', [FrontendReservationController::class, 'stepTwo'])->name('reservations.step.two');
@@ -88,7 +91,7 @@ Route::get('/gracias', [WelcomeController::class, 'gracias'])->name('gracias');
 
 Route::get('/seleccionar-sucursal/{idSucursal}', [FrontendSucursalController::class, 'seleccionarSucursal'])->name('seleccionar-sucursal');
 Route::get('/limpiar-sucursal', [FrontendSucursalController::class, 'limpiarSucural'])->name('sucursal.clear');
-Route::get('/buscar-productos', [ProductoController::class, 'buscarProductos'])->name('buscar-productos');
+Route::get('/buscar-productos', [ProductoController::class, 'buscarProductos'])->name('buscar-productos');Route::get('/buscar-productos', [FrontendProductoController::class, 'buscarProductos'])->name('buscar-productos');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -116,10 +119,13 @@ Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(fun
     Route::delete('/kit/eliminarRefaccion/{idRefaccion}', [KitController::class, 'eliminarRefaccion'])->name('kits.eliminarRefaccion');
     Route::delete('/kit/eliminar/{idKit}', [KitController::class, 'eliminarKit'])->name('kits.eliminarKit');
 
+    Route::get('/materializacion/{idKit}', [MaterializacionController::class, 'materializarShow'])->name('materializar');
+    Route::post('/materializacion/guardar', [MaterializacionController::class, 'guardarMaterializacion'])->name('materializar.guardar');
+
 
     Route::resource('/productos', ProductoController::class);
     Route::resource('/surtido', SurtidoController::class);
-    Route::resource('/ventas', VentaController::class);
+    Route::resource('/materializacion', MaterializacionController::class);
 });
 
 

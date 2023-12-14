@@ -185,3 +185,17 @@
     </script>
 
 </x-guest-layout>
+<style>
+    .btn-light-blue {
+        padding: 0.5rem 1rem;
+        background-color: #4297d3; /* Lighter blue */
+        color: #fff;
+        text-decoration: none;
+        border-radius: 0.25rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-light-blue:hover {
+        background-color: #4a8acf; /* Ajusta el color al pasar el ratón si es necesario */
+    }
+</style>
