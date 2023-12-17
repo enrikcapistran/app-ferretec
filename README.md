@@ -7,60 +7,40 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## app-ferretec
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Aplicación web para la empresa Ferretec con 4 sucursales en el estado de Sinaloa y un CEDIS en la capital del mismo estado.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Muestra General
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Aplicación de patrón de diseño modal para segregación entre sucursales.
+![z1](https://github.com/enrikcapistran/app-ferretec/assets/118037654/eeb31cd6-d498-4027-8d72-13e21589459c)
 
-## Learning Laravel
+### Landing
+![z2](https://github.com/enrikcapistran/app-ferretec/assets/118037654/bb56c867-d1db-4321-8bc5-fe5d26e26bda)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Productos de la sucursal
+![z3](https://github.com/enrikcapistran/app-ferretec/assets/118037654/3a5e7000-65aa-4f1a-9eb7-eebb507e9616)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Vista de Administrador & Empleados
+![z4](https://github.com/enrikcapistran/app-ferretec/assets/118037654/64500cd8-5e5b-4d63-8f67-9457f4d1b9a3)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Surtidos de Sucursales para Almacenistas del CEDIS y de Empleados de cada Sucursal
+![z5](https://github.com/enrikcapistran/app-ferretec/assets/118037654/0ccc1112-e0b7-402d-8634-8a9e5b16c738)
 
-## Laravel Sponsors
+### Vista Login
+![z6](https://github.com/enrikcapistran/app-ferretec/assets/118037654/fd0a7a52-bdbc-4d41-8bd2-ee1ea58d139d)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Carro de Compra
+![z7](https://github.com/enrikcapistran/app-ferretec/assets/118037654/4d23cf43-8b5d-4a95-84e2-2977bcaf6b8a)
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### Proceso de Pago Paso 1
+![z8](https://github.com/enrikcapistran/app-ferretec/assets/118037654/ee8921c3-5bd7-4544-be12-49597e2d64c2)
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Proceso de Pago Paso 2
+![z9](https://github.com/enrikcapistran/app-ferretec/assets/118037654/8b78437e-37e1-4546-81be-acf1ff6984f8)
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
